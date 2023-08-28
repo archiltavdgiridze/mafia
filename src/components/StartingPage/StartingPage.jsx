@@ -1,8 +1,10 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./startingpage.scss";
 import mafiaDude from "../../assets/img/mafia_dude.svg";
 import bullet from "../../assets/img/bullet.svg";
 import gear from "../../assets/img/gear.svg";
+import gun from "../../assets/img/gun.svg";
 
 const StartingPage = () => {
   return (
@@ -13,14 +15,16 @@ const StartingPage = () => {
       <div className="mafia_dude">
         <img src={mafiaDude} alt="" />
       </div>
-      <div className="start_btn">
+      <div className="start_page_btns">
         <div className="start">
-          <button>
-            <div className="start_icons">
-              <img src={bullet} alt="" />
-            </div>
-            <p>დაწყება</p>
-          </button>
+          <Link to="/input_player_names">
+            <button>
+              <div className="start_icons">
+                <img src={bullet} alt="" />
+              </div>
+              <p>დაწყება</p>
+            </button>
+          </Link>
         </div>
         <div className="about_us">
           <button>

@@ -1,0 +1,30 @@
+.input_container {
+  p {
+    font-size: 1.5rem;
+    color: #ccc;
+    font-family: var(--mainFont);
+    // margin-bottom: 1rem;
+  }
+
+  input {
+    width: 50%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #000;
+    border-radius: 5px;
+    padding: 4px 10px 0;
+    margin: 0 auto;
+    font-size: 16px;
+    color: #fff;
+    background-color: transparent;
+    outline: none;
+    transition: all 0.3s ease-in-out;
+    &:focus {
+      border-color: #333;
+    }
+    font-family: var(--mainFont);
+    font-weight: 900;
+  }
+}
