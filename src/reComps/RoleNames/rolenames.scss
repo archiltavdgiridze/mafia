@@ -1,0 +1,50 @@
+.role_container {
+  max-height: 60vh;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  // display: flex;
+  // flex-direction: column;
+  // justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+
+  .role_buttons {
+    // width: 50%;
+    display: flex;
+    flex-direction: row;
+
+    gap: 1rem;
+
+    button {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      gap: 1rem;
+      background-color: var(--black);
+      border: none;
+      padding: 4px 10px 0;
+
+      p {
+        color: var(--white);
+        font-family: var(--mainFont);
+        font-size: 2rem;
+        padding: 6px 0 0;
+      }
+    }
+
+    button:active {
+      background-color: var(--black);
+      border-top-left-radius: 10px;
+      border-top-right-radius: 20px;
+      border-bottom-left-radius: 20px;
+      border-bottom-right-radius: 10px;
+    }
+
+    input {
+      width: 30px;
+      border-radius: 20px;
+    }
+  }
+}

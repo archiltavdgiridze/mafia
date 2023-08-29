@@ -1,4 +1,4 @@
-.IPN_container {
+.IR_container {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -10,22 +10,9 @@
     font-size: 2rem;
   }
 
-  .title,
   .input_text {
-    color: #ccc;
-    font-family: var(--mainFont);
-  }
-
-  .input_text {
+    color: var(--white);
     background-color: var(--black);
     padding: 4px 0 0;
-  }
-
-  .inputs {
-    max-height: 60vh;
-    overflow-y: auto;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
   }
 }

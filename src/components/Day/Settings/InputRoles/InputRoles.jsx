@@ -1,31 +1,25 @@
 import React from "react";
-import InputName from "../../../../reComps/InputName/InputName";
-import "./inputplayernames.scss";
 import { Link } from "react-router-dom";
-import stripLeft from "../../../../assets/img/strip-left.svg";
+import "./inputroles.scss";
+import RoleNames from "../../../../reComps/RoleNames/RoleNames";
 
-const InputPlayerNames = () => {
-  const numOfPlayers = 12;
-
-  const inputComponents = Array.from({ length: numOfPlayers }, (_, index) => (
-    <InputName key={index} numOfPlayers={index + 1} />
-  ));
-
+const InputRoles = () => {
   return (
-    <div className="IPN_container">
+    <div className="IR_container">
       <div className="title">
         <h1>
           <Link to={"/"}>მაფია</Link>
         </h1>
       </div>
       <div className="input_text">
-        <h2>შეიყვანეთ მოთამაშეების სახელები</h2>
+        <h2>აირჩიეთ როლები</h2>
       </div>
-      <div className="inputs">{inputComponents}</div>
-      {/* circles of steps */}
+      <div className="role_names">
+        <RoleNames />
+      </div>
       <div className="prev_next_btn">
         <div className="prev_btn">
-          <Link to={"/"}>
+          <Link to={"/input_player_names"}>
             <button>
               <p>უკან</p>
             </button>
@@ -43,4 +37,4 @@ const InputPlayerNames = () => {
   );
 };
 
-export default InputPlayerNames;
+export default InputRoles;

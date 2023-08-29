@@ -6,6 +6,7 @@
 :root {
   --mainFont: "Constitution", sans-serif;
   --white: #E3E3E3;
+  --black: #151515;
 }
 
 body {
@@ -28,4 +29,43 @@ p {
 a {
   color: var(--white);
   text-decoration: none;
+}
+
+.prev_next_btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+
+}
+
+button {
+  font-family: var(--mainFont);
+  font-size: 36px;
+  font-weight: 900;
+  padding: 0.5rem 2rem 0;
+  color: var(--white);
+  background-color: var(--black);
+  border: none;
+  position: relative;
+
+}
+
+button:hover {
+  transition: 0.3s ease-in-out;
+  background-color: black;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 10px;
+}
+
+button:active {
+  transition: 0.3s ease-in-out;
+  background-color: rgb(147, 147, 147);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 10px;
 }
