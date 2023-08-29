@@ -1,0 +1,35 @@
+.slider_container {
+  width: 100%;
+
+  input,
+  .value_labels {
+    width: 80%;
+  }
+
+  .value_labels {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+  }
+}
+
+// .range_slider {
+//   width: 100%;
+//   appearance: none;
+//   height: 8px;
+//   background: var(--track-color); /* Use the defined variable for track color */
+//   border-radius: 3px;
+//   outline: none;
+//   transition: background 0.2s;
+// }
+
+// .range_slider::-webkit-slider-thumb {
+//   appearance: none;
+//   width: 16px;
+//   height: 16px;
+//   background: var(--red); /* Use the defined variable for thumb color */
+//   border-radius: 50%;
+//   cursor: pointer;
+// }
+
+/* Add more vendor-specific styles as needed */

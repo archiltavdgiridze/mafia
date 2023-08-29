@@ -7,6 +7,7 @@
   --mainFont: "Constitution", sans-serif;
   --white: #E3E3E3;
   --black: #151515;
+  --red: #ba0013;
 }
 
 body {
@@ -68,4 +69,15 @@ button:active {
   border-top-right-radius: 20px;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 10px;
+}
+
+.title {
+  color: var(--white);
+  font-size: 2rem;
+}
+
+.input_text {
+  color: var(--white);
+  background-color: var(--black);
+  padding: 4px 0 0;
 }

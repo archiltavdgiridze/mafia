@@ -26,7 +26,7 @@ const InputRoles = () => {
           </Link>
         </div>
         <div className="next_btn">
-          <Link to={"/input_player_roles"}>
+          <Link to={"/set_limits"}>
             <button>
               <p>შემდეგი</p>
             </button>
