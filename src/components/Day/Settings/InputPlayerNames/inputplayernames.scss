@@ -29,3 +29,12 @@
     gap: 1rem;
   }
 }
+@media screen and (max-width:620px) {
+  .inputs {
+    grid-template-columns: repeat(1, 1fr) !important;
+  }
+  .prev_next_btn{
+    display: flex;
+    flex-direction: column;
+  }
+}
