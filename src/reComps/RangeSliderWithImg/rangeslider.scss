@@ -21,17 +21,17 @@ input[type="range"] {
   background-color: black;
 }
 
-/* Target Chrome, Edge, and Safari */
-input[type="range"]::-webkit-slider-thumb {
-  /* Change the thumb color to red */
-  // background-color: red;
-}
+// /* Target Chrome, Edge, and Safari */
+// input[type="range"]::-webkit-slider-thumb {
+//   /* Change the thumb color to red */
+//   // background-color: red;
+// }
 
-/* Target Firefox */
-input[type="range"]::-moz-range-thumb {
-  /* Change the thumb color to red */
-  // background-color: red;
-}
+// /* Target Firefox */
+// input[type="range"]::-moz-range-thumb {
+//   /* Change the thumb color to red */
+//   // background-color: red;
+// }
 
 /* Target Internet Explorer */
 input[type="range"]::-ms-thumb {
@@ -84,5 +84,5 @@ input[type="range"]::-moz-range-progress {
 /* Add more vendor-specific styles as needed */
 
 @media screen and (max-width :530px) {
-    
+
 }
