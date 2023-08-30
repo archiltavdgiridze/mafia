@@ -46,9 +46,6 @@ const RoleShow = () => {
           <button>უკან</button>
         </Link>
       </div>
-      {/* <div className="input_text">
-        <h2>მოთამაშეები ეცნობიან როლებს</h2>
-      </div> */}
       <div className="msg_4_host">
         <h3>ღამდება, ყველა იძინებს, მოთამაშეები ეცნობიან როლებს.</h3>
       </div>
@@ -79,7 +76,7 @@ const RoleShow = () => {
         </div>
       </div>
       <div className="morning_btn">
-        <Link to={"/day"}>
+        <Link to={"/talk_time"}>
           <button
             className={`morning_button  ${
               morningButton ? "enabled" : "disabled"
