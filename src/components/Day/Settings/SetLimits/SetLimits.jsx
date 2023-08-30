@@ -35,7 +35,7 @@ const SetLimits = () => {
           </Link>
         </div>
         <div className="next_btn">
-          <Link to={"/set_limits"}>
+          <Link to={"/role_show"}>
             <button>
               <p>შემდეგი</p>
             </button>

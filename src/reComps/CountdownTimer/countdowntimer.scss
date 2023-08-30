@@ -1,0 +1,42 @@
+.CT_container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+  align-items: center;
+
+  .CT_container .ReactCountdownCircleTimer__text {
+    color: #fff !important;
+  }
+
+  .timer_buttons {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    background-color: transparent;
+    color: var(--black);
+
+   
+    .play_btn,
+    .pause_btn {
+      font-size: 3rem;
+    }
+
+    .play_btn:hover,
+    .pause_btn:hover {
+      cursor: pointer;
+      color: var(--white);
+    }
+    
+    .play_btn:active,
+    .pause_btn:active {
+      cursor: pointer;
+      color: var(--black);
+    }
+
+
+
+
+  }
+}

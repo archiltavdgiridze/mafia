@@ -50,12 +50,10 @@ button {
   background-color: var(--black);
   border: none;
   position: relative;
-
 }
 
 button:hover {
-  transition: 0.3s ease-in-out;
-  background-color: black;
+  transition: 0.3s;
   border-top-left-radius: 10px;
   border-top-right-radius: 20px;
   border-bottom-left-radius: 20px;
@@ -63,8 +61,6 @@ button:hover {
 }
 
 button:active {
-  transition: 0.3s ease-in-out;
-  background-color: rgb(147, 147, 147);
   border-top-left-radius: 10px;
   border-top-right-radius: 20px;
   border-bottom-left-radius: 20px;
