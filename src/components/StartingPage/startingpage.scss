@@ -1,6 +1,6 @@
-:root {
+// :root {
  
-}
+// }
 
 .App {
   margin: 10px auto;
@@ -95,6 +95,48 @@ body {
 
       button:focus {
         outline: none;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) {
+    .mafia_dude{
+      right: auto !important;
+    }
+}
+@media screen and (max-width: 750px) {
+  .mafia_dude{
+    right: -20px !important;
+  }
+  .start_container{
+    flex-direction: column;
+    align-self: flex-start;
+    .start_page_btns{
+      width: 100%;
+      .start, .about_us{
+        width: 80%;
+        button{
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 350px) {
+  .start_container{
+    overflow: visible !important;
+  }
+  .title{
+    h1{
+      font-size: 1.8em;
+    }
+  }
+  .start_page_btns{
+    margin-right: 80px !important;
+    button{
+      p{
+        font-size: 1.3rem !important;
       }
     }
   }

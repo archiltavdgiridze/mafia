@@ -12,3 +12,18 @@
     padding: 4px 0 0;
   }
 }
+
+@media screen and (max-width: 790px) {
+  .role_container{
+    grid-template-columns: repeat(1, 1fr) !important;
+  }
+}
+@media screen and (max-width: 460px) {
+  .role_buttons{
+    button{
+      p{
+        font-size: 1.2rem !important;
+      }
+    }
+  }
+}

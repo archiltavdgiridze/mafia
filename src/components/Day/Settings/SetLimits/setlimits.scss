@@ -18,3 +18,9 @@
     }
   }
 }
+@media screen and (max-width: 530px) {
+    .limits{
+      max-height: fit-content !important;
+      overflow-y: unset !important;
+    }
+}
