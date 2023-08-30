@@ -1,0 +1,31 @@
+.RS_container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+  text-align: center;
+
+  .back_to_settings {
+    display: flex;
+    position: absolute;
+    top: 1rem;
+  }
+
+  .msg_4_host {
+    background: rgba(0, 0, 0, 0.32);
+    padding: 4px 0 0;
+
+    h3 {
+      color: var(--white);
+    }
+  }
+
+  .role_card {
+    width: 250px;
+  }
+
+  .swiper-3d .swiper-slide-shadow {
+    background: transparent;
+  }
+}

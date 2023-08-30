@@ -10,8 +10,57 @@
     display: flex;
     justify-content: space-between;
     margin: 0 auto;
+    color: var(--white);
+    font-size: 1.5rem;
   }
 }
+
+/* Target all browsers */
+input[type="range"] {
+  /* Change the background color to black */
+  background-color: black;
+}
+
+/* Target Chrome, Edge, and Safari */
+input[type="range"]::-webkit-slider-thumb {
+  /* Change the thumb color to red */
+  // background-color: red;
+}
+
+/* Target Firefox */
+input[type="range"]::-moz-range-thumb {
+  /* Change the thumb color to red */
+  // background-color: red;
+}
+
+/* Target Internet Explorer */
+input[type="range"]::-ms-thumb {
+  /* Change the thumb color to red */
+  background-color: red;
+}
+
+/* Target Chrome, Edge, and Safari */
+input[type="range"]::-webkit-slider-runnable-track {
+  /* Change the track color to red */
+  background-color: red;
+}
+
+/* Target Firefox */
+input[type="range"]::-moz-range-track {
+  /* Change the track color to red */
+  background: red;
+}
+
+/* Target Internet Explorer */
+input[type="range"]::-ms-track {
+  /* Change the track color to red */
+  background-color: red;
+}
+
+input[type="range"]::-moz-range-progress {
+  height: 4px !important;
+}
+
 
 // .range_slider {
 //   width: 100%;
