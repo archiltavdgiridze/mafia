@@ -8,8 +8,6 @@
 
   .back_to_settings {
     display: flex;
-    position: absolute;
-    top: 1rem;
   }
 
   .msg_4_host {
@@ -52,8 +50,6 @@
   }
 
   .morning_btn {
-    display: flex;
-    justify-content: flex-end;
 
     .morning_button {
       &:disabled {
@@ -67,6 +63,50 @@
         color: white;
         cursor: pointer;
       }
+    }
+  }
+}
+
+.nav_btns {
+  display: flex;
+  justify-content: space-between;
+
+  .back_to_settings {
+    width: 45% !important;
+
+    a {
+      width: 100%;
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+
+  .morning_btn {
+    width: 45% !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    a {
+      width: 100%;
+      height: 100%;
+      button {
+        width: 100%;
+        padding: 5px 0 !important;
+      }
+    }
+  }
+}
+@media screen and (max-width: 768px) {
+  .nav_btns{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    .back_to_settings, .morning_btn{
+      width: 90% !important;
     }
   }
 }
