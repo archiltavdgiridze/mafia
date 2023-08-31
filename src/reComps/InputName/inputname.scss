@@ -37,21 +37,27 @@
 
 // ~  TABLET PORTRAIT
 @media (min-width: 501px) and (max-width: 950px) and (min-height: 951px) and (max-height: 1200px) {
-  input {
-    width: 80% !important;
+  .input_container {
+    input {
+      width: 80% !important;
+    }
   }
 }
 
 // ~ MOBILE LANDSCAPE
 @media (min-width: 450px) and (max-width: 950px) and (min-height: 300px) and (max-height: 500px) {
-  input {
-    width: 80% !important;
+  .input_container {
+    input {
+      width: 80% !important;
+    }
   }
 }
 
 // ~ MOBILE PORTRAIT (from 300-550px to 500-950px)
-@media (min-width: 300px) and (max-width: 500px) and (min-height: 550px) and (max-height: 950px) {
-  input {
-    width: 90% !important;
+@media (min-width: 300px) and (max-width: 500px) and (max-height: 950px) {
+  .input_container {
+    input {
+      width: 90% !important;
+    }
   }
 }

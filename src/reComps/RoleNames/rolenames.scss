@@ -7,7 +7,8 @@
   // flex-direction: column;
   // justify-content: flex-start;
   align-items: center;
-  gap: 1rem;
+  gap: 1rem 3rem;
+  // column-gap: 3rem;
   text-align: center;
 
   .role_buttons {
@@ -21,7 +22,7 @@
       width: 100%;
       display: flex;
       flex-direction: row;
-      gap: 1rem;
+      // gap: 1rem;
       background-color: var(--black);
       border: none;
       padding: 4px 10px 0;
@@ -43,8 +44,29 @@
     }
 
     input {
-      width: 30px;
+      width: 10%;
       border-radius: 20px;
     }
+  }
+}
+
+// ~ MOBILE PORTRAIT
+@media (min-width: 300px) and (max-width: 500px) and (max-height: 950px) {
+  .role_container {
+    max-height: 67dvh;
+
+    .role_buttons {
+      input {
+        width: 30%;
+      }
+    }
+  }
+}
+
+// ~ MOBILE LANDSCAPE
+@media (min-width: 450px) and (max-width: 950px) and (min-height: 300px) and (max-height: 500px) {
+  .role_container {
+    max-height: 40dvh;
+    gap: 0.5rem;
   }
 }

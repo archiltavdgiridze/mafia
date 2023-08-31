@@ -55,8 +55,8 @@
   }
 }
 
-// ~ MOBILE PORTRAIT (from 300-550px to 500-950px)
-@media (min-width: 300px) and (max-width: 500px) and (min-height: 550px) and (max-height: 950px) {
+// ~ MOBILE PORTRAIT
+@media (min-width: 300px) and (max-width: 500px)  and (max-height: 950px) {
   .inputs {
     max-height: 65dvh !important;
     grid-template-columns: repeat(1, 1fr) !important;

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "./talktime.scss";
 import { Link } from "react-router-dom";
 import CountdownTimer from "../../../reComps/CountdownTimer/CountdownTimer";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 const TalkTime = (isPlaying, toggleTimer) => {
   const [count, setCount] = useState(0);
@@ -54,7 +56,9 @@ const TalkTime = (isPlaying, toggleTimer) => {
       </div>
       <div className="back_to_settings">
         <Link to={"/role_show"}>
-          <button>უკან</button>
+          <button>
+            <FontAwesomeIcon icon={faArrowLeft} />
+          </button>
         </Link>
       </div>
       <div className="speaker_name">
@@ -66,7 +70,7 @@ const TalkTime = (isPlaying, toggleTimer) => {
           წინა
         </button>
         <button className="next_player" onClick={handleNextPlayer}>
-          შემდეგი
+          რიგშია მოთ.{[currentPlayerIndex + 2]}
         </button>
       </div>
       <div className="next_component">
