@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./startingpage.scss";
-import mafiaDude from "../../assets/img/mafia_dude.svg";
+import mafiaDude from "../../assets/img/mafia_dude.png";
 import bullet from "../../assets/img/bullet.svg";
 import gear from "../../assets/img/gear.svg";
 import gun from "../../assets/img/gun.svg";

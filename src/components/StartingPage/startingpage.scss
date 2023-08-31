@@ -1,19 +1,11 @@
-// :root {
- 
-// }
-
-.App {
-  margin: 10px auto;
-}
-
 body {
   background-color: var(--red);
 }
 
 .start_container {
   width: 100%;
-  height: 90vh;
-  max-height: 95vh;
+  height: 100dvh;
+  max-height: 100dvh;
   overflow: hidden;
   display: flex;
   flex-direction: row;
@@ -21,15 +13,22 @@ body {
   align-items: center;
   align-content: center;
 
-  .title,
-  .start_btn {
-    margin: auto;
+  .title {
+    margin: auto auto auto 0;
     color: #e3e3e3;
   }
 
+  .title {
+    h1 {
+      font-size: 7dvw;
+    }
+  }
+
   .mafia_dude {
-    width: 280px;
-    height: 300px;
+    // width: 200px;
+    // height: 264px;
+    width: 13dvw;
+    height: 38dvh;
     position: absolute;
     bottom: 10px;
     right: 0;
@@ -47,9 +46,11 @@ body {
 
     .start,
     .about_us {
-     
       button {
-        width: 25vw;
+        width: 30dvw;
+        min-width: 30vw;
+        height: 10dvh;
+        min-height: 10vh;
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -63,21 +64,22 @@ body {
 
         .start_icons {
           width: 20%;
-          height: 50px;
+          height: 8dvh;
           display: flex;
           align-items: center;
           justify-content: center;
 
           img {
+            height: 100%;
             mix-blend-mode: difference;
           }
         }
 
         p {
-          width: 60%;
+          min-width: 60%;
           padding: 8px 0 0;
           text-align: left;
-          font-size: 1.5rem;
+          font-size: 2dvw;
           font-family: var(--mainFont);
         }
       }
@@ -100,43 +102,167 @@ body {
   }
 }
 
-@media screen and (max-width: 1200px) {
-    .mafia_dude{
-      right: auto !important;
-    }
-}
-@media screen and (max-width: 750px) {
-  .mafia_dude{
-    right: -20px !important;
-  }
-  .start_container{
+// ~ TABLET LANDSCAPE
+@media (min-width: 951px) and (max-width: 1200px) and (min-height: 501px) and (max-height: 950px) {
+  .start_container {
+    // background-color: chartreuse;
+    display: flex;
     flex-direction: column;
-    align-self: flex-start;
-    .start_page_btns{
-      width: 100%;
-      .start, .about_us{
-        width: 80%;
-        button{
-          width: 100%;
+
+    .title {
+      margin: 0 0 8rem;
+      font-size: 3rem;
+    }
+
+    .mafia_dude {
+      right: -20px !important;
+    }
+
+    .start_page_btns {
+      .start,
+      .about_us {
+        button {
+          width: 40dvw;
+          min-width: 40vw;
+          height: 12dvh;
+          min-height: 10vh;
+
+          p {
+            font-size: 2.5dvw !important;
+          }
         }
       }
     }
   }
 }
-@media screen and (max-width: 350px) {
-  .start_container{
-    overflow: visible !important;
-  }
-  .title{
-    h1{
-      font-size: 1.8em;
+
+// ~  TABLET PORTRAIT
+@media (min-width: 501px) and (max-width: 950px) and (min-height: 951px) and (max-height: 1200px) {
+  .start_container {
+    // background-color: aquamarine;
+    display: flex;
+    flex-direction: column !important;
+
+    .title {
+      margin: 0 0 8rem;
+    }
+
+    .start_page_btns {
+      .start,
+      .about_us {
+        button {
+          width: 55vw;
+          min-width: 55vw;
+          height: 8vh;
+          min-height: 8vh;
+
+          p {
+            font-size: 2rem !important;
+          }
+        }
+      }
     }
   }
-  .start_page_btns{
-    margin-right: 80px !important;
-    button{
-      p{
-        font-size: 1.3rem !important;
+}
+
+// ~ MOBILE LANDSCAPE
+@media (min-width: 450px) and (max-width: 950px) and (min-height: 300px) and (max-height: 500px) {
+  .start_container {
+    // background-color: rgb(103, 103, 0);
+
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    .title {
+      margin: 0;
+
+      h1 {
+        font-size: 3.5rem !important;
+      }
+    }
+
+    .mafia_dude {
+      width: 160px;
+      height: 210px;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .start_page_btns {
+      .start,
+      .about_us {
+        button {
+          width: 45vw;
+          min-width: 45vw;
+          height: 15vh;
+          min-height: 15vh;
+
+          p {
+            min-width: 70%;
+            font-size: 2rem !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+// ~ MOBILE PORTRAIT (from 300-550px to 500-950px)
+@media (min-width: 300px) and (max-width: 500px) and (min-height: 550px) and (max-height: 950px) {
+  .start_container {
+    // background-color: rgb(0, 13, 255) !important;
+    display: flex;
+    flex-direction: column;
+
+    .title {
+      margin: 0 0 5rem;
+      h1 {
+        font-size: 4rem;
+      }
+    }
+
+    .mafia_dude {
+      width: 160px;
+      height: 210px;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .start_page_btns {
+      .start,
+      .about_us {
+        button {
+          width: 60vw;
+          min-width: 60vw;
+          height: 12vh;
+          min-height: 12vh;
+
+          .start_icons {
+            width: 30%;
+
+            img {
+              width: 100%;
+            }
+          }
+
+          p {
+            min-width: 70%;
+            font-size: 1.8rem !important;
+          }
+        }
       }
     }
   }

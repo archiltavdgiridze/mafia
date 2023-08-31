@@ -42,7 +42,8 @@ const CountdownTimer = () => {
         {isPlaying ? (
           <FontAwesomeIcon
             className="pause_btn"
-            icon={faPause}
+            icon={faPause} 
+            flip="horizontal"
             onClick={toggleTimer}
           />
         ) : (
