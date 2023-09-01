@@ -53,10 +53,11 @@
   }
 }
 
-// ~ MOBILE PORTRAIT (from 300-550px to 500-950px)
+// ~ MOBILE PORTRAIT 
 @media (min-width: 300px) and (max-width: 500px) and (max-height: 950px) {
   .input_container {
     input {
+      margin: 0;
       width: 90% !important;
     }
   }

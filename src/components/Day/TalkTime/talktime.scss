@@ -1,21 +1,15 @@
 .TT_container {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  text-align: center;
-  margin-top: 20px;
-
+  padding: var(--container-padding);
   .back_to_settings {
     display: flex;
     position: absolute;
-    top: 1rem;
+    top: var(--margin-top);
   }
 
   .speaker_name {
     color: var(--white);
     background: rgba(0, 0, 0, 0.32);
-    padding: 4px 0 0;
+    padding: 8px 0 0;
     font-size: 1.5rem;
     font-weight: 900;
   }
@@ -30,7 +24,7 @@
     .prev_player,
     .next_player {
       font-size: 2rem;
-      width: 210px;
+      width: 270px;
     }
 
     .prev_player:hover,
@@ -63,7 +57,7 @@
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
-    margin-top: 5rem;
+    margin: 5rem 0 2rem;
   }
 }
 
@@ -74,7 +68,7 @@
       button {
         display: flex;
         align-items: center;
-        top: 1rem;
+        top: 0.4rem;
         left: -1.5rem;
 
         padding: 0.5rem 1rem;
@@ -88,6 +82,33 @@
     .player_select {
       button {
         font-size: 1.5rem !important;
+      }
+    }
+  }
+}
+
+// ~ MOBILE LANDSCAPE
+@media (min-width: 450px) and (max-width: 950px) and (min-height: 300px) and (max-height: 500px) {
+  .TT_container {
+    height: 100% !important;
+  }
+}
+
+// ~ TABLET LANDSCAPE
+@media (min-width: 951px) and (max-width: 1200px) and (min-height: 501px) and (max-height: 950px) {
+  .TT_container {
+    .title {
+      margin-top: var(--margin-top);
+    }
+
+    .next_component {
+      margin-top: 1rem;
+    }
+
+    .player_select {
+      .prev_player,
+      .next_player {
+        font-size: 1.5rem;
       }
     }
   }

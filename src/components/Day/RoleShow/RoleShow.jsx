@@ -37,7 +37,7 @@ const RoleShow = () => {
   };
 
   return (
-    <div className="RS_container">
+    <div className="RS_container main_content_wrapper">
       <div className="title">
         <h1>მაფია</h1>
       </div>

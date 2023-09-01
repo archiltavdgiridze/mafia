@@ -5,11 +5,9 @@ import RoleNames from "../../../../reComps/RoleNames/RoleNames";
 
 const InputRoles = () => {
   return (
-    <div className="IR_container">
+    <div className="IR_container main_content_wrapper">
       <div className="title">
-        <h1>
-          <Link to={"/"}>მაფია</Link>
-        </h1>
+        <h1>მაფია</h1>
       </div>
       <div className="input_text">
         <h2>აირჩიეთ როლები</h2>

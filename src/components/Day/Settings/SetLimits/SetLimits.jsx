@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./setlimits.scss";
-import RangeSlider from "../../../../reComps/RangeSliderWithImg/RangeSlider";
+import RangeSlider from "../../../../reComps/RangeSlider/RangeSlider";
 
 const SetLimits = () => {
   return (
-    <div className="SL_container">
+    <div className="SL_container main_content_wrapper">
       <div className="title">
         <h1>მაფია</h1>
       </div>

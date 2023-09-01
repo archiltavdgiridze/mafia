@@ -12,11 +12,9 @@ const InputPlayerNames = () => {
   ));
 
   return (
-    <div className="IPN_container">
+    <div className="IPN_container  main_content_wrapper">
       <div className="title">
-        <h1>
-          <Link to={"/"}>მაფია</Link>
-        </h1>
+        <h1>მაფია</h1>
       </div>
       <div className="input_text">
         <h2>შეიყვანეთ მოთამაშეების სახელები</h2>

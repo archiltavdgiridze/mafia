@@ -1,0 +1,76 @@
+.RQ_container {
+  color: var(--white);
+
+  .back_to_settings {
+    display: flex;
+    position: absolute;
+    top: var(--margin-top);
+
+    button {
+      color: var(--red);
+      background-color: rgb(46, 46, 46);
+    }
+  }
+
+  .title {
+    margin-top: var(--margin-top);
+    h1 {
+      color: var(--red);
+    }
+  }
+
+  .role_queue {
+    background-color: #ff000050;
+    font-size: 1.5rem;
+
+    h3 {
+      padding-top: 8px;
+    }
+  }
+
+  .role_list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    .role {
+      padding-top: 8px;
+      background-color: #ff000025;
+      font-size: 2rem;
+    }
+  }
+
+  .start_night_btn {
+    margin-top: var(--margin-top);
+    margin-bottom: 2rem;
+    background-color: var(--red);
+    color: var(--white);
+    font-size: 2rem;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+  }
+}
+
+// ~ MOBILE PORTRAIT
+@media (min-width: 300px) and (max-width: 500px) and (max-height: 950px) {
+  .RQ_container {
+    .back_to_settings {
+      button {
+        display: flex;
+        align-items: center;
+        top: 0.4rem;
+        left: -1.5rem;
+        padding: 0.5rem 1rem;
+      }
+    }
+  }
+}
+
+// ~ MOBILE LANDSCAPE
+@media (min-width: 450px) and (max-width: 950px) and (min-height: 300px) and (max-height: 500px) {
+  .RQ_container {
+    height: 100% !important;
+  }
+}

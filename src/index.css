@@ -8,6 +8,11 @@
   --white: #fafafa;
   --black: #151515;
   --red: #ba0013;
+  /* this padding is for components top part, to move elements down by 20px */
+  --margin-top: 20px;
+  /* title h1 size */
+  --title-size: 4rem;
+  --title-size-mobile: 2.5rem;
 }
 
 body {
@@ -30,6 +35,26 @@ p {
 a {
   color: var(--white);
   text-decoration: none;
+}
+
+.main_content_wrapper {
+  display: flex !important;
+  justify-content: start !important;
+  width: 70% !important;
+  height: 100dvh !important;
+  margin: 0 auto !important;
+  flex-direction: column;
+  gap: 1rem;
+  text-align: center;
+
+}
+
+.day_theme {
+  background-color: var(--red);
+}
+
+.night_theme {
+  background-color: var(--black);
 }
 
 .prev_next_btn {
@@ -68,8 +93,12 @@ button:active {
 }
 
 .title {
+  margin-top: var(--margin-top);
+}
+
+.title h1 {
   color: var(--white);
-  font-size: 2rem;
+  font-size: var(--title-size);
 }
 
 .input_text {
@@ -85,10 +114,10 @@ button:active {
   }
 }
 
-/* ~ MOBILE PORTRAIT (from 300-550px to 500-950px) */
-@media (min-width: 300px) and (max-width: 500px)  and (max-height: 950px) {
+/* ~ MOBILE PORTRAIT */
+@media (min-width: 300px) and (max-width: 500px) and (max-height: 950px) {
   .prev_next_btn {
-    margin-top: 0 ;
+    margin-top: 0;
     gap: 0.5rem;
   }
 

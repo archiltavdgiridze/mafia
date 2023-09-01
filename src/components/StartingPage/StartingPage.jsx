@@ -8,7 +8,7 @@ import gun from "../../assets/img/gun.svg";
 
 const StartingPage = () => {
   return (
-    <div className="start_container">
+    <div className="start_container main_content_wrapper">
       <div className="title">
         <h1>მაფია</h1>
       </div>

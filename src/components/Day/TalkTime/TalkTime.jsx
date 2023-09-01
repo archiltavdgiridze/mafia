@@ -50,7 +50,7 @@ const TalkTime = (isPlaying, toggleTimer) => {
   };
 
   return (
-    <div className="TT_container">
+    <div className="TT_container main_content_wrapper">
       <div className="title">
         <h1>მაფია</h1>
       </div>
@@ -74,8 +74,8 @@ const TalkTime = (isPlaying, toggleTimer) => {
         </button>
       </div>
       <div className="next_component">
-        <Link to={""}>
-          <button>შემდეგი</button>
+        <Link to={"/role_queue"}>
+          <button>დაღამდა</button>
         </Link>
       </div>
     </div>

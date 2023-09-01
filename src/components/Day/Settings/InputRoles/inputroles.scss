@@ -1,12 +1,5 @@
 .IR_container {
-  width: 100%;
   height: fit-content;
-  display: flex;
-  flex-direction: column;
-  // justify-content: center;
-  gap: 1rem;
-  text-align: center;
-  margin-top: 20px;
 
   .input_text {
     color: var(--white);
@@ -27,7 +20,7 @@
     padding-bottom: 2rem;
     .title {
       h1 {
-        font-size: 3rem;
+        font-size: var(--title-size-mobile);
       }
     }
     .role_buttons {
@@ -47,6 +40,15 @@
       p {
         font-size: 1.5rem !important;
       }
+    }
+  }
+}
+
+// ~ TABLET LANDSCAPE
+@media (min-width: 951px) and (max-width: 1200px) and (min-height: 501px) and (max-height: 950px) {
+  .IR_container {
+    .role_container {
+      height: 50dvh;
     }
   }
 }

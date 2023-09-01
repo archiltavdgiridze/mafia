@@ -1,14 +1,8 @@
-.App {
-  display: flex;
-  justify-content: center;
-  width: 70%;
-  height: 100dvh;
-  margin: 0 auto;
-}
+.App {}
 
 /* ~ MOBILE PORTRAIT (from 300-550px to 500-950px) */
-@media (min-width: 300px) and (max-width: 500px)  and (max-height: 950px) {
-  .App {
-    width: 80%;
+@media (min-width: 300px) and (max-width: 500px) and (max-height: 950px) {
+  .main_content_wrapper {
+    width: 80% !important;
   }
 }
