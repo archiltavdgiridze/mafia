@@ -30,9 +30,9 @@ const InputPlayerNames = () => {
       alert("Please fill out all required fields.");
     }
   };
-  const onSubmit = (e) =>{
+  const onSubmit = (e) => {
     e.preventDefault();
-  }
+  };
   return (
     <div className="IPN_container  main_content_wrapper">
       <div className="title">
@@ -42,32 +42,26 @@ const InputPlayerNames = () => {
         <h2>შეიყვანეთ მოთამაშეების სახელები</h2>
       </div>
       <div className="inputs">
-        <form ref={formOfInps} onSubmit={onSubmit} >
+        <form ref={formOfInps} onSubmit={onSubmit}>
           {inputComponents}
         </form>
       </div>
       {/* circles of steps */}
       <div className="prev_next_btn">
-        <div className="prev_btn">
+        <button>
           <Link to={"/"}>
-            <button>
-              <p>უკან</p>
-            </button>
+            <p>უკან</p>
           </Link>
-        </div>
-        <button
-          className="submit_btn"
-          onClick={handleSubmit}
-        >
+        </button>
+        <button className="submit_btn" onClick={handleSubmit}>
           შენახვა
         </button>
-        <div className="next_btn">
+        <button>
           <Link to={"/input_player_roles"}>
-            <button> {/* RAGACEBS VCHALICHOB */}
-              <p>შემდეგი</p>
-            </button>
+            {/* RAGACEBS VCHALICHOB */}
+            <p>შემდეგი</p>
           </Link>
-        </div>
+        </button>
       </div>
     </div>
   );
