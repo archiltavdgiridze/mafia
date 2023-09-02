@@ -5,7 +5,10 @@ const InputName = ({ numOfPlayers }) => {
   return (
     <div className="input_container">
       <p>მოთამაშე {numOfPlayers}</p>
-      <input type="text" placeholder="ჩაწერე სახელი" />
+      {numOfPlayers <= 6 ?
+        <input required type="text" placeholder="ჩაწერე სახელი (აუც.)" />
+        :
+        <input type="text" placeholder="ჩაწერე სახელი" />}
     </div>
   );
 };
