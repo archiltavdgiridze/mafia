@@ -9,7 +9,7 @@ const SetLimits = () => {
       <div className="title">
         <h1>მაფია</h1>
       </div>
-      <div className="input_text">
+      <div className="msg_4_host">
         <h2>მონიშნე ლიმიტები</h2>
       </div>
       <div className="limits">

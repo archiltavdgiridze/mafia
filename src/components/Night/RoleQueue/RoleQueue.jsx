@@ -18,7 +18,7 @@ const RoleQueue = () => {
           </button>
         </Link>
       </div>
-      <div className="role_queue">
+      <div className="role_queue msg_4_host">
         <h3 className="queue_title">როლების რიგი ღამით</h3>
       </div>
       <div className="role_list">

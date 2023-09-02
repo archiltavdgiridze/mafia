@@ -1,5 +1,4 @@
 .TT_container {
-  padding: var(--container-padding);
   .back_to_settings {
     display: flex;
     position: absolute;
@@ -7,10 +6,7 @@
   }
 
   .speaker_name {
-    color: var(--white);
     background: rgba(0, 0, 0, 0.32);
-    padding: 8px 0 0;
-    font-size: 1.5rem;
     font-weight: 900;
   }
 
@@ -20,11 +16,12 @@
     gap: 2rem;
     background-color: transparent;
     color: var(--black);
+    margin: 1rem 0 2rem;
 
     .prev_player,
     .next_player {
-      font-size: 2rem;
-      width: 270px;
+      font-size: 1.7rem;
+      width: 300px;
     }
 
     .prev_player:hover,
@@ -57,7 +54,7 @@
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
-    margin: 5rem 0 2rem;
+    margin: 1rem 0 2rem;
   }
 }
 

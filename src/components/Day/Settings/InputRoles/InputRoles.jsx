@@ -9,12 +9,10 @@ const InputRoles = () => {
       <div className="title">
         <h1>მაფია</h1>
       </div>
-      <div className="input_text">
+      <div className="msg_4_host">
         <h2>აირჩიეთ როლები</h2>
       </div>
-      <div className="role_names">
-        <RoleNames />
-      </div>
+      <RoleNames />
       <div className="prev_next_btn">
         <div className="prev_btn">
           <Link to={"/input_player_names"}>

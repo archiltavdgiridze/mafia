@@ -61,16 +61,16 @@ const TalkTime = (isPlaying, toggleTimer) => {
           </button>
         </Link>
       </div>
-      <div className="speaker_name">
-        <h3>საუბრობს {players[currentPlayerIndex].name}</h3>
+      <div className="speaker_name msg_4_host">
+        <h2>საუბრობს {players[currentPlayerIndex].name}</h2>
       </div>
       <CountdownTimer />
       <div className="player_select">
         <button className="prev_player" onClick={handlePreviousPlayer}>
-          წინა
+          <p>წინა</p>
         </button>
         <button className="next_player" onClick={handleNextPlayer}>
-          რიგშია მოთ.{[currentPlayerIndex + 2]}
+          <p>რიგშია მოთ.{[currentPlayerIndex + 2]}</p>
         </button>
       </div>
       <div className="next_component">
