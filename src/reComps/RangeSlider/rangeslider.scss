@@ -15,74 +15,31 @@
   }
 }
 
-/* Target all browsers */
 input[type="range"] {
-  /* Change the background color to black */
   background-color: black;
 }
 
-// /* Target Chrome, Edge, and Safari */
-// input[type="range"]::-webkit-slider-thumb {
-//   /* Change the thumb color to red */
-//   // background-color: red;
-// }
-
-// /* Target Firefox */
-// input[type="range"]::-moz-range-thumb {
-//   /* Change the thumb color to red */
-//   // background-color: red;
-// }
 
 /* Target Internet Explorer */
 input[type="range"]::-ms-thumb {
-  /* Change the thumb color to red */
   background-color: red;
 }
 
 /* Target Chrome, Edge, and Safari */
 input[type="range"]::-webkit-slider-runnable-track {
-  /* Change the track color to red */
   background-color: red;
 }
 
 /* Target Firefox */
 input[type="range"]::-moz-range-track {
-  /* Change the track color to red */
   background: red;
 }
 
 /* Target Internet Explorer */
 input[type="range"]::-ms-track {
-  /* Change the track color to red */
   background-color: red;
 }
 
 input[type="range"]::-moz-range-progress {
   height: 4px !important;
-}
-
-
-// .range_slider {
-//   width: 100%;
-//   appearance: none;
-//   height: 8px;
-//   background: var(--track-color); /* Use the defined variable for track color */
-//   border-radius: 3px;
-//   outline: none;
-//   transition: background 0.2s;
-// }
-
-// .range_slider::-webkit-slider-thumb {
-//   appearance: none;
-//   width: 16px;
-//   height: 16px;
-//   background: var(--red); /* Use the defined variable for thumb color */
-//   border-radius: 50%;
-//   cursor: pointer;
-// }
-
-/* Add more vendor-specific styles as needed */
-
-@media screen and (max-width :530px) {
-
 }

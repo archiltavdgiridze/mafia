@@ -1,11 +1,4 @@
 .IR_container {
-  height: fit-content;
-
-  .input_text {
-    color: var(--white);
-    background-color: var(--black);
-    padding: 4px 0 0;
-  }
 }
 
 @media screen and (max-width: 790px) {

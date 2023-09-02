@@ -1,8 +1,1 @@
 .App {}
-
-/* ~ MOBILE PORTRAIT (from 300-550px to 500-950px) */
-@media (min-width: 300px) and (max-width: 500px) and (max-height: 950px) {
-  .main_content_wrapper {
-    width: 80% !important;
-  }
-}

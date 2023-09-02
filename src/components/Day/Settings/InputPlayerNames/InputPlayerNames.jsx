@@ -38,7 +38,7 @@ const InputPlayerNames = () => {
       <div className="title">
         <h1>მაფია</h1>
       </div>
-      <div className="input_text">
+      <div className="msg_4_host">
         <h2>შეიყვანეთ მოთამაშეების სახელები</h2>
       </div>
       <div className="inputs">
@@ -48,20 +48,19 @@ const InputPlayerNames = () => {
       </div>
       {/* circles of steps */}
       <div className="prev_next_btn">
-        <button>
-          <Link to={"/"}>
+        <Link to={"/"}>
+          <button>
             <p>უკან</p>
-          </Link>
-        </button>
+          </button>
+        </Link>
         <button className="submit_btn" onClick={handleSubmit}>
           შენახვა
         </button>
-        <button>
-          <Link to={"/input_player_roles"}>
-            {/* RAGACEBS VCHALICHOB */}
+        <Link to={"/input_player_roles"}>
+          <button>
             <p>შემდეგი</p>
-          </Link>
-        </button>
+          </button>
+        </Link>
       </div>
     </div>
   );

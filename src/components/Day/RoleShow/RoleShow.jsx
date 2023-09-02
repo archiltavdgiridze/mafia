@@ -41,10 +41,10 @@ const RoleShow = () => {
       <div className="title">
         <h1>მაფია</h1>
       </div>
+      <div className="msg_4_host">
+        <h2>ღამდება, ყველა იძინებს, მოთამაშეები ეცნობიან როლებს.</h2>
+      </div>
       <div className="card_wrapper">
-        <div className="msg_4_host">
-          <h3>ღამდება, ყველა იძინებს, მოთამაშეები ეცნობიან როლებს.</h3>
-        </div>
         <div className="role_card_container">
           <div className="role_card_title">
             <Swiper
@@ -72,7 +72,7 @@ const RoleShow = () => {
           </div>
         </div>
       </div>
-      <div className="nav_btns">
+      <div className="prev_next_btn">
         <div className="back_to_settings">
           <Link to={"/set_limits"}>
             <button>უკან</button>
