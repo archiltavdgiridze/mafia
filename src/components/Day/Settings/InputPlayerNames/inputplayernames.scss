@@ -14,11 +14,16 @@
 
   .inputs {
     max-height: 60dvh;
+
     overflow-y: auto;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
   }
+}
+
+form {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
 }
 
 // ~ TABLET LANDSCAPE
@@ -52,17 +57,15 @@
   .IPN_container {
     padding-top: var(--padding-top);
     gap: 0.6rem;
-    
+
     .title {
       h1 {
         font-size: var(--title-size-mobile);
       }
     }
-    
+
     .inputs {
-      max-height: 46dvh ;
+      max-height: 46dvh;
     }
   }
 }
-
-
