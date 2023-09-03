@@ -8,11 +8,18 @@
   --white: #fafafa;
   --black: #151515;
   --red: #ba0013;
+  --btn_gray: #2e2e2e;
   /* this padding is for components top part, to move elements down by 20px */
   --margin-top: 20px;
+  --back-btn-margin-top: 18px;
   /* title h1 size */
   --title-size: 4rem;
   --title-size-mobile: 2.5rem;
+
+  --night_msg_4_host_bg_color_70: #ff000070;
+  --night_msg_4_host_bg_color: #ff000050;
+  --night_msg_4_host_bg_color_30: #ff000030;
+
 }
 
 body {
@@ -47,7 +54,6 @@ a {
 
 .main_content_wrapper {
   display: flex !important;
-  /* justify-content: space-between !important; */
   justify-content: start !important;
   width: 80% !important;
   height: 100dvh !important;
@@ -59,18 +65,6 @@ a {
 
 .day_theme {
   background-color: var(--red);
-}
-
-.night_theme {
-  background-color: var(--black);
-}
-
-.prev_next_btn {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 1rem 0 2rem;
-  max-width: 100dvw;
 }
 
 button {
@@ -94,11 +88,15 @@ button:active {
   font-size: var(--title-size);
 }
 
-.msg_4_host {
+/* ~ NIGHT */
+.night_theme {
   color: var(--white);
   background-color: var(--black);
-  padding: 6px 0 0;
-  margin-bottom: 1rem;
+}
+
+.night_msg_4_host {
+  padding-top: 8px;
+  background-color: var(--night_msg_4_host_bg_color_70) !important;
 }
 
 /* ~ MOBILE PORTRAIT */

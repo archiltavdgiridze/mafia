@@ -47,7 +47,7 @@
 // ~ MOBILE PORTRAIT
 @media (min-width: 300px) and (max-width: 500px) and (max-height: 950px) {
   .role_container {
-    max-height: 69dvh;
+    // max-height: 69dvh;
 
     .role_buttons {
       input {
@@ -60,7 +60,7 @@
 // ~ MOBILE LANDSCAPE
 @media (min-width: 450px) and (max-width: 950px) and (min-height: 300px) and (max-height: 500px) {
   .role_container {
-    max-height: 40dvh;
+    // max-height: 40dvh;
     gap: 0.5rem;
   }
 }
@@ -68,7 +68,7 @@
 // ~  TABLET PORTRAIT
 @media (min-width: 501px) and (max-width: 950px) and (min-height: 951px) and (max-height: 1200px) {
   .role_container {
-    max-height: 70dvh;
+    // max-height: 70dvh;
   }
 }
 

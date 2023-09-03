@@ -3,6 +3,8 @@ import InputName from "../../../../reComps/InputName/InputName";
 import "./inputplayernames.scss";
 import { Link } from "react-router-dom";
 import stripLeft from "../../../../assets/img/strip-left.svg";
+import Msg4Host from "../../../../reComps/Msg4Host/Msg4Host";
+import PrevNextBtn from "../../../../reComps/PrevNextBtn/PrevNextBtn";
 
 const InputPlayerNames = () => {
   const numOfPlayers = 12;
@@ -38,30 +40,18 @@ const InputPlayerNames = () => {
       <div className="title">
         <h1>მაფია</h1>
       </div>
-      <div className="msg_4_host">
-        <h2>შეიყვანეთ მოთამაშეების სახელები</h2>
-      </div>
+      <Msg4Host message={"შეიყვანეთ მოთამაშეების სახელები"} />
       <div className="inputs">
         <form ref={formOfInps} onSubmit={onSubmit}>
           {inputComponents}
         </form>
       </div>
       {/* circles of steps */}
-      <div className="prev_next_btn">
-        <Link to={"/"}>
-          <button>
-            <p>უკან</p>
-          </button>
-        </Link>
-        <button className="submit_btn" onClick={handleSubmit}>
-          შენახვა
-        </button>
-        <Link to={"/input_player_roles"}>
-          <button>
-            <p>შემდეგი</p>
-          </button>
-        </Link>
-      </div>
+      <PrevNextBtn
+        linkBack={"/"}
+        linkForward={"/input_player_roles"}
+        addBtnClass={"day"}
+      />
     </div>
   );
 };

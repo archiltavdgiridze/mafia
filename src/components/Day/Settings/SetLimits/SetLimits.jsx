@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./setlimits.scss";
 import RangeSlider from "../../../../reComps/RangeSlider/RangeSlider";
+import Msg4Host from "../../../../reComps/Msg4Host/Msg4Host";
+import PrevNextBtn from './../../../../reComps/PrevNextBtn/PrevNextBtn';
 
 const SetLimits = () => {
   return (
@@ -9,9 +11,7 @@ const SetLimits = () => {
       <div className="title">
         <h1>მაფია</h1>
       </div>
-      <div className="msg_4_host">
-        <h2>მონიშნე ლიმიტები</h2>
-      </div>
+      <Msg4Host message={"მონიშნეთ ლიმიტები"} />
       <div className="limits">
         <div className="talk_time">
           <h2>სასაუბრო დრო</h2>
@@ -26,22 +26,11 @@ const SetLimits = () => {
           <RangeSlider min={2} max={4} step={1} />
         </div>
       </div>
-      <div className="prev_next_btn">
-        <div className="prev_btn">
-          <Link to={"/input_player_roles"}>
-            <button>
-              <p>უკან</p>
-            </button>
-          </Link>
-        </div>
-        <div className="next_btn">
-          <Link to={"/role_show"}>
-            <button>
-              <p>შემდეგი</p>
-            </button>
-          </Link>
-        </div>
-      </div>
+      <PrevNextBtn
+        linkBack={"/input_player_roles"}
+        linkForward={"/role_show"}
+        addBtnClass={"day"}
+      />
     </div>
   );
 };

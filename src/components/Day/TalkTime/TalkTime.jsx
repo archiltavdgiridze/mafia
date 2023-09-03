@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import "./talktime.scss";
 import { Link } from "react-router-dom";
 import CountdownTimer from "../../../reComps/CountdownTimer/CountdownTimer";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import BackArrow from "../../../reComps/BackArrow/BackArrow";
 
 const TalkTime = (isPlaying, toggleTimer) => {
   const [count, setCount] = useState(0);
@@ -54,13 +53,7 @@ const TalkTime = (isPlaying, toggleTimer) => {
       <div className="title">
         <h1>მაფია</h1>
       </div>
-      <div className="back_to_settings">
-        <Link to={"/role_show"}>
-          <button>
-            <FontAwesomeIcon icon={faArrowLeft} />
-          </button>
-        </Link>
-      </div>
+      <BackArrow backLink={"/role_show"} />
       <div className="speaker_name msg_4_host">
         <h2>საუბრობს {players[currentPlayerIndex].name}</h2>
       </div>
@@ -74,7 +67,7 @@ const TalkTime = (isPlaying, toggleTimer) => {
         </button>
       </div>
       <div className="next_component">
-        <Link to={"/role_queue"}>
+        <Link to={"/night/role_queue"}>
           <button>დაღამდა</button>
         </Link>
       </div>
