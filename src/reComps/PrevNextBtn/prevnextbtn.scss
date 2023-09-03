@@ -1,0 +1,26 @@
+.prev_next_btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem 0 2rem;
+  max-width: 100dvw;
+}
+
+.prev_next_btn {
+  .day {
+    background-color: var(--black);
+  }
+}
+
+.prev_next_btn {
+  .night {
+    background-color: var(--btn_gray);
+  }
+}
+
+// ~ MOBILE LANDSCAPE
+@media (min-width: 450px) and (max-width: 950px) and (min-height: 300px) and (max-height: 500px) {
+  .prev_next_btn {
+    margin: 1rem 0 1rem;
+  }
+}

@@ -14,6 +14,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/effect-cards";
 import { EffectCards } from "swiper/modules";
+import Msg4Host from "../../../reComps/Msg4Host/Msg4Host";
+import PrevNextBtn from "../../../reComps/PrevNextBtn/PrevNextBtn";
 
 const RoleShow = () => {
   const roleData = [
@@ -41,9 +43,10 @@ const RoleShow = () => {
       <div className="title">
         <h1>მაფია</h1>
       </div>
-      <div className="msg_4_host">
-        <h2>ღამდება, ყველა იძინებს, მოთამაშეები ეცნობიან როლებს.</h2>
-      </div>
+      <Msg4Host
+        message={"ღამდება, ყველა იძინებს, მოთამაშეები ეცნობიან როლებს."}
+      />
+
       <div className="card_wrapper">
         <div className="role_card_container">
           <div className="role_card_title">
@@ -73,7 +76,7 @@ const RoleShow = () => {
         </div>
       </div>
       <div className="prev_next_btn">
-        <div className="back_to_settings">
+        <div className="back_btn">
           <Link to={"/set_limits"}>
             <button>უკან</button>
           </Link>

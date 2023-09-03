@@ -4,7 +4,7 @@
   .back_to_settings {
     display: flex;
     position: absolute;
-    top: var(--margin-top);
+    top: var(--back-btn-margin-top);
 
     button {
       color: var(--red);
@@ -13,19 +13,9 @@
   }
 
   .title {
-    margin-top: var(--margin-top);
     h1 {
       color: var(--red);
     }
-  }
-
-  .role_queue {
-    background-color: #ff000050;
-    font-size: 1.5rem;
-  }
-
-  .msg_4_host {
-    padding-top: 8px;
   }
 
   .role_list {
@@ -61,23 +51,35 @@
 }
 
 // ~ MOBILE PORTRAIT
-@media (min-width: 300px) and (max-width: 500px) and (max-height: 950px) {
-  .RQ_container {
-    .back_to_settings {
-      button {
-        display: flex;
-        align-items: center;
-        top: 0.4rem;
-        left: -1.5rem;
-        padding: 0.5rem 1rem;
-      }
-    }
-  }
-}
 
 // ~ MOBILE LANDSCAPE
 @media (min-width: 450px) and (max-width: 950px) and (min-height: 300px) and (max-height: 500px) {
   .RQ_container {
-    height: 100% !important;
+    .role_list {
+      height: 100% !important;
+      overflow-y: auto;
+
+      .role {
+        font-size: 1.7rem;
+      }
+    }
+
+    .start_night_btn {
+      margin: 1rem 0 1rem;
+      color: var(--white);
+      border-radius: 5px;
+      border: none;
+
+      button {
+        font-size: 1.7rem;
+        padding: 1rem 2rem 0.5rem;
+        background-color: var(--red);
+      }
+
+      button:active {
+        color: var(--black);
+        background-color: var(--white);
+      }
+    }
   }
 }

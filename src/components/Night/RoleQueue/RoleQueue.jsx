@@ -1,9 +1,8 @@
 import React from "react";
 import "./rolequeue.scss";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-
+import Msg4Host from "../../../reComps/Msg4Host/Msg4Host";
+import BackArrow from "../../../reComps/BackArrow/BackArrow";
 
 const RoleQueue = () => {
   return (
@@ -11,16 +10,11 @@ const RoleQueue = () => {
       <div className="title">
         <h1>მაფია</h1>
       </div>
-      <div className="back_to_settings">
-        <Link to={"/talk_time"}>
-          <button>
-            <FontAwesomeIcon icon={faArrowLeft} />
-          </button>
-        </Link>
-      </div>
-      <div className="role_queue msg_4_host">
-        <h3 className="queue_title">როლების რიგი ღამით</h3>
-      </div>
+      <BackArrow backLink={"/talk_time"} />
+      <Msg4Host
+        message={"როლების რიგი ღამით"}
+        addClassname={"night_msg_4_host"}
+      />
       <div className="role_list">
         <div className="role">
           <p>მაფია გაისვრის</p>
@@ -39,7 +33,9 @@ const RoleQueue = () => {
         </div>
       </div>
       <div className="start_night_btn">
-        <button>ღამის დაწყება</button>
+        <Link to={"/night/mafia_shoots"}>
+          <button>ღამის დაწყება</button>
+        </Link>
       </div>
     </div>
   );

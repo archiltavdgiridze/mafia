@@ -7,6 +7,10 @@ import SetLimits from "./components/Day/Settings/SetLimits/SetLimits";
 import RoleShow from "./components/Day/RoleShow/RoleShow";
 import TalkTime from "./components/Day/TalkTime/TalkTime";
 import RoleQueue from "./components/Night/RoleQueue/RoleQueue";
+import MafiaShoots from "./components/Night/MafiaShoots/MafiaShoots";
+import ActionComp from "./reComps/ActionComp/ActionComp";
+import DocSaves from "./components/Night/DocSaves/DocSaves";
+import CopChecks from "./components/Night/CopChecks/CopChecks";
 
 function App() {
   return (
@@ -21,10 +25,13 @@ function App() {
           <Route path="/talk_time" element={<TalkTime />} />
         </Routes>
       </div>
-
       <div className="night_theme">
         <Routes>
-          <Route path="/role_queue" element={<RoleQueue />} />
+          <Route path="/night/role_queue" element={<RoleQueue />} />
+          <Route path="/night/mafia_shoots" element={<MafiaShoots />} />
+          <Route path="/night/doc_saves" element={<DocSaves />} />
+          <Route path="/night/cop_checks" element={<CopChecks />} />
+          <Route path="/action" element={<ActionComp />} />
         </Routes>
       </div>
     </div>

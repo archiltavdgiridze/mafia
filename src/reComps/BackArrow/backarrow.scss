@@ -1,0 +1,17 @@
+.back_to_settings {
+  display: flex;
+  position: absolute;
+  top: var(--back-btn-margin-top);
+}
+
+@media (min-width: 300px) and (max-width: 500px) and (max-height: 950px) {
+  .back_to_settings {
+    button {
+      display: flex;
+      align-items: center;
+      top: 0.4rem;
+      left: -1.5rem;
+      padding: 0.5rem 1rem;
+    }
+  }
+}

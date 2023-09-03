@@ -1,0 +1,104 @@
+.night_roles_container {
+  .title {
+    h1 {
+      color: var(--red);
+    }
+  }
+
+  .back_to_settings {
+    button {
+      color: var(--red);
+      background-color: rgb(46, 46, 46);
+    }
+  }
+
+  .player_list {
+    height: 100%;
+    overflow-y: auto;
+
+    .action_players,
+    .non_action_players {
+      margin-bottom: 1rem;
+      background-color: var(--night_msg_4_host_bg_color_30);
+
+      table {
+        border-collapse: collapse;
+        width: 100%;
+
+        tbody {
+          display: grid;
+          grid-template-columns: repeat(1, 1fr);
+
+          tr {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+
+            td {
+              align-self: center;
+            }
+          }
+
+          th,
+          td {
+            padding: 6px 0 2px;
+          }
+
+          td {
+            p {
+              font-size: 1.5rem;
+            }
+          }
+
+          td:not(:last-child) {
+            border-right: 1px solid #ddd;
+          }
+
+          tr:not(:last-child) {
+            border-bottom: 1px solid #ddd;
+          }
+
+          tr:hover {
+            background-color: #dddddd50;
+          }
+
+          tbody {
+            tr > .disabled_row:hover {
+              background-color: yellow;
+            }
+          }
+        }
+      }
+    }
+
+    .non_action_players {
+      tr {
+        td:nth-child(even) {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-around;
+          align-items: center;
+          padding: 6px 0;
+          transform: 0.4s;
+
+          button {
+            padding-top: 0.4rem;
+          }
+        }
+
+        td:nth-child(2) {
+          p:nth-child(2) {
+            padding: 6px 0 0;
+          }
+        }
+      }
+    }
+  }
+
+  .disabled_btn {
+    background-color: gray;
+  }
+
+  .disabled_row {
+    background-color: gray;
+  }
+}
