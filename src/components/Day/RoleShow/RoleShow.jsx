@@ -1,31 +1,57 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./roleshow.scss";
-
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/effect-cards";
+import { EffectCards } from "swiper/modules";
 // role card images
 import mafia from "../../../assets/img/mafia.png";
 import don from "../../../assets/img/don.png";
 import citizen from "../../../assets/img/citizen.png";
 import detective from "../../../assets/img/detektivi.png";
 import doctor from "../../../assets/img/doctor.png";
-import click from "../../../assets/img/click.png";
-// swiper
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/effect-cards";
-import { EffectCards } from "swiper/modules";
 import Msg4Host from "../../../reComps/Msg4Host/Msg4Host";
 import PrevNextBtn from "../../../reComps/PrevNextBtn/PrevNextBtn";
 
 const RoleShow = () => {
+  // 1. Retrieve and Filter Player Names
+  const storedPlayerNames = JSON.parse(sessionStorage.getItem("playerNames"));
+  const filteredPlayerNames = storedPlayerNames.filter(
+    (name) => name !== null && name.trim() !== ""
+  );
+
+  // 2. Create Role Data
   const roleData = [
-    { name: "მოთამაშე1", roleName: "მაფია", url: mafia },
-    { name: "მოთამაშე2", roleName: "დონი", url: don },
-    { name: "მოთამაშე3", roleName: "მოქალაქე", url: citizen },
-    { name: "მოთამაშე4", roleName: "დეტექტივი", url: detective },
-    { name: "მოთამაშე5", roleName: "ექიმი", url: doctor },
+    { roleName: "მოქალაქე", roleImg: citizen },
+    { roleName: "მოქალაქე", roleImg: citizen },
+    { roleName: "მოქალაქე", roleImg: citizen },
+    { roleName: "მოქალაქე", roleImg: citizen },
+    { roleName: "მოქალაქე", roleImg: citizen },
+    { roleName: "მოქალაქე", roleImg: citizen },
+    { roleName: "მაფიოზი", roleImg: mafia },
+    { roleName: "დონი", roleImg: don },
   ];
 
+  // 3. Assign Roles Randomly (Only on Initial Render)
+  const [assignedRoles] = useState(() => {
+    const shuffledRoles = shuffleArray(roleData);
+    const roles = [];
+
+    // Assign roles based on the desired distribution
+    for (let i = 0; i < filteredPlayerNames.length; i++) {
+      const role = shuffledRoles.pop();
+      roles.push({
+        name: filteredPlayerNames[i],
+        role: role.roleName,
+        role_img: role.roleImg,
+      });
+    }
+
+    return roles;
+  });
+
+  // 4. useState Hooks
   const [activeIndex, setActiveIndex] = useState(0);
   const [morningButton, setMorningButton] = useState(false);
 
@@ -37,6 +63,19 @@ const RoleShow = () => {
   const handleLastIndex = () => {
     setMorningButton(true);
   };
+
+  // Shuffle array helper function
+  function shuffleArray(array) {
+    let shuffledArray = [...array];
+    for (let i = shuffledArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledArray[i], shuffledArray[j]] = [
+        shuffledArray[j],
+        shuffledArray[i],
+      ];
+    }
+    return shuffledArray;
+  }
 
   return (
     <div className="RS_container main_content_wrapper">
@@ -58,16 +97,16 @@ const RoleShow = () => {
               onReachEnd={handleLastIndex}
               onSlideChange={handleSlideChange}
             >
-              {roleData.map((data, index) => (
+              {assignedRoles.map((data, index) => (
                 <SwiperSlide key={index}>
                   {activeIndex === index && <p>{data.name}</p>}
                   <div className="card_container">
                     <img
                       className="role_card"
-                      src={data.url}
+                      src={data.role_img}
                       alt={`Slide ${index}`}
                     />
-                    {activeIndex === index && <p>{data.roleName}</p>}
+                    {activeIndex === index && <p>{data.role}</p>}
                   </div>
                 </SwiperSlide>
               ))}

@@ -11,6 +11,8 @@ import MafiaShoots from "./components/Night/MafiaShoots/MafiaShoots";
 import ActionComp from "./reComps/ActionComp/ActionComp";
 import DocSaves from "./components/Night/DocSaves/DocSaves";
 import CopChecks from "./components/Night/CopChecks/CopChecks";
+import KillerKills from "./components/Night/KillerKills/KillerKills";
+import GameSessionStorage from "./reComps/GameSessionComp/GameSessionStorage";
 
 function App() {
   return (
@@ -23,6 +25,7 @@ function App() {
           <Route path="/set_limits" element={<SetLimits />} />
           <Route path="/role_show" element={<RoleShow />} />
           <Route path="/talk_time" element={<TalkTime />} />
+          <Route path="/game-session" element={<GameSessionStorage />} />
         </Routes>
       </div>
       <div className="night_theme">
@@ -31,6 +34,7 @@ function App() {
           <Route path="/night/mafia_shoots" element={<MafiaShoots />} />
           <Route path="/night/doc_saves" element={<DocSaves />} />
           <Route path="/night/cop_checks" element={<CopChecks />} />
+          <Route path="/night/killer_kills" element={<KillerKills />} />
           <Route path="/action" element={<ActionComp />} />
         </Routes>
       </div>

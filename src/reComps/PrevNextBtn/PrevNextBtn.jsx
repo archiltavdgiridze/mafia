@@ -2,7 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./prevnextbtn.scss";
 
-const PrevNextBtn = ({ linkBack, linkForward, addBtnClass }) => {
+const PrevNextBtn = ({
+  linkBack,
+  linkForward,
+  addBtnClass,
+  onNextButtonClick,
+}) => {
   return (
     <div className="prev_next_btn">
       <div className="prev_btn ">
@@ -14,7 +19,7 @@ const PrevNextBtn = ({ linkBack, linkForward, addBtnClass }) => {
       </div>
       <div className="next_btn">
         <Link to={linkForward}>
-          <button className={addBtnClass}>
+          <button className={addBtnClass} onClick={onNextButtonClick}>
             <p>შემდეგი</p>
           </button>
         </Link>
