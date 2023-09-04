@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "./inputroles.scss";
 import RoleNames from "../../../../reComps/RoleNames/RoleNames";
 import PrevNextBtn from "../../../../reComps/PrevNextBtn/PrevNextBtn";
+import GameSessionStorage from "../../../../reComps/GameSessionComp/GameSessionStorage";
 
 const InputRoles = () => {
   return (
@@ -19,6 +20,7 @@ const InputRoles = () => {
         linkForward={"/set_limits"}
         addBtnClass={"day"}
       />
+      {/* <GameSessionStorage /> */}
     </div>
   );
 };

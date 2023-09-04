@@ -5,22 +5,24 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faRotateLeft,
   faMagnifyingGlass,
-  faHandcuffs
+  faHandcuffs,
+  faSkull,
+  faBookSkull,
 } from "@fortawesome/free-solid-svg-icons";
 import {} from "@fortawesome/free-solid-svg-icons";
 import Msg4Host from "../../../reComps/Msg4Host/Msg4Host";
 import PrevNextBtn from "../../../reComps/PrevNextBtn/PrevNextBtn";
 import BackArrow from "../../../reComps/BackArrow/BackArrow";
 
-const CopChecks = () => {
+const KillerKills = () => {
   const [checkedPlayers, setCheckedPlayers] = useState({});
   const [checkIsDone, setCheckIsDone] = useState(false);
   const [undoDisabled, setUndoDisabled] = useState(true); // State to track if Undo buttons should be disabled
 
-  const copPlayer = [
+  const killerPlayer = [
     {
-      name: "მოთამაშე 5",
-      role: "დეტექტივი",
+      name: "მოთამაშე 6",
+      role: "ქილერი",
     },
   ];
 
@@ -93,12 +95,15 @@ const CopChecks = () => {
         <h1>მაფია</h1>
       </div>
       <BackArrow backLink={"/night/role_queue"} />
-      <Msg4Host message={"დეტექტივი გადაამოწმებს"} addClassname={"night_msg_4_host"} />
+      <Msg4Host
+        message={"ქილერი მოკლავს"}
+        addClassname={"night_msg_4_host"}
+      />
       <div className="player_list">
         <div className="action_players">
           <table>
             <tbody>
-              {copPlayer.map((player, index) => (
+              {killerPlayer.map((player, index) => (
                 <tr key={index}>
                   <td>
                     <p>{player.name}</p>
@@ -135,8 +140,8 @@ const CopChecks = () => {
                           </p>
                         </button>
                         <p>
-                          <FontAwesomeIcon icon={faMagnifyingGlass} />
-                          <FontAwesomeIcon icon={faHandcuffs} />
+                          <FontAwesomeIcon icon={faSkull} />
+                          <FontAwesomeIcon icon={faBookSkull} />
                         </p>
                       </>
                     ) : (
@@ -146,7 +151,7 @@ const CopChecks = () => {
                         className={checkIsDone ? "disabled_btn" : ""}
                       >
                         <p>
-                          <FontAwesomeIcon icon={faMagnifyingGlass} />
+                          <FontAwesomeIcon icon={faSkull} />
                         </p>
                       </button>
                     )}
@@ -158,12 +163,12 @@ const CopChecks = () => {
         </div>
       </div>
       <PrevNextBtn
-        linkBack={"/night/doc_saves"}
-        linkForward={"/night/killer_kills"}
+        linkBack={"/night/cop_checks"}
+        linkForward={""}
         addBtnClass={"night"}
       />
     </div>
   );
 };
 
-export default CopChecks;
+export default KillerKills;
