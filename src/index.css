@@ -25,7 +25,7 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: var(--mainFont);
+  font-family: var(--mainFont) !important;
 }
 
 h1 {

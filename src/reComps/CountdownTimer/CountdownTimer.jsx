@@ -4,7 +4,7 @@ import "./countdowntimer.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPause, faPlay } from "@fortawesome/free-solid-svg-icons";
 
-const CountdownTimer = () => {
+const CountdownTimer = ({key}) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [remainingTextColor, setRemainingTextColor] = useState("#fff");
 
@@ -19,6 +19,7 @@ const CountdownTimer = () => {
   return (
     <div className="CT_container">
       <CountdownCircleTimer
+        key={key}
         isPlaying={isPlaying}
         duration={60} 
         style={{ fontSize: "30px" }}
