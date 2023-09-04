@@ -1,24 +1,45 @@
 // InputPlayerNames.js
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import InputName from "../../../../reComps/InputName/InputName";
 import "./inputplayernames.scss";
-import { Link } from "react-router-dom";
-import stripLeft from "../../../../assets/img/strip-left.svg";
 import Msg4Host from "../../../../reComps/Msg4Host/Msg4Host";
 import PrevNextBtn from "../../../../reComps/PrevNextBtn/PrevNextBtn";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const InputPlayerNames = () => {
-  const numOfPlayers = 12;
+  // const numOfPlayers = 12;
   const formOfInps = useRef();
   const [isFormValid, setIsFormValid] = useState(false); // Initialize form validity state
-  const [playerNames, setPlayerNames] = useState(Array(numOfPlayers)); // Initialize an array to hold player names
+  // const [playerNames, setPlayerNames] = useState(Array(numOfPlayers)); // Initialize an array to hold player names
+  const [playerCounter, setPlayerCounter] = useState(6); // Initialize a counter to keep track of the number of players
+  const [playerNames, setPlayerNames] = useState(Array(playerCounter)); // Initialize an array to hold player names
 
-  console.log(playerNames);
+  // When the component mounts, check if playerCounter is stored in sessionStorage
+  const [storedPlayerCounter, setStoredPlayerCounter] = useState(6);
 
-  // Function to handle form submission
+  // When the component mounts, check if playerCounter is stored in sessionStorage
+  useEffect(() => {
+    const storedNames = JSON.parse(sessionStorage.getItem("playerNames"));
+    const storedCounter = JSON.parse(sessionStorage.getItem("playerCounter"));
+
+    if (storedCounter === null) {
+      // playerCounter is not in sessionStorage, set it to the default value
+      sessionStorage.setItem("playerCounter", JSON.stringify(6));
+    } else {
+      // playerCounter is in sessionStorage, update the state and storedPlayerCounter
+      setPlayerCounter(storedCounter);
+      setStoredPlayerCounter(storedCounter);
+      if (storedNames) {
+        setPlayerNames(storedNames);
+      }
+    }
+  }, []);
+
+  const minPlayerCount = 6;
+  const maxPlayerCount = 12;
+
   const handleSubmit = (e) => {
-    // Perform your form validation logic here
-    // For example, check if all required fields are filled
     const isAllFieldsValid = Array.from(formOfInps.current.elements).every(
       (element) => {
         return !element.required || element.value.trim() !== "";
@@ -27,35 +48,35 @@ const InputPlayerNames = () => {
     setIsFormValid(isAllFieldsValid);
 
     if (isAllFieldsValid) {
-      // Submit the form if all fields are valid
       formOfInps.current.submit();
     } else {
       alert("Please fill out all required fields.");
     }
 
     if (isAllFieldsValid) {
-      // Save playerNames to sessionStorage
-      sessionStorage.setItem("playerNames", JSON.stringify(playerNames));
-
-      // Navigate to the game session route
-      window.location.href = "/game-session"; // You can also use <Link to="/game-session" /> here if it's wrapped in a Router component
+      // Save playerCounter to sessionStorage
+      sessionStorage.setItem("playerCounter", JSON.stringify(playerCounter));
     } else {
       alert("Please fill out all required fields.");
     }
   };
 
-  // Function to handle "next_btn" click
   const handleNextButtonClick = () => {
-    // Save playerNames to sessionStorage
     sessionStorage.setItem("playerNames", JSON.stringify(playerNames));
-
-    // Redirect to the next step using react-router-dom's Link
-    // Change "/input_player_roles" to the appropriate route
-    // You can also use history.push() to navigate programmatically if you have access to the router's history
+    // Save playerCounter to sessionStorage
+    sessionStorage.setItem("playerCounter", JSON.stringify(playerCounter));
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
+  };
+
+  const handleNameChange = (index, name) => {
+    setPlayerNames((prevNames) => {
+      const updatedNames = [...prevNames];
+      updatedNames[index] = name;
+      return updatedNames;
+    });
   };
 
   return (
@@ -64,27 +85,60 @@ const InputPlayerNames = () => {
         <h1>მაფია</h1>
       </div>
       <Msg4Host message={"შეიყვანეთ მოთამაშეების სახელები"} />
-      <p>* ჯერჯერობით მუშაობს მხოლოდ 8 მოთამაშეზე / 04.09</p>
       <div className="inputs">
+        <div className="player_count_btn_container">
+          <p>
+            აირჩიე რაოდენობა {minPlayerCount}-{maxPlayerCount}
+          </p>
+          <div className="player_count">
+            <div className="player_count_btns">
+              <button
+                className="player_count_btn"
+                onClick={() => {
+                  if (playerCounter > minPlayerCount) {
+                    setPlayerCounter(playerCounter - 1);
+                    // Update the stored playerCounter value
+                    sessionStorage.setItem(
+                      "playerCounter",
+                      JSON.stringify(playerCounter - 1)
+                    );
+                    setStoredPlayerCounter(playerCounter - 1);
+                  }
+                }}
+              >
+                <FontAwesomeIcon icon={faMinus} />
+              </button>
+              <button
+                className="player_count_btn"
+                onClick={() => {
+                  if (playerCounter < maxPlayerCount) {
+                    setPlayerCounter(playerCounter + 1);
+                    // Update the stored playerCounter value
+                    sessionStorage.setItem(
+                      "playerCounter",
+                      JSON.stringify(playerCounter + 1)
+                    );
+                    setStoredPlayerCounter(playerCounter + 1);
+                  }
+                }}
+              >
+                <FontAwesomeIcon icon={faPlus} />
+              </button>
+            </div>
+            <p>არჩეულია {storedPlayerCounter}</p>
+          </div>
+        </div>
         <form ref={formOfInps} onSubmit={onSubmit}>
-          {Array.from({ length: numOfPlayers }, (_, index) => (
+          {Array.from({ length: storedPlayerCounter }, (_, index) => (
             <InputName
               key={index}
-              numOfPlayers={index + 1}
-              playerName={playerNames[index]} // Pass the corresponding name from playerNames
-              setPlayerName={(name) =>
-                setPlayerNames((prevNames) => {
-                  const updatedNames = [...prevNames];
-                  updatedNames[index] = name;
-                  console.log(updatedNames);
-                  return updatedNames;
-                })
-              }
+              playerCounter={index + 1}
+              playerName={playerNames[index]}
+              setPlayerName={(name) => handleNameChange(index, name)}
             />
           ))}
         </form>
       </div>
-      {/* circles of steps */}
       <PrevNextBtn
         linkBack={"/"}
         linkForward={"/input_player_roles"}

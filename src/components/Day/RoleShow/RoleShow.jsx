@@ -15,23 +15,69 @@ import Msg4Host from "../../../reComps/Msg4Host/Msg4Host";
 import PrevNextBtn from "../../../reComps/PrevNextBtn/PrevNextBtn";
 
 const RoleShow = () => {
-  // 1. Retrieve and Filter Player Names
+  // Retrieve and Filter Player Names
   const storedPlayerNames = JSON.parse(sessionStorage.getItem("playerNames"));
+  // Retrieve the player counter from the inputPlayerName counter
+  const storedPlayerCounter = JSON.parse(
+    sessionStorage.getItem("playerCounter")
+  );
   const filteredPlayerNames = storedPlayerNames.filter(
     (name) => name !== null && name.trim() !== ""
   );
 
-  // 2. Create Role Data
+  // this 4 objects are because the min number of players is 6
   const roleData = [
     { roleName: "მოქალაქე", roleImg: citizen },
     { roleName: "მოქალაქე", roleImg: citizen },
     { roleName: "მოქალაქე", roleImg: citizen },
-    { roleName: "მოქალაქე", roleImg: citizen },
-    { roleName: "მოქალაქე", roleImg: citizen },
-    { roleName: "მოქალაქე", roleImg: citizen },
-    { roleName: "მაფიოზი", roleImg: mafia },
-    { roleName: "დონი", roleImg: don },
+    { roleName: "დეტექტივი", roleImg: detective },
   ];
+
+  // a switch statement to assign roles based on the number of players which is retrieved from the sessionStorage
+  switch (storedPlayerCounter) {
+    case 6:
+      roleData.push({ roleName: "მაფიოზი", roleImg: mafia });
+      roleData.push({ roleName: "მაფიოზი", roleImg: mafia });
+      break;
+    case 7:
+      roleData.push({ roleName: "მოქალაქე", roleImg: citizen });
+      roleData.push({ roleName: "მაფიოზი", roleImg: mafia });
+      roleData.push({ roleName: "დონი", roleImg: don });
+      break;
+    case 8:
+      roleData.push({ roleName: "ექიმი", roleImg: doctor });
+      roleData.push({ roleName: "მაფიოზი", roleImg: mafia });
+      roleData.push({ roleName: "მაფიოზი", roleImg: mafia });
+      roleData.push({ roleName: "დონი", roleImg: don });
+      break;
+    case 9:
+      roleData.push({ roleName: "ექიმი", roleImg: doctor });
+      roleData.push({ roleName: "მოქალაქე", roleImg: citizen });
+      roleData.push({ roleName: "მაფიოზი", roleImg: mafia });
+      roleData.push({ roleName: "მაფიოზი", roleImg: mafia });
+      roleData.push({ roleName: "დონი", roleImg: don });
+      break;
+    case 10:
+      roleData.push({ roleName: "ექიმი", roleImg: doctor });
+      roleData.push({ roleName: "მოქალაქე", roleImg: citizen });
+      roleData.push({ roleName: "მოქალაქე", roleImg: citizen });
+      roleData.push({ roleName: "მაფიოზი", roleImg: mafia });
+      roleData.push({ roleName: "მაფიოზი", roleImg: mafia });
+      roleData.push({ roleName: "დონი", roleImg: don });
+      break;
+    case 11:
+      roleData.push({ roleName: "ექიმი", roleImg: doctor });
+      roleData.push({ roleName: "მოქალაქე", roleImg: citizen });
+      roleData.push({ roleName: "მოქალაქე", roleImg: citizen });
+      roleData.push({ roleName: "მაფიოზი", roleImg: mafia });
+      roleData.push({ roleName: "მაფიოზი", roleImg: mafia });
+      roleData.push({ roleName: "დონი", roleImg: don });
+      break;
+    default:
+      break;
+  }
+
+  console.log(roleData);
 
   // 3. Assign Roles Randomly (Only on Initial Render)
   const [assignedRoles] = useState(() => {

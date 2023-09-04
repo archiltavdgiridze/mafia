@@ -2,7 +2,7 @@
 import React from "react";
 import "./inputname.scss";
 
-const InputName = ({ numOfPlayers, playerName, setPlayerName }) => {
+const InputName = ({ playerCounter, playerName, setPlayerName }) => {
   const handleChange = (e) => {
     setPlayerName(e.target.value); // Update the player name in the parent component
     console.log(playerName);
@@ -10,8 +10,8 @@ const InputName = ({ numOfPlayers, playerName, setPlayerName }) => {
 
   return (
     <div className="input_container">
-      <p>მოთამაშე {numOfPlayers}</p>
-      {numOfPlayers <= 6 ? (
+      <p>მოთამაშე {playerCounter}</p>
+      {playerCounter <= 6 ? (
         <input
           required
           type="text"
