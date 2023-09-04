@@ -1,5 +1,4 @@
 import { Route, Routes } from "react-router-dom";
-import "./App.css";
 import StartingPage from "./components/StartingPage/StartingPage";
 import InputPlayerNames from "./components/Day/Settings/InputPlayerNames/InputPlayerNames";
 import InputRoles from "./components/Day/Settings/InputRoles/InputRoles";
@@ -13,10 +12,12 @@ import DocSaves from "./components/Night/DocSaves/DocSaves";
 import CopChecks from "./components/Night/CopChecks/CopChecks";
 import KillerKills from "./components/Night/KillerKills/KillerKills";
 import GameSessionStorage from "./reComps/GameSessionComp/GameSessionStorage";
-
+import Fouls from "./reComps/fouls/Fouls";
+import "./App.css";
 function App() {
+
   return (
-    <div className="App">
+    <div className="App" style={{position:'relative'}}>
       <div className="day_theme">
         <Routes>
           <Route path="/" element={<StartingPage />} />

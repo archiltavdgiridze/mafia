@@ -6,6 +6,7 @@ const RangeSlider = ({ min, max, step }) => {
 
   const handleSliderChange = (event) => {
     setSliderValue(event.target.value);
+    sessionStorage.setItem('val', event.target.value)
   };
 
   const renderValueLabels = (min, max, step) => {

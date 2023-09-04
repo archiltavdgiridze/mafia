@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./talktime.scss";
 import { Link } from "react-router-dom";
 import CountdownTimer from "../../../reComps/CountdownTimer/CountdownTimer";
@@ -7,7 +7,12 @@ import BackArrow from "../../../reComps/BackArrow/BackArrow";
 const TalkTime = (isPlaying, toggleTimer) => {
   const [count, setCount] = useState(0);
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
+  const [timerKey, setTimerKey] = useState(0); // State variable to manage the key
 
+  useEffect(() => {
+    // Increment the timerKey whenever currentPlayerIndex changes
+    setTimerKey((prevKey) => prevKey + 1);
+  }, [currentPlayerIndex]);
   // array of players
   const players = [
     {
@@ -57,7 +62,7 @@ const TalkTime = (isPlaying, toggleTimer) => {
       <div className="speaker_name msg_4_host">
         <h2>საუბრობს {players[currentPlayerIndex].name}</h2>
       </div>
-      <CountdownTimer />
+      <CountdownTimer key={timerKey} />
       <div className="player_select">
         <button className="prev_player" onClick={handlePreviousPlayer}>
           <p>წინა</p>
