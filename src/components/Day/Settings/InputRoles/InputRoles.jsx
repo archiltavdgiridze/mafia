@@ -4,10 +4,12 @@ import "./inputroles.scss";
 import RoleNames from "../../../../reComps/RoleNames/RoleNames";
 import PrevNextBtn from "../../../../reComps/PrevNextBtn/PrevNextBtn";
 import GameSessionStorage from "../../../../reComps/GameSessionComp/GameSessionStorage";
+import Fouls from "../../../../reComps/fouls/Fouls";
 
 const InputRoles = () => {
   return (
     <div className="IR_container main_content_wrapper">
+      <Fouls />
       <div className="title">
         <h1>მაფია</h1>
       </div>
