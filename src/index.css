@@ -62,6 +62,16 @@ a {
   text-align: center;
 
 }
+@media screen and (min-width: 1600px){
+  .main_content_wrapper{
+    width: 60% !important;
+  }
+}
+@media screen and (min-width: 2000px){
+  .main_content_wrapper{
+    width: 50% !important;
+  }
+}
 
 .day_theme {
   background-color: var(--red);
