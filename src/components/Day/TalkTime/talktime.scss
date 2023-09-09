@@ -16,6 +16,7 @@
     .next_player {
       font-size: 1.7rem;
       width: 300px;
+      padding: 6px 0 0;
     }
 
     .prev_player:hover,
@@ -49,6 +50,11 @@
     justify-content: flex-end;
     align-items: flex-end;
     margin: 1rem 0 2rem;
+    
+    button {
+      padding: 6px 1rem 0 ;
+      font-size: 36px;
+    }
   }
 }
 

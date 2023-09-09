@@ -4,7 +4,13 @@
   align-items: center;
   margin: 1rem 0 2rem;
   max-width: 100dvw;
-  
+  border: none;
+
+  button {
+    background-color: var(--black);
+    font-size: 36px;
+    padding: 0.6rem 2rem 0;
+  }
 }
 
 .prev_next_btn {
