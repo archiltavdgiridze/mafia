@@ -14,9 +14,11 @@ import KillerKills from "./components/Night/KillerKills/KillerKills";
 import GameSessionStorage from "./reComps/GameSessionComp/GameSessionStorage";
 import Fouls from "./reComps/fouls/Fouls";
 import "./App.css";
+import MafiaAction from "./reComps/TEST/MafiaAction";
 function App() {
 
   return (
+
     <div className="App" style={{position:'relative'}}>
       <div className="day_theme">
         <Routes>
@@ -27,6 +29,7 @@ function App() {
           <Route path="/role_show" element={<RoleShow />} />
           <Route path="/talk_time" element={<TalkTime />} />
           <Route path="/game-session" element={<GameSessionStorage />} />
+          <Route path="/test" element={<MafiaAction />} />
         </Routes>
       </div>
       <div className="night_theme">
