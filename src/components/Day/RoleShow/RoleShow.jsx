@@ -6,13 +6,14 @@ import "swiper/css";
 import "swiper/css/effect-cards";
 import { EffectCards } from "swiper/modules";
 // role card images
-import mafia from "../../../assets/img/mafia.png";
-import don from "../../../assets/img/don.png";
-import citizen from "../../../assets/img/citizen.png";
-import detective from "../../../assets/img/detektivi.png";
-import doctor from "../../../assets/img/doctor.png";
+import mafia from "../../../assets/img/roleCards/mafia.webp";
+import don from "../../../assets/img/roleCards/don.webp";
+import maniac from "../../../assets/img/roleCards/maniac.webp";
+import citizen from "../../../assets/img/roleCards/citizen.webp";
+import detective from "../../../assets/img/roleCards/detective.webp";
+import doctor from "../../../assets/img/roleCards/doctor.webp";
+
 import Msg4Host from "../../../reComps/Msg4Host/Msg4Host";
-import PrevNextBtn from "../../../reComps/PrevNextBtn/PrevNextBtn";
 
 const RoleShow = () => {
   // Retrieve and Filter Player Names
@@ -24,6 +25,8 @@ const RoleShow = () => {
   const filteredPlayerNames = storedPlayerNames.filter(
     (name) => name !== null && name.trim() !== ""
   );
+
+  // console.table(storedPlayerCounter);
 
   // this 4 objects are because the min number of players is 6
   const roleData = [
@@ -37,7 +40,7 @@ const RoleShow = () => {
   switch (storedPlayerCounter) {
     case 6:
       roleData.push({ roleName: "მაფიოზი", roleImg: mafia });
-      roleData.push({ roleName: "მაფიოზი", roleImg: mafia });
+      roleData.push({ roleName: "დონი", roleImg: don });
       break;
     case 7:
       roleData.push({ roleName: "მოქალაქე", roleImg: citizen });
@@ -47,23 +50,23 @@ const RoleShow = () => {
     case 8:
       roleData.push({ roleName: "ექიმი", roleImg: doctor });
       roleData.push({ roleName: "მაფიოზი", roleImg: mafia });
-      roleData.push({ roleName: "მაფიოზი", roleImg: mafia });
       roleData.push({ roleName: "დონი", roleImg: don });
+      roleData.push({ roleName: "მანიაკი", roleImg: maniac });
       break;
     case 9:
       roleData.push({ roleName: "ექიმი", roleImg: doctor });
       roleData.push({ roleName: "მოქალაქე", roleImg: citizen });
       roleData.push({ roleName: "მაფიოზი", roleImg: mafia });
-      roleData.push({ roleName: "მაფიოზი", roleImg: mafia });
       roleData.push({ roleName: "დონი", roleImg: don });
+      roleData.push({ roleName: "მანიაკი", roleImg: maniac });
       break;
     case 10:
       roleData.push({ roleName: "ექიმი", roleImg: doctor });
       roleData.push({ roleName: "მოქალაქე", roleImg: citizen });
       roleData.push({ roleName: "მოქალაქე", roleImg: citizen });
       roleData.push({ roleName: "მაფიოზი", roleImg: mafia });
-      roleData.push({ roleName: "მაფიოზი", roleImg: mafia });
       roleData.push({ roleName: "დონი", roleImg: don });
+      roleData.push({ roleName: "მანიაკი", roleImg: maniac });
       break;
     case 11:
       roleData.push({ roleName: "ექიმი", roleImg: doctor });
@@ -72,17 +75,29 @@ const RoleShow = () => {
       roleData.push({ roleName: "მაფიოზი", roleImg: mafia });
       roleData.push({ roleName: "მაფიოზი", roleImg: mafia });
       roleData.push({ roleName: "დონი", roleImg: don });
+      roleData.push({ roleName: "მანიაკი", roleImg: maniac });
+      break;
+    case 12:
+      roleData.push({ roleName: "ექიმი", roleImg: doctor });
+      roleData.push({ roleName: "მოქალაქე", roleImg: citizen });
+      roleData.push({ roleName: "მოქალაქე", roleImg: citizen });
+      roleData.push({ roleName: "მოქალაქე", roleImg: citizen });
+      roleData.push({ roleName: "მაფიოზი", roleImg: mafia });
+      roleData.push({ roleName: "მაფიოზი", roleImg: mafia });
+      roleData.push({ roleName: "დონი", roleImg: don });
+      roleData.push({ roleName: "მანიაკი", roleImg: maniac });
       break;
     default:
       break;
   }
 
-  console.log(roleData);
+  // console.log(roleData);
 
   // 3. Assign Roles Randomly (Only on Initial Render)
   const [assignedRoles] = useState(() => {
     const shuffledRoles = shuffleArray(roleData);
     const roles = [];
+    // console.table(shuffledRoles);
 
     // Assign roles based on the desired distribution
     for (let i = 0; i < filteredPlayerNames.length; i++) {
@@ -96,6 +111,9 @@ const RoleShow = () => {
 
     return roles;
   });
+
+  // console.table(assignedRoles);
+  // console.log("assignedRoles:", assignedRoles);
 
   // 4. useState Hooks
   const [activeIndex, setActiveIndex] = useState(0);
