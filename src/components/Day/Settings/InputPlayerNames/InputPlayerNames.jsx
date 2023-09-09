@@ -6,6 +6,7 @@ import Msg4Host from "../../../../reComps/Msg4Host/Msg4Host";
 import PrevNextBtn from "../../../../reComps/PrevNextBtn/PrevNextBtn";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
+import PhoneNavbar from "../../../../reComps/PhoneNabvar/PhoneNavbar";
 
 const InputPlayerNames = () => {
   // const numOfPlayers = 12;
@@ -84,6 +85,7 @@ const InputPlayerNames = () => {
       <div className="title">
         <h1>მაფია</h1>
       </div>
+      {/* <PhoneNavbar /> */}
       <Msg4Host message={"შეიყვანეთ მოთამაშეების სახელები"} />
       <div className="inputs">
         <div className="player_count_btn_container">
@@ -97,7 +99,6 @@ const InputPlayerNames = () => {
                 onClick={() => {
                   if (playerCounter > minPlayerCount) {
                     setPlayerCounter(playerCounter - 1);
-                    // Update the stored playerCounter value
                     sessionStorage.setItem(
                       "playerCounter",
                       JSON.stringify(playerCounter - 1)

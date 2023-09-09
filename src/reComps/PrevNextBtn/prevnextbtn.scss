@@ -31,3 +31,12 @@
     margin: 1rem 0 1rem;
   }
 }
+
+// ~ MOBILE PORTRAIT
+@media (min-width: 300px) and (max-width: 500px) and (max-height: 950px) {
+  .prev_next_btn {
+    button {
+      font-size: 28px;
+    }
+  }
+}

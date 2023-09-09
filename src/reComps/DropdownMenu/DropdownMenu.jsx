@@ -1,19 +1,24 @@
+import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBarsStaggered,
+  faSquarePollVertical,
+} from "@fortawesome/free-solid-svg-icons";
 import Dropdown from "react-bootstrap/Dropdown";
+import "./dropdownmenu.scss";
+import Fouls from "../fouls/Fouls";
 
-function DropdownMenu() {
+const DropdownMenu = ({ toggleDropdown, isDropdownVisible }) => {
   return (
-    <Dropdown>
-      <Dropdown.Toggle variant="success" id="dropdown-basic">
-        Dropdown Button
-      </Dropdown.Toggle>
-
-      <Dropdown.Menu>
-        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-      </Dropdown.Menu>
-    </Dropdown>
+    <div className={`dropdown_menu ${isDropdownVisible ? "active" : "hidden"}`}>
+      <button>
+        <Fouls />
+      </button>
+      <button>
+        <FontAwesomeIcon icon={faSquarePollVertical} />
+      </button>
+    </div>
   );
-}
+};
 
 export default DropdownMenu;
