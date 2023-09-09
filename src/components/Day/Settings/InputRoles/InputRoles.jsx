@@ -9,7 +9,7 @@ import Fouls from "../../../../reComps/fouls/Fouls";
 const InputRoles = () => {
   return (
     <div className="IR_container main_content_wrapper">
-      <Fouls />
+      {/* <Fouls /> */}
       <div className="title">
         <h1>მაფია</h1>
       </div>
@@ -22,7 +22,6 @@ const InputRoles = () => {
         linkForward={"/set_limits"}
         addBtnClass={"day"}
       />
-      {/* <GameSessionStorage /> */}
     </div>
   );
 };

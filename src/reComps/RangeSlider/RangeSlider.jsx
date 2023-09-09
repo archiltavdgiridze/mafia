@@ -1,12 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./rangeslider.scss";
 
-const RangeSlider = ({ min, max, step }) => {
+const RangeSlider = ({ min, max, step, name }) => {
   const [sliderValue, setSliderValue] = useState(min);
 
+  // Store the default value when the component initializes
+  useEffect(() => {
+    sessionStorage.setItem(name, min);
+  }, [min, name]);
+
   const handleSliderChange = (event) => {
-    setSliderValue(event.target.value);
-    sessionStorage.setItem('val', event.target.value)
+    const newValue = event.target.value;
+    setSliderValue(newValue);
+
+    // Store the value in sessionStorage with a unique name
+    sessionStorage.setItem(name, newValue);
   };
 
   const renderValueLabels = (min, max, step) => {
