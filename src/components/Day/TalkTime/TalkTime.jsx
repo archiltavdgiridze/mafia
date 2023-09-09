@@ -12,8 +12,6 @@ const TalkTime = (isPlaying, toggleTimer) => {
   const players = JSON.parse(sessionStorage.getItem("playerNames"));
   const activePlayerName = players[count];
 
-  console.log(players);
-
   useEffect(() => {
     setTimerKey((prevKey) => prevKey + 1);
   }, [activePlayerName]);
