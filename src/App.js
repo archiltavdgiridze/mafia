@@ -12,14 +12,12 @@ import DocSaves from "./components/Night/DocSaves/DocSaves";
 import CopChecks from "./components/Night/CopChecks/CopChecks";
 import KillerKills from "./components/Night/KillerKills/KillerKills";
 import GameSessionStorage from "./reComps/GameSessionComp/GameSessionStorage";
-import Fouls from "./reComps/fouls/Fouls";
 import "./App.css";
 import MafiaAction from "./reComps/TEST/MafiaAction";
+
 function App() {
-
   return (
-
-    <div className="App" style={{position:'relative'}}>
+    <div className="App" style={{ position: "relative" }}>
       <div className="day_theme">
         <Routes>
           <Route path="/" element={<StartingPage />} />
