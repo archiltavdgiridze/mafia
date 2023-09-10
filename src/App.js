@@ -13,7 +13,7 @@ import CopChecks from "./components/Night/CopChecks/CopChecks";
 import KillerKills from "./components/Night/KillerKills/KillerKills";
 import GameSessionStorage from "./reComps/GameSessionComp/GameSessionStorage";
 import "./App.css";
-import MafiaAction from "./reComps/TEST/MafiaAction";
+import MafiaAction from "./reComps/MafiaAction/MafiaAction";
 
 function App() {
   return (
