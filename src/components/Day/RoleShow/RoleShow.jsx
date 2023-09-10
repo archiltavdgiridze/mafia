@@ -26,8 +26,6 @@ const RoleShow = () => {
     (name) => name !== null && name.trim() !== ""
   );
 
-  // console.table(storedPlayerCounter);
-
   // this 4 objects are because the min number of players is 6
   const roleData = [
     { roleName: "მოქალაქე", roleImg: citizen },
@@ -91,13 +89,10 @@ const RoleShow = () => {
       break;
   }
 
-  // console.log(roleData);
-
   // 3. Assign Roles Randomly (Only on Initial Render)
   const [assignedRoles] = useState(() => {
     const shuffledRoles = shuffleArray(roleData);
     const roles = [];
-    // console.table(shuffledRoles);
 
     // Assign roles based on the desired distribution
     for (let i = 0; i < filteredPlayerNames.length; i++) {
@@ -112,8 +107,7 @@ const RoleShow = () => {
     return roles;
   });
 
-  // console.table(assignedRoles);
-  // console.log("assignedRoles:", assignedRoles);
+  sessionStorage.setItem("assignedRoles", JSON.stringify(assignedRoles));
 
   // 4. useState Hooks
   const [activeIndex, setActiveIndex] = useState(0);

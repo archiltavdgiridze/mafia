@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../../../reComps/nightrolestyles.scss"
+import "../../../reComps/nightrolestyles.scss";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -14,56 +14,23 @@ import BackArrow from "../../../reComps/BackArrow/BackArrow";
 const MafiaShoots = () => {
   const [killedPlayers, setKilledPlayers] = useState({});
   const [killIsDone, setKillIsDone] = useState(false);
-  const [undoDisabled, setUndoDisabled] = useState(true); // State to track if Undo buttons should be disabled
+  const [undoDisabled, setUndoDisabled] = useState(true); 
 
-  const mafiaPlayers = [
-    {
-      name: "მოთამაშე 1",
-      role: "მაფიოზი",
-    },
-    {
-      name: "მოთამაშე 1",
-      role: "მაფიოზი",
-    },
-    {
-      name: "მოთამაშე 2",
-      role: "მაფიოზი",
-    },
-    {
-      name: "მოთამაშე 2",
-      role: "დონი",
-    },
-  ];
+  const playerAndRole = JSON.parse(sessionStorage.getItem("assignedRoles"));
 
-  const notMafia = [
-    {
-      name: "მოთამაშე 3",
-    },
-    {
-      name: "მოთამ 4",
-    },
-    {
-      name: "მოთ. 5",
-    },
-    {
-      name: "მოთამაშე 6",
-    },
-    {
-      name: "მოთააშ 7",
-    },
-    {
-      name: "მოთ. 8",
-    },
-    {
-      name: "მოთ.შე 9",
-    },
-    {
-      name: "მოთამაშე 10",
-    },
-    {
-      name: "მოთამაშე 11",
-    },
-  ];
+  const mafiaPlayers = [];
+  const notMafia = [];
+
+  for (let i = 0; i < playerAndRole.length; i++) {
+    if (
+      playerAndRole[i].role === "მაფიოზი" ||
+      playerAndRole[i].role === "დონი"
+    ) {
+      mafiaPlayers.push(playerAndRole[i]);
+    } else {
+      notMafia.push(playerAndRole[i]);
+    }
+  }
 
   const toggleKillStatus = (playerName) => {
     if (!killIsDone) {
@@ -175,10 +142,6 @@ const MafiaShoots = () => {
 };
 
 export default MafiaShoots;
-
-
-
-
 
 // import React, { useState } from "react";
 // import "./mafiashoots.scss";

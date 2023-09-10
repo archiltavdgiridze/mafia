@@ -1,32 +1,25 @@
 import React, { useState, useEffect } from "react";
 
 const GameSessionStorage = () => {
-  const [playerNames, setPlayerNames] = useState([]);
-  const [playerCounter, setPlayerCounter] = useState(6); // Initialize a counter to keep track of the number of players
+  const [playerAndRole, setPlayerAndRole] = useState([]);
 
   useEffect(() => {
-    // Retrieve the player names from sessionStorage when the component mounts
-    const storedPlayerNames = JSON.parse(sessionStorage.getItem("playerNames"));
-    const storedPlayerCounter = JSON.parse(
-      sessionStorage.getItem("playerCounter")
+    // Retrieve the player data from sessionStorage when the component mounts
+    const storedPlayerAndRole = JSON.parse(
+      sessionStorage.getItem("assignedRoles")
     );
 
-    if (storedPlayerNames) {
-      setPlayerNames(storedPlayerNames);
-    }
-
-    if (storedPlayerCounter) {
-      setPlayerCounter(storedPlayerCounter);
+    if (storedPlayerAndRole) {
+      setPlayerAndRole(storedPlayerAndRole);
     }
   }, []);
 
-  console.log(playerCounter);
-
-  // Render the player names in your game session
+  // Render the player names and roles in your game session
   const renderPlayerNames = () => {
-    return playerNames.map((name, index) => (
+    return playerAndRole.map((player, index) => (
       <div key={index}>
-        მოთამაშე {index + 1}: {name}
+        Player {index + 1}: {player.name} ---- {player.role}
+        {/* <img src={player.role_img} alt={`Role Image for Player ${index + 1}`} /> */}
       </div>
     ));
   };
@@ -34,7 +27,7 @@ const GameSessionStorage = () => {
   return (
     <div>
       <h1>Game Session</h1>
-      <h2>Player Names</h2>
+      <h2>Player Data</h2>
       {renderPlayerNames()}
     </div>
   );

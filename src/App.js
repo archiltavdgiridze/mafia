@@ -14,6 +14,8 @@ import KillerKills from "./components/Night/KillerKills/KillerKills";
 import GameSessionStorage from "./reComps/GameSessionComp/GameSessionStorage";
 import "./App.css";
 import MafiaAction from "./reComps/MafiaAction/MafiaAction";
+import DonChecks from "./components/Night/DonChecks/DonChecks";
+import Summary from "./components/Night/Summary/Summary";
 
 function App() {
   return (
@@ -36,7 +38,9 @@ function App() {
           <Route path="/night/mafia_shoots" element={<MafiaShoots />} />
           <Route path="/night/doc_saves" element={<DocSaves />} />
           <Route path="/night/cop_checks" element={<CopChecks />} />
+          <Route path="/night/don_checks" element={<DonChecks />} />
           <Route path="/night/killer_kills" element={<KillerKills />} />
+          <Route path="/night/summary" element={<Summary />} />
           <Route path="/action" element={<ActionComp />} />
         </Routes>
       </div>

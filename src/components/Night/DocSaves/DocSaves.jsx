@@ -19,45 +19,19 @@ const DocSaves = () => {
   const [healIsDone, setHealIsDone] = useState(false);
   const [undoDisabled, setUndoDisabled] = useState(true); // State to track if Undo buttons should be disabled
 
-  const docPlayer = [
-    {
-      name: "მოთამაშე 3",
-      role: "ექიმი",
-    },
-  ];
+  const playerAndRole = JSON.parse(sessionStorage.getItem("assignedRoles"));
 
-  const otherPlayers = [
-    {
-      name: "მოთამაშე 1",
-    },
-    {
-      name: "მოთამაშე 2",
-    },
-    {
-      name: "მოთამ 4",
-    },
-    {
-      name: "მოთ. 5",
-    },
-    {
-      name: "მოთამაშე 6",
-    },
-    {
-      name: "მოთააშ 7",
-    },
-    {
-      name: "მოთ. 8",
-    },
-    {
-      name: "მოთ.შე 9",
-    },
-    {
-      name: "მოთამაშე 10",
-    },
-    {
-      name: "მოთამაშე 11",
-    },
-  ];
+  const docPlayer = [];
+
+  const otherPlayers = [];
+
+  for (let i = 0; i < playerAndRole.length; i++) {
+    if (playerAndRole[i].role === "ექიმი") {
+      docPlayer.push(playerAndRole[i]);
+    } else {
+      otherPlayers.push(playerAndRole[i]);
+    }
+  }
 
   const toggleHealStatus = (playerName) => {
     if (!healIsDone) {

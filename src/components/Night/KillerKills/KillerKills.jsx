@@ -1,11 +1,8 @@
 import React, { useState } from "react";
 import "../../../reComps/nightrolestyles.scss";
-import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faRotateLeft,
-  faMagnifyingGlass,
-  faHandcuffs,
   faSkull,
   faBookSkull,
 } from "@fortawesome/free-solid-svg-icons";
@@ -19,57 +16,30 @@ const KillerKills = () => {
   const [checkIsDone, setCheckIsDone] = useState(false);
   const [undoDisabled, setUndoDisabled] = useState(true); // State to track if Undo buttons should be disabled
 
-  const killerPlayer = [
-    {
-      name: "მოთამაშე 6",
-      role: "ქილერი",
-    },
-  ];
+  const playerAndRole = JSON.parse(sessionStorage.getItem("assignedRoles"));
 
-  const otherPlayers = [
-    {
-      name: "მოთამაშე 1",
-    },
-    {
-      name: "მოთამაშე 2",
-    },
-    {
-      name: "მოთამ 3",
-    },
-    {
-      name: "მოთ. 4",
-    },
-    {
-      name: "მოთამაშე 6",
-    },
-    {
-      name: "მოთააშ 7",
-    },
-    {
-      name: "მოთ. 8",
-    },
-    {
-      name: "მოთ.შე 9",
-    },
-    {
-      name: "მოთამაშე 10",
-    },
-    {
-      name: "მოთამაშე 11",
-    },
-  ];
+  const killerPlayer = [];
+  const otherPlayers = [];
+
+  for (let i = 0; i < playerAndRole.length; i++) {
+    if (playerAndRole[i].role === "მანიაკი") {
+      killerPlayer.push(playerAndRole[i]);
+    } else {
+      otherPlayers.push(playerAndRole[i]);
+    }
+  }
 
   const toggleCheckStatus = (playerName) => {
     if (!checkIsDone) {
       setCheckedPlayers((prevCheckedPlayers) => {
         const updatedCheckedPlayers = { ...prevCheckedPlayers };
         if (updatedCheckedPlayers[playerName]) {
-          delete updatedCheckedPlayers[playerName]; // Undo check
-          setUndoDisabled(true); // Disable Undo button
+          delete updatedCheckedPlayers[playerName];
+          setUndoDisabled(true);
         } else {
-          updatedCheckedPlayers[playerName] = true; // Mark as checked
-          setCheckIsDone(true); // Disable other "check" buttons
-          setUndoDisabled(false); // Enable Undo button
+          updatedCheckedPlayers[playerName] = true;
+          setCheckIsDone(true);
+          setUndoDisabled(false);
         }
         return updatedCheckedPlayers;
       });
@@ -95,10 +65,7 @@ const KillerKills = () => {
         <h1>მაფია</h1>
       </div>
       <BackArrow backLink={"/night/role_queue"} />
-      <Msg4Host
-        message={"ქილერი მოკლავს"}
-        addClassname={"night_msg_4_host"}
-      />
+      <Msg4Host message={"ქილერი მოკლავს"} addClassname={"night_msg_4_host"} />
       <div className="player_list">
         <div className="action_players">
           <table>
@@ -163,8 +130,8 @@ const KillerKills = () => {
         </div>
       </div>
       <PrevNextBtn
-        linkBack={"/night/cop_checks"}
-        linkForward={""}
+        linkBack={"/night/don_checks"}
+        linkForward={"/night/summary"}
         addBtnClass={"night"}
       />
     </div>

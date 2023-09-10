@@ -1,30 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../../reComps/nightrolestyles.scss";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faRotateLeft,
   faMagnifyingGlass,
-  faHandcuffs,
+  faGun,
 } from "@fortawesome/free-solid-svg-icons";
 import {} from "@fortawesome/free-solid-svg-icons";
 import Msg4Host from "../../../reComps/Msg4Host/Msg4Host";
 import PrevNextBtn from "../../../reComps/PrevNextBtn/PrevNextBtn";
 import BackArrow from "../../../reComps/BackArrow/BackArrow";
 
-const CopChecks = () => {
+const DonChecks = () => {
   const [checkedPlayers, setCheckedPlayers] = useState({});
   const [checkIsDone, setCheckIsDone] = useState(false);
   const [undoDisabled, setUndoDisabled] = useState(true); // State to track if Undo buttons should be disabled
+  const [killerPlays, setKillerPlays] = useState(""); // State to track if killer plays or not
 
   const playerAndRole = JSON.parse(sessionStorage.getItem("assignedRoles"));
 
-  const copPlayer = [];
+  const donPlayer = [];
   const otherPlayers = [];
 
   for (let i = 0; i < playerAndRole.length; i++) {
-    if (playerAndRole[i].role === "დეტექტივი") {
-      copPlayer.push(playerAndRole[i]);
+    if (playerAndRole[i].role === "დონი") {
+      donPlayer.push(playerAndRole[i]);
     } else {
       otherPlayers.push(playerAndRole[i]);
     }
@@ -60,6 +61,14 @@ const CopChecks = () => {
     }
   };
 
+  useEffect(() => {
+    if (playerAndRole.length < 8) {
+      setKillerPlays("/night/summary");
+    } else {
+      setKillerPlays("/night/killer_kills");
+    }
+  }, [playerAndRole]);
+
   return (
     <div className="MS_container night_roles_container main_content_wrapper night_theme">
       <div className="title">
@@ -67,14 +76,14 @@ const CopChecks = () => {
       </div>
       <BackArrow backLink={"/night/role_queue"} />
       <Msg4Host
-        message={"დეტექტივი გადაამოწმებს"}
+        message={"დონი გადაამოწმებს"}
         addClassname={"night_msg_4_host"}
       />
       <div className="player_list">
         <div className="action_players">
           <table>
             <tbody>
-              {copPlayer.map((player, index) => (
+              {donPlayer.map((player, index) => (
                 <tr key={index}>
                   <td>
                     <p>{player.name}</p>
@@ -112,7 +121,7 @@ const CopChecks = () => {
                         </button>
                         <p>
                           <FontAwesomeIcon icon={faMagnifyingGlass} />
-                          <FontAwesomeIcon icon={faHandcuffs} />
+                          <FontAwesomeIcon icon={faGun} />
                         </p>
                       </>
                     ) : (
@@ -134,12 +143,12 @@ const CopChecks = () => {
         </div>
       </div>
       <PrevNextBtn
-        linkBack={"/night/doc_saves"}
-        linkForward={"/night/don_checks"}
+        linkBack={"/night/cop_checks"}
+        linkForward={killerPlays}
         addBtnClass={"night"}
       />
     </div>
   );
 };
 
-export default CopChecks;
+export default DonChecks;
