@@ -11,6 +11,7 @@ import {} from "@fortawesome/free-solid-svg-icons";
 import Msg4Host from "../../../reComps/Msg4Host/Msg4Host";
 import PrevNextBtn from "../../../reComps/PrevNextBtn/PrevNextBtn";
 import BackArrow from "../../../reComps/BackArrow/BackArrow";
+import Navbar from "../../../reComps/Navbar/Navbar";
 
 const CopChecks = () => {
   const [checkedPlayers, setCheckedPlayers] = useState({});
@@ -62,10 +63,7 @@ const CopChecks = () => {
 
   return (
     <div className="MS_container night_roles_container main_content_wrapper night_theme">
-      <div className="title">
-        <h1>მაფია</h1>
-      </div>
-      <BackArrow backLink={"/night/role_queue"} />
+      <Navbar />
       <Msg4Host
         message={"დეტექტივი გადაამოწმებს"}
         addClassname={"night_msg_4_host"}

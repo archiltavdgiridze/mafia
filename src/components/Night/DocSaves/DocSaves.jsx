@@ -1,8 +1,5 @@
 import React, { useState } from "react";
-// import "./mafiashoots.scss";
 import "../../../reComps/nightrolestyles.scss";
-
-import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faRotateLeft,
@@ -12,7 +9,7 @@ import {
 import {} from "@fortawesome/free-solid-svg-icons";
 import Msg4Host from "../../../reComps/Msg4Host/Msg4Host";
 import PrevNextBtn from "../../../reComps/PrevNextBtn/PrevNextBtn";
-import BackArrow from "../../../reComps/BackArrow/BackArrow";
+import Navbar from "../../../reComps/Navbar/Navbar";
 
 const DocSaves = () => {
   const [healedPlayers, setHealedPlayers] = useState({});
@@ -22,7 +19,6 @@ const DocSaves = () => {
   const playerAndRole = JSON.parse(sessionStorage.getItem("assignedRoles"));
 
   const docPlayer = [];
-
   const otherPlayers = [];
 
   for (let i = 0; i < playerAndRole.length; i++) {
@@ -38,12 +34,12 @@ const DocSaves = () => {
       setHealedPlayers((prevHealedPlayers) => {
         const updatedHealedPlayers = { ...prevHealedPlayers };
         if (updatedHealedPlayers[playerName]) {
-          delete updatedHealedPlayers[playerName]; // Undo heal
-          setUndoDisabled(true); // Disable Undo button
+          delete updatedHealedPlayers[playerName];
+          setUndoDisabled(true);
         } else {
-          updatedHealedPlayers[playerName] = true; // Mark as healed
-          setHealIsDone(true); // Disable other "heal" buttons
-          setUndoDisabled(false); // Enable Undo button
+          updatedHealedPlayers[playerName] = true;
+          setHealIsDone(true);
+          setUndoDisabled(false);
         }
         return updatedHealedPlayers;
       });
@@ -65,10 +61,7 @@ const DocSaves = () => {
 
   return (
     <div className="MS_container night_roles_container main_content_wrapper night_theme">
-      <div className="title">
-        <h1>მაფია</h1>
-      </div>
-      <BackArrow backLink={"/night/role_queue"} />
+      <Navbar />
       <Msg4Host
         message={"ექიმი გადაარჩენს"}
         addClassname={"night_msg_4_host"}
