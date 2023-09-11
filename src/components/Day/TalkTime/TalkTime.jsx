@@ -34,16 +34,9 @@ const TalkTime = (isPlaying, toggleTimer) => {
     }
   };
 
-  const toggleDropdown = () => {
-    setIsDropdownVisible(!isDropdownVisible);
-  };
-
   return (
     <div className="TT_container main_content_wrapper">
-      <Navbar
-        toggleDropdown={toggleDropdown}
-        isDropdownVisible={isDropdownVisible}
-      />
+      <Navbar backLink={"/role_show"} />
       <div className="speaker_name msg_4_host">
         <h2>საუბრობს {activePlayerName}</h2>
       </div>
@@ -56,10 +49,17 @@ const TalkTime = (isPlaying, toggleTimer) => {
           <p>რიგშია {players[count + 1]}</p>
         </button>
       </div>
-      <div className="next_component">
-        <Link to={"/night/role_queue"}>
-          <button>დაღამდა</button>
-        </Link>
+      <div className="prev_next_btn">
+        <div className="back_btn">
+          <Link to={"/role_show"}>
+            <button>უკან</button>
+          </Link>
+        </div>
+        <div className="morning_btn">
+          <Link to={"/night/role_queue"}>
+            <button>დაღამდა</button>
+          </Link>
+        </div>
       </div>
     </div>
   );

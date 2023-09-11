@@ -5,16 +5,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import DropdownMenu from "../DropdownMenu/DropdownMenu";
 import "./navbar.scss";
 
-const Navbar = () => {
+const Navbar = ({ backLinkFromRoleQueue }) => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
   const toggleDropdown = () => {
     setIsDropdownVisible(!isDropdownVisible);
   };
-  
+
+  const backLinkToRoleQueue = "/night/role_queue";
+
   return (
     <div className="navbar">
-      <BackArrow backLink={"/role_show"} />
+      <BackArrow
+        backLink={
+          backLinkFromRoleQueue ? backLinkFromRoleQueue : backLinkToRoleQueue
+        }
+      />
       <div className="title">
         <h1>მაფია</h1>
       </div>

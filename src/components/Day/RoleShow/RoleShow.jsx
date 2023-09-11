@@ -101,6 +101,7 @@ const RoleShow = () => {
         name: filteredPlayerNames[i],
         role: role.roleName,
         role_img: role.roleImg,
+        isAlive: true,
       });
     }
 

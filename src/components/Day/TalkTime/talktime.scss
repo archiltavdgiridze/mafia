@@ -45,6 +45,11 @@
     }
   }
 
+  .back_to_settings {
+    opacity: 0;
+    pointer-events: none;
+  }
+
   .next_component {
     display: flex;
     justify-content: flex-end;
