@@ -3,8 +3,6 @@
 
   .back_to_settings {
     display: flex;
-    position: absolute;
-    top: var(--back-btn-margin-top);
 
     button {
       color: var(--red);

@@ -10,6 +10,7 @@ import {} from "@fortawesome/free-solid-svg-icons";
 import Msg4Host from "../../../reComps/Msg4Host/Msg4Host";
 import PrevNextBtn from "../../../reComps/PrevNextBtn/PrevNextBtn";
 import BackArrow from "../../../reComps/BackArrow/BackArrow";
+import Navbar from "../../../reComps/Navbar/Navbar";
 
 const KillerKills = () => {
   const [checkedPlayers, setCheckedPlayers] = useState({});
@@ -61,10 +62,7 @@ const KillerKills = () => {
 
   return (
     <div className="MS_container night_roles_container main_content_wrapper night_theme">
-      <div className="title">
-        <h1>მაფია</h1>
-      </div>
-      <BackArrow backLink={"/night/role_queue"} />
+      <Navbar />
       <Msg4Host message={"ქილერი მოკლავს"} addClassname={"night_msg_4_host"} />
       <div className="player_list">
         <div className="action_players">

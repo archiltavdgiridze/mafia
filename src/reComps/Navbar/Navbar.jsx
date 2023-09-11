@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import BackArrow from "../BackArrow/BackArrow";
 import { faBarsStaggered } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import DropdownMenu from "../DropdownMenu/DropdownMenu";
+import "./navbar.scss";
 
-const Navbar = ({ toggleDropdown, isDropdownVisible }) => {
+const Navbar = () => {
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsDropdownVisible(!isDropdownVisible);
+  };
+  
   return (
     <div className="navbar">
       <BackArrow backLink={"/role_show"} />

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "../../../reComps/nightrolestyles.scss";
-import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faGun,
@@ -9,12 +8,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Msg4Host from "../../../reComps/Msg4Host/Msg4Host";
 import PrevNextBtn from "../../../reComps/PrevNextBtn/PrevNextBtn";
-import BackArrow from "../../../reComps/BackArrow/BackArrow";
+import Navbar from "../../../reComps/Navbar/Navbar";
 
 const MafiaShoots = () => {
   const [killedPlayers, setKilledPlayers] = useState({});
   const [killIsDone, setKillIsDone] = useState(false);
-  const [undoDisabled, setUndoDisabled] = useState(true); 
+  const [undoDisabled, setUndoDisabled] = useState(true);
 
   const playerAndRole = JSON.parse(sessionStorage.getItem("assignedRoles"));
 
@@ -37,12 +36,12 @@ const MafiaShoots = () => {
       setKilledPlayers((prevKilledPlayers) => {
         const updatedKilledPlayers = { ...prevKilledPlayers };
         if (updatedKilledPlayers[playerName]) {
-          delete updatedKilledPlayers[playerName]; // Undo kill
-          setUndoDisabled(true); // Disable Undo button
+          delete updatedKilledPlayers[playerName];
+          setUndoDisabled(true);
         } else {
-          updatedKilledPlayers[playerName] = true; // Mark as killed
-          setKillIsDone(true); // Disable other "kill" buttons
-          setUndoDisabled(false); // Enable Undo button
+          updatedKilledPlayers[playerName] = true;
+          setKillIsDone(true);
+          setUndoDisabled(false);
         }
         return updatedKilledPlayers;
       });
@@ -64,10 +63,7 @@ const MafiaShoots = () => {
 
   return (
     <div className="night_roles_container main_content_wrapper night_theme">
-      <div className="title">
-        <h1>მაფია</h1>
-      </div>
-      <BackArrow backLink={"/night/role_queue"} />
+      <Navbar />
       <Msg4Host message={"მაფია გაისვრის"} addClassname={"night_msg_4_host"} />
       <div className="player_list">
         <div className="action_players">
@@ -142,135 +138,3 @@ const MafiaShoots = () => {
 };
 
 export default MafiaShoots;
-
-// import React, { useState } from "react";
-// import "./mafiashoots.scss";
-// // import { Link } from "react-router-dom";
-// // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import {
-//   // faArrowLeft,
-//   faGun,
-//   faRotateLeft,
-//   faSkullCrossbones,
-// } from "@fortawesome/free-solid-svg-icons";
-// // import Msg4Host from "../../../reComps/Msg4Host/Msg4Host";
-// import PrevNextBtn from "../../../reComps/PrevNextBtn/PrevNextBtn";
-// // import BackArrow from "../../../reComps/BackArrow/BackArrow";
-// import ActionComp from "../../../reComps/ActionComp/ActionComp";
-
-// const MafiaShoots = () => {
-//   // const [killedPlayers, setKilledPlayers] = useState({});
-//   // const [killIsDone, setKillIsDone] = useState(false);
-//   const [undoDisabled, setUndoDisabled] = useState(true); // State to track if Undo buttons should be disabled
-
-//   const mafiaPlayers = [
-//     {
-//       name: "მოთამაშე 1",
-//       role: "მაფიოზი",
-//     },
-//     {
-//       name: "მოთამაშე 3",
-//       role: "მაფიოზი",
-//     },
-//     {
-//       name: "მოთამაშე 2",
-//       role: "მაფიოზი",
-//     },
-//     {
-//       name: "მოთამაშე 2",
-//       role: "დონი",
-//     },
-//   ];
-
-//   const notMafia = [
-//     {
-//       name: "მოთამაშე 3",
-//     },
-//     {
-//       name: "მოთამ 4",
-//     },
-//     {
-//       name: "მოთ. 5",
-//     },
-//     {
-//       name: "მოთამაშე 6",
-//     },
-//     {
-//       name: "მოთააშ 7",
-//     },
-//     {
-//       name: "მოთ. 8",
-//     },
-//     {
-//       name: "მოთ.შე 9",
-//     },
-//     {
-//       name: "მოთამაშე 10",
-//     },
-//     {
-//       name: "მოთამაშე 11",
-//     },
-//   ];
-
-//   return (
-//     <div className="MS_container main_content_wrapper night_theme">
-//       <div className="title">
-//         <h1>მაფია</h1>
-//       </div>
-//       <ActionComp
-//         role={"mafia"}
-//         roleGeo={"მაფია"}
-//         backlink={"/night/role_queue"}
-//         message={"მაფია გაისვრის"}
-//         actionType={"მკვლელობა"}
-//         currentActiveRolePlayersArr={mafiaPlayers}
-//         otherPlayersArr={notMafia}
-//         // influencedPlayers={killedPlayers}
-//         // confirmUndoKill={confirmUndoKill}
-//         // undoDisabled={undoDisabled}
-//         undoIcon={faRotateLeft}
-//         actionIcon={faGun}
-//         actionIcon2={faSkullCrossbones}
-//         // toggleKillStatus={toggleKillStatus}
-//       />
-
-//       <PrevNextBtn
-//         linkBack={"/night/role_queue"}
-//         linkForward={"/night/doc_saves"}
-//         addBtnClass={"night"}
-//       />
-//     </div>
-//   );
-// };
-
-// export default MafiaShoots;
-
-// const toggleKillStatus = (playerName) => {
-//   if (!killIsDone) {
-//     setKilledPlayers((prevKilledPlayers) => {
-//       const updatedKilledPlayers = { ...prevKilledPlayers };
-//       if (updatedKilledPlayers[playerName]) {
-//         delete updatedKilledPlayers[playerName]; // Undo kill
-//         setUndoDisabled(true); // Disable Undo button
-//       } else {
-//         updatedKilledPlayers[playerName] = true; // Mark as killed
-//         setKillIsDone(true); // Disable other "kill" buttons
-//         setUndoDisabled(false); // Enable Undo button
-//       }
-//       return updatedKilledPlayers;
-//     });
-//   }
-// };
-
-// const confirmUndoKill = (playerName) => {
-//   if (window.confirm(`გსურთ გააუქმოთ ${playerName}–ის მკვლელობა?`)) {
-//     setKilledPlayers((prevKilledPlayers) => {
-//       const updatedKilledPlayers = { ...prevKilledPlayers };
-//       delete updatedKilledPlayers[playerName];
-
-//       setUndoDisabled(true);
-//       setKillIsDone(false);
-//       return updatedKilledPlayers;
-//     });
-//   }
-// };
