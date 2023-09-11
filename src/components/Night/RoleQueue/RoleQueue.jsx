@@ -1,14 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import "./rolequeue.scss";
 import { Link } from "react-router-dom";
 import Msg4Host from "../../../reComps/Msg4Host/Msg4Host";
-import BackArrow from "../../../reComps/BackArrow/BackArrow";
 import Navbar from "../../../reComps/Navbar/Navbar";
 
 const RoleQueue = () => {
   return (
     <div className="RQ_container main_content_wrapper night_theme">
-      <Navbar />
+      <Navbar backLinkFromRoleQueue={"/talk_time"} />
       <Msg4Host
         message={"როლების რიგი ღამით"}
         addClassname={"night_msg_4_host"}

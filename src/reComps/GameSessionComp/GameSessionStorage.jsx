@@ -18,7 +18,7 @@ const GameSessionStorage = () => {
   const renderPlayerNames = () => {
     return playerAndRole.map((player, index) => (
       <div key={index}>
-        Player {index + 1}: {player.name} ---- {player.role}
+        Player {index + 1}: {player.name} ---- {player.role} ---- {player.isAlive ? "Alive" : "Dead"}
         {/* <img src={player.role_img} alt={`Role Image for Player ${index + 1}`} /> */}
       </div>
     ));
