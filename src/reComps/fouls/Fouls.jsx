@@ -23,6 +23,11 @@ const Fouls = () => {
     const newFoulCounts = [...foulCounts];
     newFoulCounts[index] = Math.max(0, newFoulCounts[index] - 1);
     setFoulCounts(newFoulCounts);
+    if (newFoulCounts[index] !== foulQuantity) {
+      const updatedAssignedRoles = [...assignedRoles];
+      updatedAssignedRoles[index].isAlive = true;
+      sessionStorage.setItem('assignedRoles', JSON.stringify(updatedAssignedRoles));
+    }
   };
 
   const handleFoulAdd = (index) => {
