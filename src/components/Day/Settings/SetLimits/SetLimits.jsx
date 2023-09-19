@@ -34,6 +34,7 @@ const SetLimits = () => {
           <h2>ფოლების რაოდენობა</h2>
           <RangeSlider min={2} max={4} step={1} name={foulQuantitySliderName} />
         </div>
+        
       </div>
       <PrevNextBtn
         linkBack={"/input_player_roles"}
