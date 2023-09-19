@@ -9,6 +9,8 @@ const Fouls = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const players = JSON.parse(sessionStorage.getItem("playerNames"));
+  const foulQuantity = JSON.parse(sessionStorage.getItem("foulQuantity"));
+  const assignedRoles = JSON.parse(sessionStorage.getItem('assignedRoles'));
 
   // Initialize foulCounts from session storage or with zeros if not available
   const initialFoulCounts =
@@ -25,18 +27,26 @@ const Fouls = () => {
 
   const handleFoulAdd = (index) => {
     const newFoulCounts = [...foulCounts];
-    newFoulCounts[index] += 1;
+    if (newFoulCounts[index] <= (foulQuantity - 1)) {
+      newFoulCounts[index] += 1;
+    }
+    if (newFoulCounts[index] === foulQuantity) {
+      const updatedAssignedRoles = [...assignedRoles];
+      updatedAssignedRoles[index].isAlive = false;
+      sessionStorage.setItem('assignedRoles', JSON.stringify(updatedAssignedRoles));
+    }
     setFoulCounts(newFoulCounts);
   };
 
   // Update session storage whenever foulCounts change
   useEffect(() => {
     sessionStorage.setItem("foulCounts", JSON.stringify(foulCounts));
-  }, [foulCounts]);
+  }, [foulCounts, assignedRoles]);
+  
 
   return (
     <>
-      <div onClick={handleShow}>ფ</div>
+      <div className="foul_btn" onClick={handleShow}>ფ</div>
       <Modal
         show={show}
         onHide={handleClose}
@@ -62,7 +72,7 @@ const Fouls = () => {
               {players.map((player, index) => (
                 <tr key={index}>
                   <td>
-                    <p>{player}</p>
+                    <p>{player} {!assignedRoles[index].isAlive ? 'mokda egi' : ''} </p>
                   </td>
                   <td>
                     <div>
