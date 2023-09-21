@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../../reComps/nightrolestyles.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -17,6 +17,7 @@ const DocSaves = () => {
   const [undoDisabled, setUndoDisabled] = useState(true); // State to track if Undo buttons should be disabled
 
   const playerAndRole = JSON.parse(sessionStorage.getItem("assignedRoles"));
+  console.table(playerAndRole);
 
   const docPlayer = [];
   const otherPlayers = [];
@@ -25,22 +26,24 @@ const DocSaves = () => {
     if (playerAndRole[i].role === "ექიმი") {
       docPlayer.push(playerAndRole[i]);
     } else {
-      otherPlayers.push(playerAndRole[i]);
+      // otherPlayers.push(playerAndRole[i]);
     }
   }
 
+  // useEffect(() => {
+  //   // Save healedPlayers to sessionStorage whenever it changes
+  //   sessionStorage.setItem("healedPlayers", JSON.stringify(healedPlayers));
+  // }, [healedPlayers]);
+
   const toggleHealStatus = (playerName) => {
-    if (!healIsDone) {
+    if (!healIsDone && !healedPlayers[playerName]) {
       setHealedPlayers((prevHealedPlayers) => {
-        const updatedHealedPlayers = { ...prevHealedPlayers };
-        if (updatedHealedPlayers[playerName]) {
-          delete updatedHealedPlayers[playerName];
-          setUndoDisabled(true);
-        } else {
-          updatedHealedPlayers[playerName] = true;
-          setHealIsDone(true);
-          setUndoDisabled(false);
-        }
+        const updatedHealedPlayers = {
+          ...prevHealedPlayers,
+          [playerName]: true,
+        };
+        setHealIsDone(true);
+        setUndoDisabled(false);
         return updatedHealedPlayers;
       });
     }
@@ -58,6 +61,30 @@ const DocSaves = () => {
       });
     }
   };
+  useEffect(() => {
+    const updateIsAliveStatus = () => {
+      const updatedPlayerAndRole = [...playerAndRole];
+      for (const playerName in healedPlayers) {
+        if (healedPlayers.hasOwnProperty(playerName)) {
+          const playerIndex = updatedPlayerAndRole.findIndex(
+            (player) => player.name === playerName
+          );
+          if (playerIndex !== -1) {
+            updatedPlayerAndRole[playerIndex].isAlive = true;
+          }
+        }
+      }
+
+      sessionStorage.setItem(
+        "assignedRoles",
+        JSON.stringify(updatedPlayerAndRole)
+      );
+    };
+
+    updateIsAliveStatus();
+  }, [healedPlayers]);
+
+  console.table(healedPlayers);
 
   return (
     <div className="MS_container night_roles_container main_content_wrapper night_theme">
@@ -86,10 +113,12 @@ const DocSaves = () => {
         <div className="non_action_players">
           <table>
             <tbody>
-              {otherPlayers.map((player, index) => (
+              {playerAndRole.map((player, index) => (
                 <tr
                   key={index}
-                  className={healedPlayers[player.name] ? "disabled_row" : ""}
+                  className={
+                    playerAndRole[index].isAlive === false ? "disabled_row" : ""
+                  }
                 >
                   <td>
                     <p>{player.name}</p>
@@ -139,71 +168,3 @@ const DocSaves = () => {
 };
 
 export default DocSaves;
-
-// import React from "react";
-// import ActionComp from "../../../reComps/ActionComp/ActionComp";
-// import { faHeart, faPlus, faUserDoctor } from "@fortawesome/free-solid-svg-icons";
-
-// const DocSaves = () => {
-//   const docPlayer = [
-//     {
-//       name: "მოთამაშე 4",
-//       role: "ექიმი",
-//     },
-//   ];
-
-//   const otherPlayers = [
-//     {
-//       name: "მოთამაშე 1",
-//     },
-//     {
-//       name: "მოთამაშე 2",
-//     },
-//     {
-//       name: "მოთამ 3",
-//     },
-//     {
-//       name: "მოთ. 5",
-//     },
-//     {
-//       name: "მოთამაშე 6",
-//     },
-//     {
-//       name: "მოთააშ 7",
-//     },
-//     {
-//       name: "მოთ. 8",
-//     },
-//     {
-//       name: "მოთ.შე 9",
-//     },
-//     {
-//       name: "მოთამაშე 10",
-//     },
-//     {
-//       name: "მოთამაშე 11",
-//     },
-//   ];
-
-//   return (
-//     <div className="DS_container main_content_wrapper night_theme">
-//       <div className="title">
-//         <h1>მაფია</h1>
-//       </div>
-//       <ActionComp
-//         role={"doctor"}
-//         roleGeo={"ექიმი"}
-//         backlink={"/night/mafia_shoots"}
-//         message={"ექიმი იცავს"}
-//         actionType={"გადარჩენა"}
-//         currentActiveRolePlayersArr={docPlayer}
-//         otherPlayersArr={otherPlayers}
-//         influencedPlayers={"healedPlayers"}
-//         actionIcon={faUserDoctor}
-//         actionIcon2={faHeart}
-//       />
-//     </div>
-//   );
-// };
-
-// export default DocSaves;
