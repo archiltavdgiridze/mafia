@@ -54,7 +54,7 @@ a {
 
 .main_content_wrapper {
   display: flex !important;
-  justify-content: start !important;
+  justify-content: flex-start !important;
   width: 80% !important;
   height: 100dvh !important;
   margin: 0 auto !important;

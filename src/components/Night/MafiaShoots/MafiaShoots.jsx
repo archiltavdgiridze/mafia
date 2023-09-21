@@ -15,22 +15,16 @@ const MafiaShoots = () => {
   const [killIsDone, setKillIsDone] = useState(false);
   const [undoDisabled, setUndoDisabled] = useState(true);
   const [docPlays, setDocPlays] = useState(""); // State to track if killer plays or not
+  const gameData = JSON.parse(sessionStorage.getItem("gameData"));
 
-  const playerAndRole = JSON.parse(sessionStorage.getItem("assignedRoles"));
-
-  const mafiaPlayers = [];
-  const notMafia = [];
-
-  for (let i = 0; i < playerAndRole.length; i++) {
-    if (
-      playerAndRole[i].role === "მაფიოზი" ||
-      playerAndRole[i].role === "დონი"
-    ) {
-      mafiaPlayers.push(playerAndRole[i]);
-    } else {
-      notMafia.push(playerAndRole[i]);
-    }
-  }
+  // Separate mafiaPlayers and notMafia players during component initialization
+  const mafiaPlayers = gameData.filter(
+    (data) => data.playerInfo.roleID === 4 || data.playerInfo.roleID === 5
+  );
+  const notMafia = gameData.filter(
+    (data) => data.playerInfo.roleID !== 4 && data.playerInfo.roleID !== 5
+  );
+  console.log(notMafia);
 
   useEffect(() => {
     // Check if killIsDone state is stored in localStorage
@@ -48,7 +42,7 @@ const MafiaShoots = () => {
     setKilledPlayers(storedKilledPlayers);
 
     const initialUndoDisabled = notMafia.some((player, index) => {
-      return !playerAndRole[index].isAlive && !storedKilledPlayers[index];
+      return !gameData[index].isAlive && !storedKilledPlayers[index];
     });
     setUndoDisabled(initialUndoDisabled);
 
@@ -56,12 +50,12 @@ const MafiaShoots = () => {
     localStorage.setItem("killedPlayers", JSON.stringify(storedKilledPlayers));
   }, []);
 
+  // const toggleKillStatus = 1;
+  // const confirmUndoKill = 2;
   const toggleKillStatus = (playerIndex) => {
     if (!killIsDone) {
-      // Retrieve playerAndRole from sessionStorage
-      const retrievedPlayerAndRole = JSON.parse(
-        sessionStorage.getItem("assignedRoles")
-      );
+      // Retrieve gameData from sessionStorage
+      const retrievedPlayerAndRole = [...gameData];
 
       setKilledPlayers((prevKilledPlayers) => {
         const updatedKilledPlayers = { ...prevKilledPlayers };
@@ -71,12 +65,12 @@ const MafiaShoots = () => {
           updatedKilledPlayers[playerIndex] = true;
 
           // Update the player's isAlive property in retrievedPlayerAndRole
-          retrievedPlayerAndRole[playerIndex].isAlive = false;
+          retrievedPlayerAndRole[playerIndex].playerInfo.isAlive = false;
         }
 
-        // Save the modified playerAndRole array back to sessionStorage
+        // Save the modified gameData array back to sessionStorage
         sessionStorage.setItem(
-          "assignedRoles",
+          "gameData",
           JSON.stringify(retrievedPlayerAndRole)
         );
 
@@ -101,7 +95,7 @@ const MafiaShoots = () => {
 
   const confirmUndoKill = (playerIndex) => {
     const retrievedPlayerAndRole = JSON.parse(
-      sessionStorage.getItem("assignedRoles")
+      sessionStorage.getItem("gameData")
     );
 
     if (
@@ -110,11 +104,11 @@ const MafiaShoots = () => {
       )
     ) {
       // Update isAlive to true
-      retrievedPlayerAndRole[playerIndex].isAlive = true;
+      retrievedPlayerAndRole[playerIndex].playerInfo.isAlive = true;
 
-      // Save the modified playerAndRole array back to sessionStorage
+      // Save the modified gameData array back to sessionStorage
       sessionStorage.setItem(
-        "assignedRoles",
+        "gameData",
         JSON.stringify(retrievedPlayerAndRole)
       );
 
@@ -142,12 +136,9 @@ const MafiaShoots = () => {
   };
 
   useEffect(() => {
-    if (playerAndRole.length < 8) {
-      setDocPlays("/night/cop_checks");
-    } else {
-      setDocPlays("/night/doc_saves");
-    }
-  }, [playerAndRole]);
+    // Determine the value of docPlays based on gameData length
+    setDocPlays(gameData.length < 8 ? "/night/cop_checks" : "/night/doc_saves");
+  }, [gameData]);
 
   return (
     <div className="night_roles_container main_content_wrapper night_theme">
@@ -157,13 +148,14 @@ const MafiaShoots = () => {
         <div className="action_players">
           <table>
             <tbody>
-              {mafiaPlayers.map((player, index) => (
+              {mafiaPlayers.map((data, index) => (
                 <tr key={index}>
                   <td>
-                    <p>{player.name}</p>
+                    <p>{data.playerInfo.name}</p>
                   </td>
                   <td>
-                    <p>{player.role}</p>
+                    {[data.playerInfo.ID]}
+                    <p>{data.playerInfo.role}</p>
                   </td>
                 </tr>
               ))}
@@ -173,24 +165,26 @@ const MafiaShoots = () => {
         <div className="non_action_players">
           <table>
             <tbody>
-              {notMafia.map((player, index) => (
+              {notMafia.map((data, index) => (
                 <tr
                   key={index}
                   className={
-                    !playerAndRole[index].isAlive ? "disabled_row" : ""
+                    !gameData[index].playerState.isAlive ? "disabled_row" : ""
                   }
                 >
                   <td>
-                    <p>{player.name}</p>
+                    {data.playerInfo.ID}
+
+                    <p>{data.playerInfo.name}</p>
                   </td>
                   <td>
-                    {playerAndRole[index].isAlive ? (
+                    {gameData[index].playerState.isAlive ? (
                       <button
-                        onClick={() => toggleKillStatus(index)}
+                        onClick={() => toggleKillStatus(data.playerInfo.ID)}
                         disabled={killIsDone}
                         className={killIsDone ? "disabled_btn" : ""}
                       >
-                        {index}
+                        {[data.playerInfo.ID]}
                         <p>
                           <FontAwesomeIcon icon={faGun} />
                         </p>
