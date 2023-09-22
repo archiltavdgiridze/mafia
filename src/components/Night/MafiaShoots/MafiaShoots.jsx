@@ -11,127 +11,68 @@ import PrevNextBtn from "../../../reComps/PrevNextBtn/PrevNextBtn";
 import Navbar from "../../../reComps/Navbar/Navbar";
 
 const MafiaShoots = () => {
-  const [killedPlayers, setKilledPlayers] = useState({});
-  const [killIsDone, setKillIsDone] = useState(false);
-  const [undoDisabled, setUndoDisabled] = useState(true);
+  const [undoDisabled, setUndoDisabled] = useState({});
+  const [disabledKilling, setDisabledKilling] = useState({});
   const [docPlays, setDocPlays] = useState(""); // State to track if killer plays or not
   const gameData = JSON.parse(sessionStorage.getItem("gameData"));
 
   // Separate mafiaPlayers and notMafia players during component initialization
-  const mafiaPlayers = gameData.filter(
-    (data) => data.playerInfo.roleID === 4 || data.playerInfo.roleID === 5
-  );
-  const notMafia = gameData.filter(
-    (data) => data.playerInfo.roleID !== 4 && data.playerInfo.roleID !== 5
-  );
-  console.log(notMafia);
+  const mafiaPlayers = {};
+  const notMafia = {};
 
-  useEffect(() => {
-    // Check if killIsDone state is stored in localStorage
-    const storedKillIsDone =
-      JSON.parse(localStorage.getItem("killIsDone")) || false;
-
-    // Initialize killIsDone state based on stored data
-    setKillIsDone(storedKillIsDone);
-
-    // Check if there are previously killed players in localStorage
-    const storedKilledPlayers =
-      JSON.parse(localStorage.getItem("killedPlayers")) || {};
-
-    // Initialize killedPlayers and undoDisabled based on stored data
-    setKilledPlayers(storedKilledPlayers);
-
-    const initialUndoDisabled = notMafia.some((player, index) => {
-      return !gameData[index].isAlive && !storedKilledPlayers[index];
-    });
-    setUndoDisabled(initialUndoDisabled);
-
-    // Save the initial state to localStorage
-    localStorage.setItem("killedPlayers", JSON.stringify(storedKilledPlayers));
-  }, []);
-
-  // const toggleKillStatus = 1;
-  // const confirmUndoKill = 2;
-  const toggleKillStatus = (playerIndex) => {
-    if (!killIsDone) {
-      // Retrieve gameData from sessionStorage
-      const retrievedPlayerAndRole = [...gameData];
-
-      setKilledPlayers((prevKilledPlayers) => {
-        const updatedKilledPlayers = { ...prevKilledPlayers };
-        if (updatedKilledPlayers[playerIndex]) {
-          delete updatedKilledPlayers[playerIndex];
-        } else {
-          updatedKilledPlayers[playerIndex] = true;
-
-          // Update the player's isAlive property in retrievedPlayerAndRole
-          retrievedPlayerAndRole[playerIndex].playerInfo.isAlive = false;
-        }
-
-        // Save the modified gameData array back to sessionStorage
-        sessionStorage.setItem(
-          "gameData",
-          JSON.stringify(retrievedPlayerAndRole)
-        );
-
-        // Save updated killedPlayers to localStorage
-        localStorage.setItem(
-          "killedPlayers",
-          JSON.stringify(updatedKilledPlayers)
-        );
-
-        // Check if any player is killed
-        const isAnyPlayerKilled = Object.keys(updatedKilledPlayers).length > 0;
-        setKillIsDone(isAnyPlayerKilled);
-
-        // Check if the player was killed before disabling undo
-        const isPlayerKilled = updatedKilledPlayers[playerIndex];
-        setUndoDisabled(!isPlayerKilled);
-
-        return updatedKilledPlayers;
-      });
+  gameData.forEach((data) => {
+    const playerID = data.playerInfo.ID;
+    if (data.playerInfo.roleID === 4 || data.playerInfo.roleID === 5) {
+      mafiaPlayers[playerID] = data;
+    } else {
+      notMafia[playerID] = data;
     }
+  });
+
+  const toggleKillStatus = (playerID) => {
+    const retrievedGameData = JSON.parse(sessionStorage.getItem("gameData"));
+    console.table(retrievedGameData);
+
+    // Find the player with the given playerID
+    const updatedGameData = retrievedGameData.map((playerData) => {
+      if (playerData.playerInfo.ID === playerID) {
+        // Update isAlive to false
+        playerData.playerState.isAlive = false;
+        // Update the disabledKilling state to disable the button
+        setDisabledKilling((prevDisabledKilling) => ({
+          ...prevDisabledKilling,
+          [playerID]: true,
+        }));
+      }
+      return playerData;
+    });
+    // Save the modified gameData array back to sessionStorage
+    sessionStorage.setItem("gameData", JSON.stringify(updatedGameData));
   };
 
-  const confirmUndoKill = (playerIndex) => {
-    const retrievedPlayerAndRole = JSON.parse(
-      sessionStorage.getItem("gameData")
+  const confirmUndoKill = (playerID) => {
+    // Show a confirmation dialog to confirm the undo action
+    const isConfirmed = window.confirm(
+      "Are you sure you want to undo this action?"
     );
 
-    if (
-      window.confirm(
-        `გსურთ გააუქმოთ ${retrievedPlayerAndRole[playerIndex].name}–ის მკვლელობა?`
-      )
-    ) {
-      // Update isAlive to true
-      retrievedPlayerAndRole[playerIndex].playerInfo.isAlive = true;
-
-      // Save the modified gameData array back to sessionStorage
-      sessionStorage.setItem(
-        "gameData",
-        JSON.stringify(retrievedPlayerAndRole)
+    if (isConfirmed) {
+      // Find the index of the player in gameData array
+      const playerIndex = gameData.findIndex(
+        (data) => data.playerInfo.ID === playerID
       );
 
-      // Remove the player from killedPlayers
-      setKilledPlayers((prevKilledPlayers) => {
-        const updatedKilledPlayers = { ...prevKilledPlayers };
-        delete updatedKilledPlayers[playerIndex];
+      // Update isAlive to true
+      gameData[playerIndex].playerState.isAlive = true;
 
-        // Save updated killedPlayers to localStorage
-        localStorage.setItem(
-          "killedPlayers",
-          JSON.stringify(updatedKilledPlayers)
-        );
+      // Update the disabledKilling state to enable the kill button
+      setDisabledKilling((prevDisabledKilling) => ({
+        ...prevDisabledKilling,
+        [playerID]: false,
+      }));
 
-        // Set undoDisabled to true and killIsDone to false
-        setUndoDisabled(true);
-        setKillIsDone(false);
-
-        // Save the killIsDone state to localStorage
-        localStorage.setItem("killIsDone", JSON.stringify(false));
-
-        return updatedKilledPlayers;
-      });
+      // Save the modified gameData array back to sessionStorage
+      sessionStorage.setItem("gameData", JSON.stringify(gameData));
     }
   };
 
@@ -148,13 +89,12 @@ const MafiaShoots = () => {
         <div className="action_players">
           <table>
             <tbody>
-              {mafiaPlayers.map((data, index) => (
-                <tr key={index}>
+              {Object.values(mafiaPlayers).map((data) => (
+                <tr key={data.playerInfo.ID}>
                   <td>
                     <p>{data.playerInfo.name}</p>
                   </td>
                   <td>
-                    {[data.playerInfo.ID]}
                     <p>{data.playerInfo.role}</p>
                   </td>
                 </tr>
@@ -165,26 +105,25 @@ const MafiaShoots = () => {
         <div className="non_action_players">
           <table>
             <tbody>
-              {notMafia.map((data, index) => (
+              {Object.values(notMafia).map((data) => (
                 <tr
-                  key={index}
-                  className={
-                    !gameData[index].playerState.isAlive ? "disabled_row" : ""
-                  }
+                  key={data.playerInfo.ID}
+                  className={!data.playerState.isAlive ? "disabled_row" : ""}
                 >
                   <td>
-                    {data.playerInfo.ID}
-
                     <p>{data.playerInfo.name}</p>
                   </td>
                   <td>
-                    {gameData[index].playerState.isAlive ? (
+                    {data.playerState.isAlive ? (
                       <button
                         onClick={() => toggleKillStatus(data.playerInfo.ID)}
-                        disabled={killIsDone}
-                        className={killIsDone ? "disabled_btn" : ""}
+                        disabled={disabledKilling[data.playerInfo.ID]}
+                        className={
+                          disabledKilling[data.playerInfo.ID]
+                            ? "disabled_btn"
+                            : ""
+                        }
                       >
-                        {[data.playerInfo.ID]}
                         <p>
                           <FontAwesomeIcon icon={faGun} />
                         </p>
@@ -192,9 +131,8 @@ const MafiaShoots = () => {
                     ) : (
                       <>
                         <button
-                          onClick={() => confirmUndoKill(index)}
-                          disabled={undoDisabled}
-                          className={undoDisabled ? "disabled_btn" : ""}
+                          onClick={() => confirmUndoKill(data.playerInfo.ID)}
+                          disabled={undoDisabled[data.playerInfo.ID]}
                         >
                           <p>
                             <FontAwesomeIcon icon={faRotateLeft} />
