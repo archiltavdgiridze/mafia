@@ -12,9 +12,22 @@ import Navbar from "../../../reComps/Navbar/Navbar";
 
 const MafiaShoots = () => {
   const [undoDisabled, setUndoDisabled] = useState({});
-  const [disabledKilling, setDisabledKilling] = useState({});
+  const [disabledKilling, setDisabledKilling] = useState(false);
   const [docPlays, setDocPlays] = useState(""); // State to track if killer plays or not
-  const gameData = JSON.parse(sessionStorage.getItem("gameData"));
+  const [gameData, setGameData] = useState(
+    JSON.parse(sessionStorage.getItem("gameData"))
+  );
+  const [currentNight, setCurrentNight] = useState(1); // State to track the current night
+
+  // Load disabledKilling state from sessionStorage when the component initializes
+  useEffect(() => {
+    const disabledKillingState = JSON.parse(
+      sessionStorage.getItem("disabledKilling")
+    );
+    if (disabledKillingState) {
+      setDisabledKilling(disabledKillingState);
+    }
+  }, []);
 
   // Separate mafiaPlayers and notMafia players during component initialization
   const mafiaPlayers = {};
@@ -30,24 +43,37 @@ const MafiaShoots = () => {
   });
 
   const toggleKillStatus = (playerID) => {
-    const retrievedGameData = JSON.parse(sessionStorage.getItem("gameData"));
-    console.table(retrievedGameData);
+    if (disabledKilling) {
+      // If all "kill" buttons are disabled, don't proceed
+      return;
+    }
 
-    // Find the player with the given playerID
-    const updatedGameData = retrievedGameData.map((playerData) => {
-      if (playerData.playerInfo.ID === playerID) {
+    // Create a new copy of the gameData array
+    const updatedGameData = gameData.map((data) => {
+      if (data.playerInfo.ID === playerID) {
         // Update isAlive to false
-        playerData.playerState.isAlive = false;
-        // Update the disabledKilling state to disable the button
-        setDisabledKilling((prevDisabledKilling) => ({
-          ...prevDisabledKilling,
-          [playerID]: true,
-        }));
+        data.playerState.isAlive = false;
       }
-      return playerData;
+      return data;
     });
+
+    // Update the gameData state with the new array
+    setGameData(updatedGameData);
+
+    // Update the state to disable all "kill" buttons except for the killed player's undo button
+    setDisabledKilling(true);
+
+    // Enable the undo button for the killed player
+    setUndoDisabled((prevUndoDisabled) => ({
+      ...prevUndoDisabled,
+      [playerID]: false,
+    }));
+
     // Save the modified gameData array back to sessionStorage
     sessionStorage.setItem("gameData", JSON.stringify(updatedGameData));
+
+    // Save the disabledKilling state to sessionStorage
+    sessionStorage.setItem("disabledKilling", JSON.stringify(true));
   };
 
   const confirmUndoKill = (playerID) => {
@@ -65,21 +91,35 @@ const MafiaShoots = () => {
       // Update isAlive to true
       gameData[playerIndex].playerState.isAlive = true;
 
-      // Update the disabledKilling state to enable the kill button
-      setDisabledKilling((prevDisabledKilling) => ({
-        ...prevDisabledKilling,
-        [playerID]: false,
+      // Update the state to enable all "kill" buttons
+      setDisabledKilling(false);
+
+      // Disable the undo button for the killed player
+      setUndoDisabled((prevUndoDisabled) => ({
+        ...prevUndoDisabled,
+        [playerID]: true,
       }));
 
       // Save the modified gameData array back to sessionStorage
       sessionStorage.setItem("gameData", JSON.stringify(gameData));
     }
   };
+  const handleNextNight = () => {
+    // Increment the current night
+    setCurrentNight((prevNight) => prevNight + 1);
+
+    // Enable all "kill" buttons and disable all undo buttons
+    setDisabledKilling(false);
+    setUndoDisabled({});
+  };
 
   useEffect(() => {
     // Determine the value of docPlays based on gameData length
     setDocPlays(gameData.length < 8 ? "/night/cop_checks" : "/night/doc_saves");
   }, [gameData]);
+
+  console.table(mafiaPlayers);
+  console.table(notMafia);
 
   return (
     <div className="night_roles_container main_content_wrapper night_theme">
@@ -117,12 +157,8 @@ const MafiaShoots = () => {
                     {data.playerState.isAlive ? (
                       <button
                         onClick={() => toggleKillStatus(data.playerInfo.ID)}
-                        disabled={disabledKilling[data.playerInfo.ID]}
-                        className={
-                          disabledKilling[data.playerInfo.ID]
-                            ? "disabled_btn"
-                            : ""
-                        }
+                        disabled={disabledKilling}
+                        className={disabledKilling ? "disabled_btn" : ""}
                       >
                         <p>
                           <FontAwesomeIcon icon={faGun} />
@@ -155,6 +191,7 @@ const MafiaShoots = () => {
         linkBack={"/night/role_queue"}
         linkForward={docPlays}
         addBtnClass={"night"}
+        onNext={handleNextNight}
       />
     </div>
   );

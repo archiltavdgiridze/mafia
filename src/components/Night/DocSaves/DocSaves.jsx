@@ -12,79 +12,124 @@ import PrevNextBtn from "../../../reComps/PrevNextBtn/PrevNextBtn";
 import Navbar from "../../../reComps/Navbar/Navbar";
 
 const DocSaves = () => {
+  const [undoDisabled, setUndoDisabled] = useState({});
   const [healedPlayers, setHealedPlayers] = useState({});
-  const [healIsDone, setHealIsDone] = useState(false);
-  const [undoDisabled, setUndoDisabled] = useState(true); // State to track if Undo buttons should be disabled
+  const [disabledHealing, setDisabledHealing] = useState({}); // State to track if Undo buttons should be disabled
+  const [gameData, setGameData] = useState(
+    JSON.parse(sessionStorage.getItem("gameData"))
+  );
+  console.log("Initial gameData:", gameData);
 
-  const playerAndRole = JSON.parse(sessionStorage.getItem("assignedRoles"));
-  console.table(playerAndRole);
+  const docPlayer = gameData.filter((data) => data.playerInfo.roleID === 3);
+  const otherPlayers = gameData.filter((data) => data.playerInfo.roleID !== 3);
 
-  const docPlayer = [];
-  const otherPlayers = [];
+  // 1 მოქალაქე
+  // 2 დეტექტივი
+  // 3 ექიმი
+  // 4 მაფიოზი
+  // 5 დონი
+  // 6 მანიაკი
 
-  for (let i = 0; i < playerAndRole.length; i++) {
-    if (playerAndRole[i].role === "ექიმი") {
-      docPlayer.push(playerAndRole[i]);
-    } else {
-      // otherPlayers.push(playerAndRole[i]);
-    }
-  }
+  const toggleHealStatus = (playerID) => {
+    const retrievedGameData = JSON.parse(sessionStorage.getItem("gameData"));
+    console.log(playerID);
 
-  // useEffect(() => {
-  //   // Save healedPlayers to sessionStorage whenever it changes
-  //   sessionStorage.setItem("healedPlayers", JSON.stringify(healedPlayers));
-  // }, [healedPlayers]);
+    // Find the player with the given playerID
+    const updatedGameData = retrievedGameData.map((playerData) => {
+      if (playerData.playerInfo.ID === playerID) {
+        // If the player was dead, set isAlive to true when healed
+        if (!playerData.playerState.isAlive) {
+          playerData.playerState.isAlive = true;
+        }
+        playerData.playerState.isHealed = true;
 
-  const toggleHealStatus = (playerName) => {
-    if (!healIsDone && !healedPlayers[playerName]) {
-      setHealedPlayers((prevHealedPlayers) => {
-        const updatedHealedPlayers = {
-          ...prevHealedPlayers,
-          [playerName]: true,
-        };
-        setHealIsDone(true);
-        setUndoDisabled(false);
-        return updatedHealedPlayers;
-      });
-    }
+        setDisabledHealing((prevDisabledHealing) => ({
+          ...prevDisabledHealing,
+          [playerID]: true,
+        }));
+      }
+      return playerData;
+    });
+    sessionStorage.setItem("gameData", JSON.stringify(updatedGameData));
+
+    // const updatedGameData = gameData.map((playerData) => {
+    //   if (playerData.playerInfo.ID === playerID) {
+    //     // If the player was dead, set isAlive to true when healed
+    //     if (!playerData.playerState.isAlive) {
+    //       playerData.playerState.isAlive = true;
+    //     }
+    //     playerData.playerState.isHealed = true;
+
+    //     setDisabledHealing((prevDisabledHealing) => ({
+    //       ...prevDisabledHealing,
+    //       [playerID]: true,
+    //     }));
+    //   }
+    //   console.log("Toggle button clicked for player ID:", playerID);
+
+    //   return playerData;
+    // });
+    // console.log("Updated gameData after healing:", updatedGameData);
+    // console.log("Updated disabledHealing:", disabledHealing);
+
+    // setHealedPlayers((prevHealedPlayers) => ({
+    //   ...prevHealedPlayers,
+    //   [playerID]: true,
+    // }));
+    // setGameData(updatedGameData);
+    // sessionStorage.setItem("gameData", JSON.stringify(updatedGameData));
   };
 
-  const confirmUndoHeal = (playerName) => {
-    if (window.confirm(`გსურთ გააუქმოთ ${playerName}–ის მკვლელობა?`)) {
+  const confirmUndoHeal = (playerID) => {
+    if (window.confirm(`გსურთ გააუქმოთ ${playerID}–ის მკვლელობა?`)) {
+      const updatedGameData = gameData.map((playerData) => {
+        if (playerData.playerInfo.ID === playerID) {
+          // If the player was dead before healing, set isAlive back to false
+          if (!healedPlayers[playerID]) {
+            playerData.playerState.isAlive = false;
+          }
+          playerData.playerState.isHealed = false;
+        }
+        return playerData;
+      });
+      setDisabledHealing((prevDisabledHealing) => ({
+        ...prevDisabledHealing,
+        [playerID]: false,
+      }));
       setHealedPlayers((prevHealedPlayers) => {
         const updatedHealedPlayers = { ...prevHealedPlayers };
-        delete updatedHealedPlayers[playerName];
-
-        setUndoDisabled(true);
-        setHealIsDone(false);
+        delete updatedHealedPlayers[playerID];
         return updatedHealedPlayers;
       });
+      setGameData(updatedGameData); // Update gameData state
+      sessionStorage.setItem("gameData", JSON.stringify(updatedGameData));
     }
   };
+
   useEffect(() => {
     const updateIsAliveStatus = () => {
-      const updatedPlayerAndRole = [...playerAndRole];
-      for (const playerName in healedPlayers) {
-        if (healedPlayers.hasOwnProperty(playerName)) {
+      const updatedPlayerAndRole = [...gameData];
+      for (const playerID in healedPlayers) {
+        if (healedPlayers.hasOwnProperty(playerID)) {
           const playerIndex = updatedPlayerAndRole.findIndex(
-            (player) => player.name === playerName
+            (player) => player.playerInfo.ID === playerID
           );
           if (playerIndex !== -1) {
-            updatedPlayerAndRole[playerIndex].isAlive = true;
+            // If the player was dead before healing, set isAlive to false
+            if (!healedPlayers[playerID]) {
+              updatedPlayerAndRole[playerIndex].playerInfo.isAlive = false;
+            }
           }
         }
       }
-
-      sessionStorage.setItem(
-        "assignedRoles",
-        JSON.stringify(updatedPlayerAndRole)
-      );
+      sessionStorage.setItem("gameData", JSON.stringify(updatedPlayerAndRole));
     };
 
     updateIsAliveStatus();
-  }, [healedPlayers]);
+  }, [healedPlayers, gameData]);
 
-  console.table(healedPlayers);
+  console.table(docPlayer);
+  console.table(otherPlayers);
 
   return (
     <div className="MS_container night_roles_container main_content_wrapper night_theme">
@@ -97,13 +142,13 @@ const DocSaves = () => {
         <div className="action_players">
           <table>
             <tbody>
-              {docPlayer.map((player, index) => (
+              {docPlayer.map((data, index) => (
                 <tr key={index}>
                   <td>
-                    <p>{player.name}</p>
+                    <p>{data.playerInfo.name}</p>
                   </td>
                   <td>
-                    <p>{player.role}</p>
+                    <p>{data.playerInfo.role}</p>
                   </td>
                 </tr>
               ))}
@@ -113,23 +158,34 @@ const DocSaves = () => {
         <div className="non_action_players">
           <table>
             <tbody>
-              {playerAndRole.map((player, index) => (
+              {Object.values(otherPlayers).map((data) => (
                 <tr
-                  key={index}
-                  className={
-                    playerAndRole[index].isAlive === false ? "disabled_row" : ""
-                  }
+                  key={data.playerInfo.ID}
+                  className={!data.playerState.isAlive ? "disabled_row" : ""}
                 >
                   <td>
-                    <p>{player.name}</p>
+                    <p>{data.playerInfo.name}</p>
                   </td>
                   <td>
-                    {healedPlayers[player.name] ? (
+                    {data.playerState.isAlive ? (
+                      <button
+                        onClick={() => toggleHealStatus(data.playerInfo.ID)}
+                        disabled={disabledHealing[data.playerInfo.ID]}
+                        className={
+                          disabledHealing[data.playerInfo.ID]
+                            ? "disabled_btn"
+                            : ""
+                        }
+                      >
+                        <p>
+                          <FontAwesomeIcon icon={faUserDoctor} />
+                        </p>
+                      </button>
+                    ) : (
                       <>
                         <button
-                          onClick={() => confirmUndoHeal(player.name)}
-                          disabled={undoDisabled}
-                          className={undoDisabled ? "disabled_btn" : ""}
+                          onClick={() => confirmUndoHeal(data.playerInfo.ID)}
+                          disabled={undoDisabled[data.playerInfo.ID]}
                         >
                           <p>
                             <FontAwesomeIcon icon={faRotateLeft} />
@@ -140,16 +196,6 @@ const DocSaves = () => {
                           <FontAwesomeIcon icon={faHeart} />
                         </p>
                       </>
-                    ) : (
-                      <button
-                        onClick={() => toggleHealStatus(player.name)}
-                        disabled={healIsDone}
-                        className={healIsDone ? "disabled_btn" : ""}
-                      >
-                        <p>
-                          <FontAwesomeIcon icon={faUserDoctor} />
-                        </p>
-                      </button>
                     )}
                   </td>
                 </tr>
