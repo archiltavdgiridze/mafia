@@ -12,8 +12,10 @@ import maniac from "../../../assets/img/roleCards/maniac.webp";
 import citizen from "../../../assets/img/roleCards/citizen.webp";
 import detective from "../../../assets/img/roleCards/detective.webp";
 import doctor from "../../../assets/img/roleCards/doctor.webp";
-
 import Msg4Host from "../../../reComps/Msg4Host/Msg4Host";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css"; // You can choose a different effect if needed
+
 
 const RoleShow = () => {
   // Retrieve and Filter Player Names
@@ -115,6 +117,7 @@ const RoleShow = () => {
         playerState: {
           isAlive: true,
           isHealed: false,
+          isDeadForever: false,
           isCheckedByCop: false,
           isCheckedByDon: false,
         },
@@ -176,11 +179,13 @@ const RoleShow = () => {
                 <SwiperSlide key={index}>
                   {activeIndex === index && <p>{data.playerInfo.name}</p>}
                   <div className="card_container">
-                    <img
+                    <LazyLoadImage
                       className="role_card"
                       src={data.playerInfo.role_img}
                       alt={`Slide ${index}`}
+                      effect="blur" 
                     />
+
                     {activeIndex === index && <p>{data.playerInfo.role}</p>}
                   </div>
                 </SwiperSlide>
