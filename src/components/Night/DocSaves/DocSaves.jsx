@@ -21,7 +21,10 @@ const DocSaves = () => {
   console.log("Initial gameData:", gameData);
 
   const docPlayer = gameData.filter((data) => data.playerInfo.roleID === 3);
-  const otherPlayers = gameData.filter((data) => data.playerInfo.roleID !== 3);
+  const allPlayers = gameData.filter((data) => data.playerInfo.roleID);
+
+  console.table(docPlayer);
+  console.table(allPlayers);
 
   // 1 მოქალაქე
   // 2 დეტექტივი
@@ -51,34 +54,27 @@ const DocSaves = () => {
       return playerData;
     });
     sessionStorage.setItem("gameData", JSON.stringify(updatedGameData));
-
-    // const updatedGameData = gameData.map((playerData) => {
-    //   if (playerData.playerInfo.ID === playerID) {
-    //     // If the player was dead, set isAlive to true when healed
-    //     if (!playerData.playerState.isAlive) {
-    //       playerData.playerState.isAlive = true;
-    //     }
-    //     playerData.playerState.isHealed = true;
-
-    //     setDisabledHealing((prevDisabledHealing) => ({
-    //       ...prevDisabledHealing,
-    //       [playerID]: true,
-    //     }));
-    //   }
-    //   console.log("Toggle button clicked for player ID:", playerID);
-
-    //   return playerData;
-    // });
-    // console.log("Updated gameData after healing:", updatedGameData);
-    // console.log("Updated disabledHealing:", disabledHealing);
-
-    // setHealedPlayers((prevHealedPlayers) => ({
-    //   ...prevHealedPlayers,
-    //   [playerID]: true,
-    // }));
-    // setGameData(updatedGameData);
-    // sessionStorage.setItem("gameData", JSON.stringify(updatedGameData));
   };
+  // const toggleHealStatus = (playerID) => {
+  //   const retrievedGameData = JSON.parse(sessionStorage.getItem("gameData"));
+  //   console.log(playerID);
+
+  //   // Find the player with the given playerID
+  //   const updatedGameData = retrievedGameData.map((playerData) => {
+  //     if (playerData.playerInfo.ID === playerID) {
+  //       // Check if the player is already healed or permanently dead
+  //       if (!playerData.playerState.isDeadForever) {}
+
+
+  //       setDisabledHealing((prevDisabledHealing) => ({
+  //         ...prevDisabledHealing,
+  //         [playerID]: true,
+  //       }));
+  //     }
+  //     return playerData;
+  //   });
+  //   sessionStorage.setItem("gameData", JSON.stringify(updatedGameData));
+  // };
 
   const confirmUndoHeal = (playerID) => {
     if (window.confirm(`გსურთ გააუქმოთ ${playerID}–ის მკვლელობა?`)) {
@@ -128,9 +124,6 @@ const DocSaves = () => {
     updateIsAliveStatus();
   }, [healedPlayers, gameData]);
 
-  console.table(docPlayer);
-  console.table(otherPlayers);
-
   return (
     <div className="MS_container night_roles_container main_content_wrapper night_theme">
       <Navbar />
@@ -158,7 +151,7 @@ const DocSaves = () => {
         <div className="non_action_players">
           <table>
             <tbody>
-              {Object.values(otherPlayers).map((data) => (
+              {Object.values(allPlayers).map((data) => (
                 <tr
                   key={data.playerInfo.ID}
                   className={!data.playerState.isAlive ? "disabled_row" : ""}

@@ -19,7 +19,7 @@ const MafiaShoots = () => {
   );
   const [currentNight, setCurrentNight] = useState(1); // State to track the current night
 
-  // Load disabledKilling state from sessionStorage when the component initializes
+  // ? Load disabledKilling state from sessionStorage when the component initializes
   useEffect(() => {
     const disabledKillingState = JSON.parse(
       sessionStorage.getItem("disabledKilling")
@@ -29,7 +29,7 @@ const MafiaShoots = () => {
     }
   }, []);
 
-  // Separate mafiaPlayers and notMafia players during component initialization
+  // ? Separate mafiaPlayers and notMafia players during component initialization
   const mafiaPlayers = {};
   const notMafia = {};
 
@@ -44,14 +44,13 @@ const MafiaShoots = () => {
 
   const toggleKillStatus = (playerID) => {
     if (disabledKilling) {
-      // If all "kill" buttons are disabled, don't proceed
+      // ? If all "kill" buttons are disabled, don't proceed
       return;
     }
 
-    // Create a new copy of the gameData array
+    // ? Create a new copy of the gameData array
     const updatedGameData = gameData.map((data) => {
       if (data.playerInfo.ID === playerID) {
-        // Update isAlive to false
         data.playerState.isAlive = false;
       }
       return data;
@@ -63,32 +62,27 @@ const MafiaShoots = () => {
     // Update the state to disable all "kill" buttons except for the killed player's undo button
     setDisabledKilling(true);
 
-    // Enable the undo button for the killed player
+    // ? Enable the undo button for the killed player
     setUndoDisabled((prevUndoDisabled) => ({
       ...prevUndoDisabled,
       [playerID]: false,
     }));
 
-    // Save the modified gameData array back to sessionStorage
     sessionStorage.setItem("gameData", JSON.stringify(updatedGameData));
-
-    // Save the disabledKilling state to sessionStorage
     sessionStorage.setItem("disabledKilling", JSON.stringify(true));
   };
 
   const confirmUndoKill = (playerID) => {
-    // Show a confirmation dialog to confirm the undo action
     const isConfirmed = window.confirm(
       "Are you sure you want to undo this action?"
     );
 
     if (isConfirmed) {
-      // Find the index of the player in gameData array
+      // ? Find the index of the player in gameData array
       const playerIndex = gameData.findIndex(
         (data) => data.playerInfo.ID === playerID
       );
 
-      // Update isAlive to true
       gameData[playerIndex].playerState.isAlive = true;
 
       // Update the state to enable all "kill" buttons
@@ -100,12 +94,10 @@ const MafiaShoots = () => {
         [playerID]: true,
       }));
 
-      // Save the modified gameData array back to sessionStorage
       sessionStorage.setItem("gameData", JSON.stringify(gameData));
     }
   };
   const handleNextNight = () => {
-    // Increment the current night
     setCurrentNight((prevNight) => prevNight + 1);
 
     // Enable all "kill" buttons and disable all undo buttons
@@ -114,7 +106,7 @@ const MafiaShoots = () => {
   };
 
   useEffect(() => {
-    // Determine the value of docPlays based on gameData length
+    // ? Determine the value of docPlays based on gameData length
     setDocPlays(gameData.length < 8 ? "/night/cop_checks" : "/night/doc_saves");
   }, [gameData]);
 
