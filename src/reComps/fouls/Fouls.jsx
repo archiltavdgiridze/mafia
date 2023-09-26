@@ -10,7 +10,41 @@ const Fouls = () => {
   const handleShow = () => setShow(true);
   const players = JSON.parse(sessionStorage.getItem("playerNames"));
   const foulQuantity = JSON.parse(sessionStorage.getItem("foulQuantity"));
-  const assignedRoles = JSON.parse(sessionStorage.getItem('assignedRoles'));
+  const foulCount = JSON.parse(sessionStorage.getItem("foulCounts"));
+  const gameData = JSON.parse(sessionStorage.getItem("gameData"));
+
+  // Initialize player statuses and store them in state
+  const initialPlayerStatus = gameData.map((data) => ({
+    isAlive: data.playerState.isAlive,
+    isDeadForever: data.playerState.isDeadForever,
+  }));
+
+  const [playerStatuses, setPlayerStatuses] = useState(initialPlayerStatus);
+
+  // Monitor foul counts and update player statuses
+  useEffect(() => {
+    for (let i = 0; i < foulCount.length; i++) {
+      if (foulCount[i] === foulQuantity) {
+        // Player reached foulQuantity, set status to dead forever
+        gameData[i].playerState.isAlive = false;
+        gameData[i].playerState.isDeadForever = true;
+      } else {
+        // Player's foul count is less than foulQuantity
+        // Check if they were dead forever and revert if necessary
+        if (playerStatuses[i].isDeadForever) {
+          gameData[i].playerState.isAlive = true;
+          gameData[i].playerState.isDeadForever = false;
+        }
+      }
+    }
+    sessionStorage.setItem("gameData", JSON.stringify(gameData));
+    setPlayerStatuses(
+      gameData.map((data) => ({
+        isAlive: data.playerState.isAlive,
+        isDeadForever: data.playerState.isDeadForever,
+      }))
+    );
+  }, [foulCount]);
 
   // Initialize foulCounts from session storage or with zeros if not available
   const initialFoulCounts =
@@ -23,22 +57,12 @@ const Fouls = () => {
     const newFoulCounts = [...foulCounts];
     newFoulCounts[index] = Math.max(0, newFoulCounts[index] - 1);
     setFoulCounts(newFoulCounts);
-    if (newFoulCounts[index] !== foulQuantity) {
-      const updatedAssignedRoles = [...assignedRoles];
-      updatedAssignedRoles[index].isAlive = true;
-      sessionStorage.setItem('assignedRoles', JSON.stringify(updatedAssignedRoles));
-    }
   };
 
   const handleFoulAdd = (index) => {
     const newFoulCounts = [...foulCounts];
-    if (newFoulCounts[index] <= (foulQuantity - 1)) {
+    if (newFoulCounts[index] < foulQuantity) {
       newFoulCounts[index] += 1;
-    }
-    if (newFoulCounts[index] === foulQuantity) {
-      const updatedAssignedRoles = [...assignedRoles];
-      updatedAssignedRoles[index].isAlive = false;
-      sessionStorage.setItem('assignedRoles', JSON.stringify(updatedAssignedRoles));
     }
     setFoulCounts(newFoulCounts);
   };
@@ -46,12 +70,11 @@ const Fouls = () => {
   // Update session storage whenever foulCounts change
   useEffect(() => {
     sessionStorage.setItem("foulCounts", JSON.stringify(foulCounts));
-  }, [foulCounts, assignedRoles]);
-  
+  }, [foulCounts]);
 
   return (
     <>
-      <div className="foul_btn" onClick={handleShow}>ფ</div>
+      <div onClick={handleShow}>ფ</div>
       <Modal
         show={show}
         onHide={handleClose}
@@ -77,7 +100,7 @@ const Fouls = () => {
               {players.map((player, index) => (
                 <tr key={index}>
                   <td>
-                    <p>{player} {!assignedRoles[index].isAlive ? 'mokda egi' : ''} </p>
+                    <p>{player}</p>
                   </td>
                   <td>
                     <div>

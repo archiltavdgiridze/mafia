@@ -55,6 +55,8 @@ const DocSaves = () => {
     });
     sessionStorage.setItem("gameData", JSON.stringify(updatedGameData));
   };
+
+  // ? this toggleHealStatus function is not finished yet, dont delete it
   // const toggleHealStatus = (playerID) => {
   //   const retrievedGameData = JSON.parse(sessionStorage.getItem("gameData"));
   //   console.log(playerID);
@@ -63,8 +65,37 @@ const DocSaves = () => {
   //   const updatedGameData = retrievedGameData.map((playerData) => {
   //     if (playerData.playerInfo.ID === playerID) {
   //       // Check if the player is already healed or permanently dead
-  //       if (!playerData.playerState.isDeadForever) {}
-
+  //       if (!playerData.playerState.isDeadForever) {
+  //         // if player is not dead forever, check if player's isAlive prop
+  //         if (playerData.playerState.isAlive) {
+  //           // if player is alive, set isHealed to true
+  //           playerData.playerState.isHealed = true;
+  //         } else {
+  //           if (playerData.playerState.isHealed) {
+  //             // if player is not alive, check if player is already healed
+  //             playerData.playerState.isDeadForever = true;
+  //           } else {
+  //             // if doctor heals currently killed player, set isAlive to true, ishealed to true, if not, set another healed player's isHeale to true and currently killed player's isDeadForever to false
+  //             // if (
+  //             //   playerData.playerState.isAlive === false &&
+  //             //   playerData.playerState.isHealed === false &&
+  //             //   playerData.playerState.isDeadForever === false
+  //             // ) {
+  //             //   playerData.playerState.isAlive = true;
+  //             //   playerData.playerState.isHealed = true;
+  //             // } else if (
+  //             //   playerData.playerState.isAlive === true &&
+  //             //   playerData.playerState.isHealed === true &&
+  //             //   playerData.playerState.isDeadForever === false
+  //             // ) {
+  //             //   playerData.playerState.isHealed = true;
+  //             //   playerData.playerState.isDeadForever = false;
+  //             // }
+  //           }
+  //         }
+  //       } else {
+  //         //disable heal button
+  //       }
 
   //       setDisabledHealing((prevDisabledHealing) => ({
   //         ...prevDisabledHealing,
