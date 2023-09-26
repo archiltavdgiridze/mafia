@@ -46,7 +46,6 @@ const Fouls = () => {
     );
   }, [foulCount]);
 
-
   // Initialize foulCounts from session storage or with zeros if not available
   const initialFoulCounts =
     JSON.parse(sessionStorage.getItem("foulCounts")) ||
@@ -58,32 +57,24 @@ const Fouls = () => {
     const newFoulCounts = [...foulCounts];
     newFoulCounts[index] = Math.max(0, newFoulCounts[index] - 1);
     setFoulCounts(newFoulCounts);
-    if (newFoulCounts[index] !== foulQuantity) {
-      const updatedGameData = [...gameData];
-      updatedGameData[index].isAlive = true;
-      sessionStorage.setItem('gameData', JSON.stringify(updatedGameData));
-    }
   };
 
   const handleFoulAdd = (index) => {
     const newFoulCounts = [...foulCounts];
-
     if (newFoulCounts[index] < foulQuantity) {
       newFoulCounts[index] += 1;
     }
-
     setFoulCounts(newFoulCounts);
   };
 
   // Update session storage whenever foulCounts change
   useEffect(() => {
     sessionStorage.setItem("foulCounts", JSON.stringify(foulCounts));
-  }, [foulCounts, gameData]);
-  
+  }, [foulCounts]);
 
   return (
     <>
-      <div className="foul_btn" onClick={handleShow}>ფ</div>
+      <div onClick={handleShow}>ფ</div>
       <Modal
         show={show}
         onHide={handleClose}
@@ -109,7 +100,7 @@ const Fouls = () => {
               {players.map((player, index) => (
                 <tr key={index}>
                   <td>
-                    <p>{player} {!gameData[index].isAlive ? 'mokda egi' : ''} </p>
+                    <p>{player}</p>
                   </td>
                   <td>
                     <div>
