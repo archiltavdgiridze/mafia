@@ -1,4 +1,14 @@
 /* Modal Container */
+.foul_btn{
+  position: absolute;
+  background-color: black;
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: bolder;
+  padding: 10px;
+  top: 80dvh;
+  left: 80%;
+}
 .modal {
   display: none;
   overflow: hidden;
@@ -33,13 +43,14 @@
   outline: 0;
   max-height: 70dvh;
   overflow-y: auto;
+  width: 100% !important;
 }
 
 /* Modal Header */
 .modal-header {
-  position: fixed;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   // justify-content: space-between;
   margin: auto;
   padding: 0 1rem;
@@ -52,7 +63,6 @@
 
 /* Modal Title */
 .modal-title {
-  margin: 0 12rem 0 0;
   line-height: 1.5;
   font-size: 2rem;
   padding: 0.5rem 0 0 0;
@@ -61,7 +71,7 @@
 .modal-body {
   position: relative;
   padding: 1rem;
-  margin-top: 3rem;
+  margin-top: 1rem;
 
   table {
     width: 100%;

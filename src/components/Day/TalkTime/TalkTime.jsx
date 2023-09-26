@@ -3,6 +3,7 @@ import "./talktime.scss";
 import { Link } from "react-router-dom";
 import CountdownTimer from "../../../reComps/CountdownTimer/CountdownTimer";
 import Navbar from "../../../reComps/Navbar/Navbar";
+import Fouls from "../../../reComps/fouls/Fouls";
 
 const TalkTime = (isPlaying, toggleTimer) => {
   const [count, setCount] = useState(0);
@@ -37,6 +38,7 @@ const TalkTime = (isPlaying, toggleTimer) => {
   return (
     <div className="TT_container main_content_wrapper">
       <Navbar backLink={"/role_show"} />
+      <Fouls />
       <div className="speaker_name msg_4_host">
         <h2>საუბრობს {activePlayerName}</h2>
       </div>
