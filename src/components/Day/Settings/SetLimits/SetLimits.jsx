@@ -8,7 +8,7 @@ const SetLimits = () => {
   // Define unique names for each slider
   const talkTimeSliderName = "talkTime";
   const defenceTimeSliderName = "defenceTime";
-  const foulQuantitySliderName = "foulQuantity";
+  const foulLimitSliderName = "foulLimit";
 
   return (
     <div className="SL_container main_content_wrapper">
@@ -32,7 +32,7 @@ const SetLimits = () => {
         </div>
         <div className="foul_quantity">
           <h2>ფოლების რაოდენობა</h2>
-          <RangeSlider min={2} max={4} step={1} name={foulQuantitySliderName} />
+          <RangeSlider min={2} max={4} step={1} name={foulLimitSliderName} />
         </div>
         
       </div>
