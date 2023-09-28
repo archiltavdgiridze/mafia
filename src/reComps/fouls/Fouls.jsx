@@ -10,41 +10,7 @@ const Fouls = () => {
   const handleShow = () => setShow(true);
   const players = JSON.parse(sessionStorage.getItem("playerNames"));
   const foulQuantity = JSON.parse(sessionStorage.getItem("foulQuantity"));
-  const foulCount = JSON.parse(sessionStorage.getItem("foulCounts"));
   const gameData = JSON.parse(sessionStorage.getItem("gameData"));
-
-  // Initialize player statuses and store them in state
-  const initialPlayerStatus = gameData.map((data) => ({
-    isAlive: data.playerState.isAlive,
-    isDeadForever: data.playerState.isDeadForever,
-  }));
-
-  const [playerStatuses, setPlayerStatuses] = useState(initialPlayerStatus);
-
-  // Monitor foul counts and update player statuses
-  useEffect(() => {
-    for (let i = 0; i < foulCount.length; i++) {
-      if (foulCount[i] === foulQuantity) {
-        // Player reached foulQuantity, set status to dead forever
-        gameData[i].playerState.isAlive = false;
-        gameData[i].playerState.isDeadForever = true;
-      } else {
-        // Player's foul count is less than foulQuantity
-        // Check if they were dead forever and revert if necessary
-        if (playerStatuses[i].isDeadForever) {
-          gameData[i].playerState.isAlive = true;
-          gameData[i].playerState.isDeadForever = false;
-        }
-      }
-    }
-    sessionStorage.setItem("gameData", JSON.stringify(gameData));
-    setPlayerStatuses(
-      gameData.map((data) => ({
-        isAlive: data.playerState.isAlive,
-        isDeadForever: data.playerState.isDeadForever,
-      }))
-    );
-  }, [foulCount]);
 
   // Initialize foulCounts from session storage or with zeros if not available
   const initialFoulCounts =
@@ -53,6 +19,43 @@ const Fouls = () => {
 
   const [foulCounts, setFoulCounts] = useState(initialFoulCounts);
 
+  // Update session storage whenever foulCounts change
+  useEffect(() => {
+    sessionStorage.setItem("foulCounts", JSON.stringify(foulCounts));
+  }, [foulCounts]);
+
+  const foulCount = JSON.parse(sessionStorage.getItem("foulCounts"));
+
+  // Monitor foul counts and update player statuses
+  useEffect(() => {
+    if (foulCount) {
+      for (let i = 0; i < foulCount.length; i++) {
+        if (foulCount[i] === foulQuantity - 1) {
+          // Player reached or exceeded foulQuantity, set status to dead forever
+          if (
+            (gameData[i].playerState.isAlive &&
+              !gameData[i].playerState.isDeadForever) ||
+            (!gameData[i].playerState.isAlive &&
+              !gameData[i].playerState.isDeadForever)
+          ) {
+            gameData[i].playerState.isAlive = false;
+            gameData[i].playerState.isDeadForever = true;
+          }
+        } else {
+          // Player's foul count is less than foulQuantity
+          // Check if they were dead forever and revert if necessary
+          if (gameData[i].playerState.isDeadForever) {
+            gameData[i].playerState.isAlive = true;
+            gameData[i].playerState.isDeadForever = false;
+          }
+        }
+      }
+      // Update gameData in session storage
+      sessionStorage.setItem("gameData", JSON.stringify(gameData));
+    }
+  }, [foulCount]);
+
+  // Add and subtract foul counts
   const handleFoulSubtract = (index) => {
     const newFoulCounts = [...foulCounts];
     newFoulCounts[index] = Math.max(0, newFoulCounts[index] - 1);
@@ -66,11 +69,6 @@ const Fouls = () => {
     }
     setFoulCounts(newFoulCounts);
   };
-
-  // Update session storage whenever foulCounts change
-  useEffect(() => {
-    sessionStorage.setItem("foulCounts", JSON.stringify(foulCounts));
-  }, [foulCounts]);
 
   return (
     <>

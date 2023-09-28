@@ -56,6 +56,24 @@ const DocSaves = () => {
     sessionStorage.setItem("gameData", JSON.stringify(updatedGameData));
   };
 
+  // const toggleHealStatus = (playerID) => {
+  //   const retrievedGameData = JSON.parse(sessionStorage.getItem("gameData"));
+
+  //   // Find the player with the given playerID
+  //   const updatedGameData = retrievedGameData.map((playerData) => {
+  //     if (playerData.playerInfo.ID === playerID) {
+  //       if (
+  //         !playerData.playerState.isHealed &&
+  //         !playerData.playerState.isDeadForever
+  //       ) {
+  //         console.log("HELLO");
+  //       }
+  //     }
+  //   });
+
+  //   sessionStorage.setItem("gameData", JSON.stringify(updatedGameData));
+  // };
+
   // // ? this toggleHealStatus function is not finished yet, dont delete it
   // const toggleHealStatus = (playerID) => {
   //   const retrievedGameData = JSON.parse(sessionStorage.getItem("gameData"));
@@ -67,7 +85,7 @@ const DocSaves = () => {
   //       // Check if the player is already healed or permanently dead
   //       if (!playerData.playerState.isAlive) {
   //         // ! es kodi dasasrulebelia
-  //         // ?          
+  //         // ?
   //         // If the player was dead before healing, set isAlive to true
   //         playerData.playerState.isAlive = true;
   //         playerData.playerState.isHealed = true;
@@ -81,7 +99,7 @@ const DocSaves = () => {
   //           ...prevHealedPlayers,
   //           [playerID]: false,
   //         }));
-  //         // ? 
+  //         // ?
 
   //       } else {
   //         playerData.playerState.isHealed = true;
@@ -133,9 +151,8 @@ const DocSaves = () => {
             (player) => player.playerInfo.ID === playerID
           );
           if (playerIndex !== -1) {
-            // If the player was dead before healing, set isAlive to false
             if (!healedPlayers[playerID]) {
-              updatedPlayerAndRole[playerIndex].playerInfo.isAlive = false;
+              updatedPlayerAndRole[playerIndex].playerState.isAlive = false;
             }
           }
         }
