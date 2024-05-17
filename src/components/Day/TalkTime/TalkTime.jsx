@@ -38,7 +38,6 @@ const TalkTime = (isPlaying, toggleTimer) => {
   return (
     <div className="TT_container main_content_wrapper">
       <Navbar backLink={"/role_show"} />
-      <Fouls />
       <div className="speaker_name msg_4_host">
         <h2>საუბრობს {activePlayerName}</h2>
       </div>

@@ -18,7 +18,7 @@ const DocSaves = () => {
   const [gameData, setGameData] = useState(
     JSON.parse(sessionStorage.getItem("gameData"))
   );
-  console.log("Initial gameData:", gameData);
+  const [doctorActionDone, setDoctorActionDone] = useState(false);
 
   const docPlayer = gameData.filter((data) => data.playerInfo.roleID === 3);
   const allPlayers = gameData.filter((data) => data.playerInfo.roleID);
@@ -35,12 +35,18 @@ const DocSaves = () => {
 
   const toggleHealStatus = (playerID) => {
     const retrievedGameData = JSON.parse(sessionStorage.getItem("gameData"));
-    console.log(playerID);
 
     // Find the player with the given playerID
     const updatedGameData = retrievedGameData.map((playerData) => {
       if (playerData.playerInfo.ID === playerID) {
         // If the player was dead, set isAlive to true when healed
+        if (!healedPlayers[playerID]) {
+          setHealedPlayers((prevHealedPlayers) => ({
+            ...prevHealedPlayers,
+            [playerID]: playerData.playerState.isAlive,
+          }));
+        }
+
         if (!playerData.playerState.isAlive) {
           playerData.playerState.isAlive = true;
         }
@@ -50,78 +56,32 @@ const DocSaves = () => {
           ...prevDisabledHealing,
           [playerID]: true,
         }));
+        setDoctorActionDone(true);
       }
       return playerData;
     });
     sessionStorage.setItem("gameData", JSON.stringify(updatedGameData));
   };
 
-  // ? this toggleHealStatus function is not finished yet, dont delete it
-  // const toggleHealStatus = (playerID) => {
-  //   const retrievedGameData = JSON.parse(sessionStorage.getItem("gameData"));
-  //   console.log(playerID);
-
-  //   // Find the player with the given playerID
-  //   const updatedGameData = retrievedGameData.map((playerData) => {
-  //     if (playerData.playerInfo.ID === playerID) {
-  //       // Check if the player is already healed or permanently dead
-  //       if (!playerData.playerState.isDeadForever) {
-  //         // if player is not dead forever, check if player's isAlive prop
-  //         if (playerData.playerState.isAlive) {
-  //           // if player is alive, set isHealed to true
-  //           playerData.playerState.isHealed = true;
-  //         } else {
-  //           if (playerData.playerState.isHealed) {
-  //             // if player is not alive, check if player is already healed
-  //             playerData.playerState.isDeadForever = true;
-  //           } else {
-  //             // if doctor heals currently killed player, set isAlive to true, ishealed to true, if not, set another healed player's isHeale to true and currently killed player's isDeadForever to false
-  //             // if (
-  //             //   playerData.playerState.isAlive === false &&
-  //             //   playerData.playerState.isHealed === false &&
-  //             //   playerData.playerState.isDeadForever === false
-  //             // ) {
-  //             //   playerData.playerState.isAlive = true;
-  //             //   playerData.playerState.isHealed = true;
-  //             // } else if (
-  //             //   playerData.playerState.isAlive === true &&
-  //             //   playerData.playerState.isHealed === true &&
-  //             //   playerData.playerState.isDeadForever === false
-  //             // ) {
-  //             //   playerData.playerState.isHealed = true;
-  //             //   playerData.playerState.isDeadForever = false;
-  //             // }
-  //           }
-  //         }
-  //       } else {
-  //         //disable heal button
-  //       }
-
-  //       setDisabledHealing((prevDisabledHealing) => ({
-  //         ...prevDisabledHealing,
-  //         [playerID]: true,
-  //       }));
-  //     }
-  //     return playerData;
-  //   });
-  //   sessionStorage.setItem("gameData", JSON.stringify(updatedGameData));
-  // };
-
+  // Function to handle undoing the heal
   const confirmUndoHeal = (playerID) => {
     if (window.confirm(`გსურთ გააუქმოთ ${playerID}–ის მკვლელობა?`)) {
       const updatedGameData = gameData.map((playerData) => {
         if (playerData.playerInfo.ID === playerID) {
-          // If the player was dead before healing, set isAlive back to false
+          // If the player was dead before healing, set isAlive back to its original state
           if (!healedPlayers[playerID]) {
             playerData.playerState.isAlive = false;
+          } else {
+            playerData.playerState.isAlive = healedPlayers[playerID];
           }
           playerData.playerState.isHealed = false;
         }
         return playerData;
       });
-      setDisabledHealing((prevDisabledHealing) => ({
-        ...prevDisabledHealing,
-        [playerID]: false,
+
+      setUndoDisabled((prevUndoDisabled) => ({
+        ...prevUndoDisabled,
+        [playerID]: true,
       }));
       setHealedPlayers((prevHealedPlayers) => {
         const updatedHealedPlayers = { ...prevHealedPlayers };
@@ -134,26 +94,15 @@ const DocSaves = () => {
   };
 
   useEffect(() => {
-    const updateIsAliveStatus = () => {
-      const updatedPlayerAndRole = [...gameData];
-      for (const playerID in healedPlayers) {
-        if (healedPlayers.hasOwnProperty(playerID)) {
-          const playerIndex = updatedPlayerAndRole.findIndex(
-            (player) => player.playerInfo.ID === playerID
-          );
-          if (playerIndex !== -1) {
-            // If the player was dead before healing, set isAlive to false
-            if (!healedPlayers[playerID]) {
-              updatedPlayerAndRole[playerIndex].playerInfo.isAlive = false;
-            }
-          }
-        }
+    // Disable other player's heal buttons until the doctor's action is done
+    const disableHealButtons = () => {
+      if (doctorActionDone) {
+        setDisabledHealing({});
       }
-      sessionStorage.setItem("gameData", JSON.stringify(updatedPlayerAndRole));
     };
 
-    updateIsAliveStatus();
-  }, [healedPlayers, gameData]);
+    disableHealButtons();
+  }, [doctorActionDone]);
 
   return (
     <div className="MS_container night_roles_container main_content_wrapper night_theme">
@@ -191,7 +140,7 @@ const DocSaves = () => {
                     <p>{data.playerInfo.name}</p>
                   </td>
                   <td>
-                    {data.playerState.isAlive ? (
+                    {!data.playerState.isHealed ? (
                       <button
                         onClick={() => toggleHealStatus(data.playerInfo.ID)}
                         disabled={disabledHealing[data.playerInfo.ID]}
@@ -201,6 +150,7 @@ const DocSaves = () => {
                             : ""
                         }
                       >
+                        {data.playerInfo.ID}
                         <p>
                           <FontAwesomeIcon icon={faUserDoctor} />
                         </p>
@@ -208,7 +158,7 @@ const DocSaves = () => {
                     ) : (
                       <>
                         <button
-                          onClick={() => confirmUndoHeal(data.playerInfo.ID)}
+                          onClick={() => confirmUndoHeal(data.playerInfo)}
                           disabled={undoDisabled[data.playerInfo.ID]}
                         >
                           <p>

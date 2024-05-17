@@ -12,20 +12,20 @@ import Navbar from "../../../reComps/Navbar/Navbar";
 
 const MafiaShoots = () => {
   const [undoDisabled, setUndoDisabled] = useState({});
-  const [disabledKilling, setDisabledKilling] = useState(false);
+  const [disabledKillButton, setDisabledKillButton] = useState(false);
   const [docPlays, setDocPlays] = useState(""); // State to track if killer plays or not
   const [gameData, setGameData] = useState(
     JSON.parse(sessionStorage.getItem("gameData"))
   );
   const [currentNight, setCurrentNight] = useState(1); // State to track the current night
 
-  // ? Load disabledKilling state from sessionStorage when the component initializes
+  // ? Load disabledKillButton state from sessionStorage when the component initializes
   useEffect(() => {
     const disabledKillingState = JSON.parse(
-      sessionStorage.getItem("disabledKilling")
+      sessionStorage.getItem("disabledKillButton")
     );
     if (disabledKillingState) {
-      setDisabledKilling(disabledKillingState);
+      setDisabledKillButton(disabledKillingState);
     }
   }, []);
 
@@ -43,12 +43,12 @@ const MafiaShoots = () => {
   });
 
   const toggleKillStatus = (playerID) => {
-    if (disabledKilling) {
-      // ? If all "kill" buttons are disabled, don't proceed
+    if (disabledKillButton) {
+      //  If all "kill" buttons are disabled, don't proceed
       return;
     }
 
-    // ? Create a new copy of the gameData array
+    //  Create a new copy of the gameData array
     const updatedGameData = gameData.map((data) => {
       if (data.playerInfo.ID === playerID) {
         data.playerState.isAlive = false;
@@ -58,18 +58,16 @@ const MafiaShoots = () => {
 
     // Update the gameData state with the new array
     setGameData(updatedGameData);
+    setDisabledKillButton(true);
 
-    // Update the state to disable all "kill" buttons except for the killed player's undo button
-    setDisabledKilling(true);
-
-    // ? Enable the undo button for the killed player
+    // Enable the undo button for the killed player
     setUndoDisabled((prevUndoDisabled) => ({
       ...prevUndoDisabled,
       [playerID]: false,
     }));
 
     sessionStorage.setItem("gameData", JSON.stringify(updatedGameData));
-    sessionStorage.setItem("disabledKilling", JSON.stringify(true));
+    sessionStorage.setItem("disabledKillButton", JSON.stringify(true));
   };
 
   const confirmUndoKill = (playerID) => {
@@ -86,7 +84,7 @@ const MafiaShoots = () => {
       gameData[playerIndex].playerState.isAlive = true;
 
       // Update the state to enable all "kill" buttons
-      setDisabledKilling(false);
+      setDisabledKillButton(false);
 
       // Disable the undo button for the killed player
       setUndoDisabled((prevUndoDisabled) => ({
@@ -95,23 +93,18 @@ const MafiaShoots = () => {
       }));
 
       sessionStorage.setItem("gameData", JSON.stringify(gameData));
+      sessionStorage.setItem("disabledKillButton", JSON.stringify(false));
     }
   };
+
   const handleNextNight = () => {
     setCurrentNight((prevNight) => prevNight + 1);
-
-    // Enable all "kill" buttons and disable all undo buttons
-    setDisabledKilling(false);
-    setUndoDisabled({});
   };
 
   useEffect(() => {
     // ? Determine the value of docPlays based on gameData length
     setDocPlays(gameData.length < 8 ? "/night/cop_checks" : "/night/doc_saves");
   }, [gameData]);
-
-  console.table(mafiaPlayers);
-  console.table(notMafia);
 
   return (
     <div className="night_roles_container main_content_wrapper night_theme">
@@ -149,8 +142,8 @@ const MafiaShoots = () => {
                     {data.playerState.isAlive ? (
                       <button
                         onClick={() => toggleKillStatus(data.playerInfo.ID)}
-                        disabled={disabledKilling}
-                        className={disabledKilling ? "disabled_btn" : ""}
+                        // disabled={disabledKillButton}
+                        className={disabledKillButton ? "disabled_btn" : ""}
                       >
                         <p>
                           <FontAwesomeIcon icon={faGun} />
