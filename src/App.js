@@ -32,6 +32,7 @@ function App() {
           <Route path="/test" element={<MafiaAction />} />
         </Routes>
       </div>
+      {/* es aris komentari */}
       <div className="night_theme">
         <Routes>
           <Route path="/night/role_queue" element={<RoleQueue />} />
@@ -43,6 +44,7 @@ function App() {
           <Route path="/night/summary" element={<Summary />} />
           <Route path="/action" element={<ActionComp />} />
         </Routes>
+        {/* tavidanaa dasawyebi backtan ertad  */}
       </div>
     </div>
   );
