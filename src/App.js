@@ -44,6 +44,7 @@ function App() {
           <Route path="/night/summary" element={<Summary />} />
           <Route path="/action" element={<ActionComp />} />
         </Routes>
+        {/* tavidanaa dasawyebi backtan ertad  */}
       </div>
     </div>
   );
