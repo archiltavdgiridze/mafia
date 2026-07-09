@@ -1,10 +1,13 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import "./setlimits.scss";
 import RangeSlider from "../../../../reComps/RangeSlider/RangeSlider";
 import Msg4Host from "../../../../reComps/Msg4Host/Msg4Host";
 import PrevNextBtn from "./../../../../reComps/PrevNextBtn/PrevNextBtn";
+import { setFoulLimit } from "../../../../redux/gameSlice";
 
 const SetLimits = () => {
+  const dispatch = useDispatch();
   // Define unique names for each slider
   const talkTimeSliderName = "talkTime";
   const defenceTimeSliderName = "defenceTime";
@@ -32,7 +35,13 @@ const SetLimits = () => {
         </div>
         <div className="foul_quantity">
           <h2>ფოლების რაოდენობა</h2>
-          <RangeSlider min={2} max={4} step={1} name={foulLimitSliderName} />
+          <RangeSlider
+            min={2}
+            max={4}
+            step={1}
+            name={foulLimitSliderName}
+            onValueChange={(value) => dispatch(setFoulLimit(value))}
+          />
         </div>
         
       </div>

@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import "./inputroles.scss";
 import RoleNames from "../../../../reComps/RoleNames/RoleNames";
 import PrevNextBtn from "../../../../reComps/PrevNextBtn/PrevNextBtn";
-import GameSessionStorage from "../../../../reComps/GameSessionComp/GameSessionStorage";
 import Fouls from "../../../../reComps/fouls/Fouls";
 
 const InputRoles = () => {

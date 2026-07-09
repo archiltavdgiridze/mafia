@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from "react";
 import "./rangeslider.scss";
 
-const RangeSlider = ({ min, max, step, name }) => {
+const RangeSlider = ({ min, max, step, name, onValueChange }) => {
   const [sliderValue, setSliderValue] = useState(min);
 
   // Store the default value when the component initializes
   useEffect(() => {
     sessionStorage.setItem(name, min);
+    onValueChange?.(min);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [min, name]);
 
   const handleSliderChange = (event) => {
-    const newValue = event.target.value;
+    const newValue = Number(event.target.value);
     setSliderValue(newValue);
 
     // Store the value in sessionStorage with a unique name
     sessionStorage.setItem(name, newValue);
+    onValueChange?.(newValue);
   };
 
   const renderValueLabels = (min, max, step) => {

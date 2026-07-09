@@ -1,93 +1,57 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 import "../../../reComps/nightrolestyles.scss";
-import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faRotateLeft,
-  faMagnifyingGlass,
-  faGun,
-} from "@fortawesome/free-solid-svg-icons";
-import {} from "@fortawesome/free-solid-svg-icons";
+import { faRotateLeft, faMagnifyingGlass, faGun } from "@fortawesome/free-solid-svg-icons";
 import Msg4Host from "../../../reComps/Msg4Host/Msg4Host";
 import PrevNextBtn from "../../../reComps/PrevNextBtn/PrevNextBtn";
-import BackArrow from "../../../reComps/BackArrow/BackArrow";
 import Navbar from "../../../reComps/Navbar/Navbar";
+import { selectPlayers, selectNight, selectHasRole, setNightTarget } from "../../../redux/gameSlice";
+
+const DON_ROLE_ID = 5;
+const MANIAC_ROLE_ID = 6;
 
 const DonChecks = () => {
-  const [checkedPlayers, setCheckedPlayers] = useState({});
-  const [checkIsDone, setCheckIsDone] = useState(false);
-  const [undoDisabled, setUndoDisabled] = useState(true); // State to track if Undo buttons should be disabled
-  const [killerPlays, setKillerPlays] = useState(""); // State to track if killer plays or not
+  const dispatch = useDispatch();
+  const players = useSelector(selectPlayers);
+  const night = useSelector(selectNight);
+  const hasManiac = useSelector(selectHasRole(MANIAC_ROLE_ID));
 
-  const playerAndRole = JSON.parse(sessionStorage.getItem("assignedRoles"));
+  const donPlayer = players.filter((p) => p.roleId === DON_ROLE_ID);
+  const targetablePlayers = players.filter(
+    (p) => p.isAlive && p.roleId !== DON_ROLE_ID
+  );
 
-  const donPlayer = [];
-  const otherPlayers = [];
+  const targetSelected = night.don != null;
 
-  for (let i = 0; i < playerAndRole.length; i++) {
-    if (playerAndRole[i].role === "დონი") {
-      donPlayer.push(playerAndRole[i]);
-    } else {
-      otherPlayers.push(playerAndRole[i]);
-    }
-  }
+  const toggleCheckStatus = (playerId) => {
+    if (targetSelected) return;
+    dispatch(setNightTarget({ role: "don", targetId: playerId }));
+  };
 
-  const toggleCheckStatus = (playerName) => {
-    if (!checkIsDone) {
-      setCheckedPlayers((prevCheckedPlayers) => {
-        const updatedCheckedPlayers = { ...prevCheckedPlayers };
-        if (updatedCheckedPlayers[playerName]) {
-          delete updatedCheckedPlayers[playerName]; // Undo check
-          setUndoDisabled(true); // Disable Undo button
-        } else {
-          updatedCheckedPlayers[playerName] = true; // Mark as checked
-          setCheckIsDone(true); // Disable other "check" buttons
-          setUndoDisabled(false); // Enable Undo button
-        }
-        return updatedCheckedPlayers;
-      });
+  const confirmUndoCheck = (playerId) => {
+    if (window.confirm("გსურთ გააუქმოთ ეს შემოწმება?")) {
+      dispatch(setNightTarget({ role: "don", targetId: null }));
     }
   };
 
-  const confirmUndoCheck = (playerName) => {
-    if (window.confirm(`გსურთ გააუქმოთ ${playerName}–ის მკვლელობა?`)) {
-      setCheckedPlayers((prevCheckedPlayers) => {
-        const updatedCheckedPlayers = { ...prevCheckedPlayers };
-        delete updatedCheckedPlayers[playerName];
-
-        setUndoDisabled(true);
-        setCheckIsDone(false);
-        return updatedCheckedPlayers;
-      });
-    }
-  };
-
-  useEffect(() => {
-    if (playerAndRole.length < 8) {
-      setKillerPlays("/night/summary");
-    } else {
-      setKillerPlays("/night/killer_kills");
-    }
-  }, [playerAndRole]);
+  const killerPlays = hasManiac ? "/night/killer_kills" : "/night/summary";
 
   return (
     <div className="MS_container night_roles_container main_content_wrapper night_theme">
       <Navbar />
-      <Msg4Host
-        message={"დონი გადაამოწმებს"}
-        addClassname={"night_msg_4_host"}
-      />
+      <Msg4Host message={"დონი გადაამოწმებს"} addClassname={"night_msg_4_host"} />
       <div className="player_list">
         <div className="action_players">
           <table>
             <tbody>
-              {donPlayer.map((player, index) => (
-                <tr key={index}>
+              {donPlayer.map((player) => (
+                <tr key={player.id}>
                   <td>
                     <p>{player.name}</p>
                   </td>
                   <td>
-                    <p>{player.role}</p>
+                    <p>{player.roleName}</p>
                   </td>
                 </tr>
               ))}
@@ -97,22 +61,18 @@ const DonChecks = () => {
         <div className="non_action_players">
           <table>
             <tbody>
-              {otherPlayers.map((player, index) => (
+              {targetablePlayers.map((player) => (
                 <tr
-                  key={index}
-                  className={checkedPlayers[player.name] ? "disabled_row" : ""}
+                  key={player.id}
+                  className={player.id === night.don ? "disabled_row" : ""}
                 >
                   <td>
                     <p>{player.name}</p>
                   </td>
                   <td>
-                    {checkedPlayers[player.name] ? (
+                    {player.id === night.don ? (
                       <>
-                        <button
-                          onClick={() => confirmUndoCheck(player.name)}
-                          disabled={undoDisabled}
-                          className={undoDisabled ? "disabled_btn" : ""}
-                        >
+                        <button onClick={() => confirmUndoCheck(player.id)}>
                           <p>
                             <FontAwesomeIcon icon={faRotateLeft} />
                           </p>
@@ -124,9 +84,9 @@ const DonChecks = () => {
                       </>
                     ) : (
                       <button
-                        onClick={() => toggleCheckStatus(player.name)}
-                        disabled={checkIsDone}
-                        className={checkIsDone ? "disabled_btn" : ""}
+                        onClick={() => toggleCheckStatus(player.id)}
+                        disabled={targetSelected}
+                        className={targetSelected ? "disabled_btn" : ""}
                       >
                         <p>
                           <FontAwesomeIcon icon={faMagnifyingGlass} />

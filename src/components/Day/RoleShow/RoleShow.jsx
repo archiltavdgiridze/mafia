@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { startGame } from "../../../redux/gameSlice";
 import "./roleshow.scss";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -99,6 +101,7 @@ const RoleShow = () => {
   }
 
   // 3. Assign Roles Randomly (Only on Initial Render)
+  const dispatch = useDispatch();
   const [gameData] = useState(() => {
     const shuffledRoles = shuffleArray(roleData);
     const roles = [];
@@ -107,27 +110,21 @@ const RoleShow = () => {
     for (let i = 0; i < filteredPlayerNames.length; i++) {
       const role = shuffledRoles.pop();
       roles.push({
-        playerInfo: {
-          ID: i,
-          name: filteredPlayerNames[i],
-          roleID: role.roleID,
-          role: role.roleName,
-          role_img: role.roleImg,
-        },
-        playerState: {
-          isAlive: true,
-          isHealed: false,
-          isDeadForever: false,
-          isCheckedByCop: false,
-          isCheckedByDon: false,
-        },
+        id: i,
+        name: filteredPlayerNames[i],
+        roleId: role.roleID,
+        roleName: role.roleName,
+        roleImg: role.roleImg,
       });
     }
 
     return roles;
   });
 
-  sessionStorage.setItem("gameData", JSON.stringify(gameData));
+  useEffect(() => {
+    dispatch(startGame(gameData));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // 4. useState Hooks
   const [activeIndex, setActiveIndex] = useState(0);
@@ -177,16 +174,16 @@ const RoleShow = () => {
             >
               {gameData.map((data, index) => (
                 <SwiperSlide key={index}>
-                  {activeIndex === index && <p>{data.playerInfo.name}</p>}
+                  {activeIndex === index && <p>{data.name}</p>}
                   <div className="card_container">
                     <LazyLoadImage
                       className="role_card"
-                      src={data.playerInfo.role_img}
+                      src={data.roleImg}
                       alt={`Slide ${index}`}
-                      effect="blur" 
+                      effect="blur"
                     />
 
-                    {activeIndex === index && <p>{data.playerInfo.role}</p>}
+                    {activeIndex === index && <p>{data.roleName}</p>}
                   </div>
                 </SwiperSlide>
               ))}

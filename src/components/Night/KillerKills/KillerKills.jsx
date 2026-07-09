@@ -1,80 +1,53 @@
-import React, { useState } from "react";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 import "../../../reComps/nightrolestyles.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faRotateLeft,
-  faSkull,
-  faBookSkull,
-} from "@fortawesome/free-solid-svg-icons";
-import {} from "@fortawesome/free-solid-svg-icons";
+import { faRotateLeft, faSkull, faBookSkull } from "@fortawesome/free-solid-svg-icons";
 import Msg4Host from "../../../reComps/Msg4Host/Msg4Host";
 import PrevNextBtn from "../../../reComps/PrevNextBtn/PrevNextBtn";
-import BackArrow from "../../../reComps/BackArrow/BackArrow";
 import Navbar from "../../../reComps/Navbar/Navbar";
+import { selectPlayers, selectNight, setNightTarget } from "../../../redux/gameSlice";
+
+const MANIAC_ROLE_ID = 6;
 
 const KillerKills = () => {
-  const [checkedPlayers, setCheckedPlayers] = useState({});
-  const [checkIsDone, setCheckIsDone] = useState(false);
-  const [undoDisabled, setUndoDisabled] = useState(true); // State to track if Undo buttons should be disabled
+  const dispatch = useDispatch();
+  const players = useSelector(selectPlayers);
+  const night = useSelector(selectNight);
 
-  const playerAndRole = JSON.parse(sessionStorage.getItem("assignedRoles"));
+  const killerPlayer = players.filter((p) => p.roleId === MANIAC_ROLE_ID);
+  const targetablePlayers = players.filter(
+    (p) => p.isAlive && p.roleId !== MANIAC_ROLE_ID
+  );
 
-  const killerPlayer = [];
-  const otherPlayers = [];
+  const targetSelected = night.maniac != null;
 
-  for (let i = 0; i < playerAndRole.length; i++) {
-    if (playerAndRole[i].role === "მანიაკი") {
-      killerPlayer.push(playerAndRole[i]);
-    } else {
-      otherPlayers.push(playerAndRole[i]);
-    }
-  }
-
-  const toggleCheckStatus = (playerName) => {
-    if (!checkIsDone) {
-      setCheckedPlayers((prevCheckedPlayers) => {
-        const updatedCheckedPlayers = { ...prevCheckedPlayers };
-        if (updatedCheckedPlayers[playerName]) {
-          delete updatedCheckedPlayers[playerName];
-          setUndoDisabled(true);
-        } else {
-          updatedCheckedPlayers[playerName] = true;
-          setCheckIsDone(true);
-          setUndoDisabled(false);
-        }
-        return updatedCheckedPlayers;
-      });
-    }
+  const toggleCheckStatus = (playerId) => {
+    if (targetSelected) return;
+    dispatch(setNightTarget({ role: "maniac", targetId: playerId }));
   };
 
-  const confirmUndoCheck = (playerName) => {
-    if (window.confirm(`გსურთ გააუქმოთ ${playerName}–ის მკვლელობა?`)) {
-      setCheckedPlayers((prevCheckedPlayers) => {
-        const updatedCheckedPlayers = { ...prevCheckedPlayers };
-        delete updatedCheckedPlayers[playerName];
-
-        setUndoDisabled(true);
-        setCheckIsDone(false);
-        return updatedCheckedPlayers;
-      });
+  const confirmUndoCheck = (playerId) => {
+    if (window.confirm("გსურთ გააუქმოთ ეს მკვლელობა?")) {
+      dispatch(setNightTarget({ role: "maniac", targetId: null }));
     }
   };
 
   return (
     <div className="MS_container night_roles_container main_content_wrapper night_theme">
       <Navbar />
-      <Msg4Host message={"ქილერი მოკლავს"} addClassname={"night_msg_4_host"} />
+      <Msg4Host message={"მანიაკი მოკლავს"} addClassname={"night_msg_4_host"} />
       <div className="player_list">
         <div className="action_players">
           <table>
             <tbody>
-              {killerPlayer.map((player, index) => (
-                <tr key={index}>
+              {killerPlayer.map((player) => (
+                <tr key={player.id}>
                   <td>
                     <p>{player.name}</p>
                   </td>
                   <td>
-                    <p>{player.role}</p>
+                    <p>{player.roleName}</p>
                   </td>
                 </tr>
               ))}
@@ -84,22 +57,18 @@ const KillerKills = () => {
         <div className="non_action_players">
           <table>
             <tbody>
-              {otherPlayers.map((player, index) => (
+              {targetablePlayers.map((player) => (
                 <tr
-                  key={index}
-                  className={checkedPlayers[player.name] ? "disabled_row" : ""}
+                  key={player.id}
+                  className={player.id === night.maniac ? "disabled_row" : ""}
                 >
                   <td>
                     <p>{player.name}</p>
                   </td>
                   <td>
-                    {checkedPlayers[player.name] ? (
+                    {player.id === night.maniac ? (
                       <>
-                        <button
-                          onClick={() => confirmUndoCheck(player.name)}
-                          disabled={undoDisabled}
-                          className={undoDisabled ? "disabled_btn" : ""}
-                        >
+                        <button onClick={() => confirmUndoCheck(player.id)}>
                           <p>
                             <FontAwesomeIcon icon={faRotateLeft} />
                           </p>
@@ -111,9 +80,9 @@ const KillerKills = () => {
                       </>
                     ) : (
                       <button
-                        onClick={() => toggleCheckStatus(player.name)}
-                        disabled={checkIsDone}
-                        className={checkIsDone ? "disabled_btn" : ""}
+                        onClick={() => toggleCheckStatus(player.id)}
+                        disabled={targetSelected}
+                        className={targetSelected ? "disabled_btn" : ""}
                       >
                         <p>
                           <FontAwesomeIcon icon={faSkull} />
